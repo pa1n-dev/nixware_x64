@@ -22,7 +22,7 @@ namespace hooks
 	{
 		namespace originals
 		{
-			inline WNDPROC wnd_proc = nullptr;
+			inline WNDPROC wndproc = nullptr;
 			inline HRESULT(APIENTRY* d3d9_reset) (IDirect3DDevice9*, D3DPRESENT_PARAMETERS*);
 			inline HRESULT(APIENTRY* d3d9_present) (IDirect3DDevice9*, CONST RECT*, CONST RECT*, HWND, CONST RGNDATA*);
 			inline void(__thiscall* html_panel_load_url)(void*, const char*);
@@ -30,7 +30,7 @@ namespace hooks
 			inline void(__fastcall* panel_paint_traverse)(i_panel*, v_panel, bool, bool);
 		}
 
-		LRESULT APIENTRY wnd_proc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param);
+		LRESULT CALLBACK wndproc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param);
 		HRESULT APIENTRY d3d9_present(IDirect3DDevice9* device, CONST RECT* src, CONST RECT* dest, HWND wnd_override, CONST RGNDATA* dirty_region);
 		HRESULT APIENTRY d3d9_reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* presentation_parameters);
 		void __fastcall html_panel_load_url(void* rcx, const char* url);

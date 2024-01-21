@@ -3,8 +3,7 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 	static std::once_flag once;
 	std::call_once(once, [&]
 	{
-		HWND hwnd = FindWindowA(xorstr("Valve001"), nullptr);
-		originals::wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(wnd_proc)));
+		HWND hwnd = FindWindowW(L"Valve001", 0);
 
 		ImGui::CreateContext();
 		ImGui_ImplWin32_Init(hwnd);
@@ -65,9 +64,9 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 	ImGui::Render();
 
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
-
+	
 	pixel_state->Apply();
 	pixel_state->Release();
-
+	
 	return originals::d3d9_present(device, src, dest, wnd_override, dirty_region);
 }

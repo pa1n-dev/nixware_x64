@@ -195,7 +195,7 @@
     <ClInclude Include="hooks\handles\html_panel\paint.cpp" />
     <ClInclude Include="hooks\handles\paint_traverse.cpp" />
     <ClInclude Include="hooks\handles\reset.cpp" />
-    <ClInclude Include="hooks\handles\wnd_proc.cpp" />
+    <ClInclude Include="hooks\handles\wndproc.cpp" />
     <ClInclude Include="hooks\handles\present.cpp" />
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />

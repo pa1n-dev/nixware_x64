@@ -12,7 +12,7 @@ namespace settings
 {
     namespace menu
     {
-        inline bool opened = true;
+        inline bool opened = false;
 
         namespace colors
         {

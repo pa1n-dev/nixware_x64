@@ -146,7 +146,7 @@
     <ClInclude Include="hooks\handles\present.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\wnd_proc.cpp">
+    <ClInclude Include="hooks\handles\wndproc.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="utils\utilities.h">

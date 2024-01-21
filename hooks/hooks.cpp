@@ -12,7 +12,7 @@
 #include "../dependencies/imgui/impl/imgui_impl_win32.h"
 #include "../dependencies/imgui/freetype/imgui_freetype.h"
 
-#include "handles/wnd_proc.cpp"
+#include "handles/wndproc.cpp"
 #include "handles/present.cpp"
 #include "handles/reset.cpp"
 #include "handles/html_panel/load_url.cpp"
@@ -41,6 +41,8 @@ void hooks::initialize()
 
     if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
         throw;
+ 
+    handles::originals::wndproc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(FindWindowW(L"Valve001", 0), GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(handles::wndproc)));
 }
 
 void hooks::unhook()
