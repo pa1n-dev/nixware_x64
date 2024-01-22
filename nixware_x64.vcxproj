@@ -167,7 +167,6 @@
     <ClCompile Include="sdk\interfaces.cpp" />
     <ClCompile Include="sdk\math\math.cpp" />
     <ClCompile Include="sdk\math\vector.cpp" />
-    <ClCompile Include="utils\render_manager.cpp" />
     <ClCompile Include="utils\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>

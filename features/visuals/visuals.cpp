@@ -1,5 +1,4 @@
 #include "visuals.h"
-#include "../../utils/utilities.h"
 
 void visuals::render()
 {
@@ -37,8 +36,13 @@ void visuals::render()
 				if (!utilities::get_entity_box(entity, box))
 					continue;
 
-				//if (settings::visuals::players::box)
-				//	render_manager::render_box(box, settings::visuals::players::colors::box, 1.f);
+				if (settings::visuals::players::box)
+				{
+					render_manager::line(ImVec2(box.left, box.bottom), ImVec2(box.left, box.top), settings::visuals::players::colors::box, 1.f);
+					render_manager::line(ImVec2(box.left, box.top), ImVec2(box.right, box.top), settings::visuals::players::colors::box, 1.f);
+					render_manager::line(ImVec2(box.right, box.top), ImVec2(box.right, box.bottom), settings::visuals::players::colors::box, 1.f);
+					render_manager::line(ImVec2(box.right, box.bottom), ImVec2(box.left, box.bottom), settings::visuals::players::colors::box, 1.f);
+				}
 			}
 			else
 			{
