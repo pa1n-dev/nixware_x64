@@ -32,7 +32,7 @@ injection via process hacker
 
 #### Testers
 - [theshezzee](https://github.com/THEshezzee)
-- [@Zitc_Hen](https://github.com/ZitcHen) (partial)
+- [Zitc_Hen](https://github.com/ZitcHen) (partial)
 
 ### Software used
 - [ImGui](https://github.com/ocornut/imgui)
