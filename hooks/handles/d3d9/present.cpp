@@ -26,7 +26,6 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 	if (IsKeyPressed(ImGuiKey_Insert, false))
 		settings::menu::opened = !settings::menu::opened;
 
-
 	c_texture* rt = nullptr;
 	c_mat_render_context* ctx = interfaces::material_system->get_render_context();
 	if (ctx)

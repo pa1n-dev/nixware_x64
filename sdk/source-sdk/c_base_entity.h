@@ -1,19 +1,5 @@
 #pragma once
 
-class c_collidable
-{
-public:
-	c_vector& mins()
-	{
-		return memory::call_v_function<c_vector& (__thiscall*)(void*)>(this, 1)(this);
-	}
-
-	c_vector& maxs()
-	{
-		return memory::call_v_function<c_vector& (__thiscall*)(void*)>(this, 2)(this);
-	}
-};
-
 class c_base_entity
 {
 public:
@@ -29,7 +15,7 @@ public:
 
 	bool is_dormant()
 	{
-		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 48)(this);
+		return *(bool*)((uintptr_t)this + 0x1FA);
 	}
 
 	bool is_alive()

@@ -202,6 +202,7 @@
     <ClInclude Include="sdk\math\math.h" />
     <ClInclude Include="sdk\math\vector.h" />
     <ClInclude Include="sdk\interfaces.h" />
+    <ClInclude Include="sdk\source-sdk\c_collidable.h" />
     <ClInclude Include="sdk\source-sdk\c_engine_client.h" />
     <ClInclude Include="sdk\source-sdk\c_entity_list.h" />
     <ClInclude Include="sdk\source-sdk\c_material_system.h" />
@@ -210,7 +211,7 @@
     <ClInclude Include="sdk\source-sdk\i_render_view.h" />
     <ClInclude Include="sdk\source-sdk\i_panel.h" />
     <ClInclude Include="sdk\source-sdk\i_view_render.h" />
-    <ClInclude Include="sdk\structs.h" />
+    <ClInclude Include="sdk\source-sdk\c_base_entity.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="utils\render_manager.h" />
     <ClInclude Include="utils\utilities.h" />

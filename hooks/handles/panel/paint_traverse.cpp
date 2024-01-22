@@ -1,7 +1,5 @@
 void hooks::handles::panel_paint_traverse(i_panel* rcx, v_panel panel, bool force_repaint, bool allow_force)
 {
-	originals::panel_paint_traverse(rcx, panel, force_repaint, allow_force);
-
 	const char* name = interfaces::panel->get_name(panel);
 
 	if (!globals::overlay_popup_panel)
@@ -28,4 +26,6 @@ void hooks::handles::panel_paint_traverse(i_panel* rcx, v_panel panel, bool forc
 			interfaces::render_view->get_matrices_for_view(*interfaces::view_render->get_view_setup(), &world_to_view, &view_to_projection, &globals::world_to_screen, &world_to_pixels);
 		}
 	}
+
+	originals::panel_paint_traverse(rcx, panel, force_repaint, allow_force);
 }

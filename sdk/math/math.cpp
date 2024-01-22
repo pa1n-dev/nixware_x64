@@ -70,24 +70,41 @@ void math::vector_to_angle(const c_vector& forward, q_angle& out)
 
 bool math::screen_transform(const c_vector& in, c_vector& out)
 {
-	auto world_matrix = globals::world_to_screen;
+	auto exception_filter = [](int code, PEXCEPTION_POINTERS ex)
+	{
+		return EXCEPTION_EXECUTE_HANDLER;
+	};
 
-	const auto w = world_matrix.m[3][0] * in.x + world_matrix.m[3][1] * in.y + world_matrix.m[3][2] * in.z + world_matrix.m[3][3];
-	if (w < 0.001f)
+	__try
+	{
+		if (!interfaces::engine->is_in_game())
+			return false;
+
+		const D3DMATRIX& world_matrix = globals::world_to_screen;
+
+		const auto w = world_matrix.m[3][0] * in.x + world_matrix.m[3][1] * in.y + world_matrix.m[3][2] * in.z + world_matrix.m[3][3];
+		if (w < 0.001f)
+		{
+			out.x *= 100000;
+			out.y *= 100000;
+			return false;
+		}
+
+		out.x = world_matrix.m[0][0] * in.x + world_matrix.m[0][1] * in.y + world_matrix.m[0][2] * in.z + world_matrix.m[0][3];
+		out.y = world_matrix.m[1][0] * in.x + world_matrix.m[1][1] * in.y + world_matrix.m[1][2] * in.z + world_matrix.m[1][3];
+		out.z = 0.0f;
+
+		out.x /= w;
+		out.y /= w;
+
+		return true;
+	}
+	__except (exception_filter(GetExceptionCode(), GetExceptionInformation()))
 	{
 		out.x *= 100000;
 		out.y *= 100000;
 		return false;
 	}
-
-	out.x = world_matrix.m[0][0] * in.x + world_matrix.m[0][1] * in.y + world_matrix.m[0][2] * in.z + world_matrix.m[0][3];
-	out.y = world_matrix.m[1][0] * in.x + world_matrix.m[1][1] * in.y + world_matrix.m[1][2] * in.z + world_matrix.m[1][3];
-	out.z = 0.0f;
-
-	out.x /= w;
-	out.y /= w;
-
-	return true;
 }
 
 bool math::world_to_screen(const c_vector& in, c_vector& out)

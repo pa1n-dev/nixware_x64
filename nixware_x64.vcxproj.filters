@@ -188,7 +188,7 @@
     <ClInclude Include="sdk\math\vector.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\structs.h">
+    <ClInclude Include="sdk\source-sdk\c_base_entity.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\math\math.h">
@@ -213,6 +213,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\c_texture.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\c_collidable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

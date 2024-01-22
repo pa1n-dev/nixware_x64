@@ -9,7 +9,8 @@
 #include "math/vector.h"
 #include "math/math.h"
 
-#include "structs.h"
+#include "source-sdk/c_collidable.h"
+#include "source-sdk/c_base_entity.h"
 #include "source-sdk/c_engine_client.h"
 #include "source-sdk/i_panel.h"
 #include "source-sdk/c_view_setup.h"
