@@ -1,19 +1,6 @@
 #include "visuals.h"
 #include "../../utils/utilities.h"
 
-void line(ImVec2 a, ImVec2 b, float color[4], float thickness)
-{
-	ImGui::GetWindowDrawList()->AddLine(a, b, ImGui::GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
-}
-
-void render_box(box_t box, float color[4], float thickness)
-{
-	line(ImVec2(box.left, box.bottom), ImVec2(box.left, box.top), color, thickness);
-	line(ImVec2(box.left, box.top), ImVec2(box.right, box.top), color, thickness);
-	line(ImVec2(box.right, box.top), ImVec2(box.right, box.bottom), color, thickness);
-	line(ImVec2(box.right, box.bottom), ImVec2(box.left, box.bottom), color, thickness);
-}
-
 void visuals::render()
 {
 	if (!interfaces::engine->is_in_game())
@@ -50,7 +37,8 @@ void visuals::render()
 				if (!utilities::get_entity_box(entity, box))
 					continue;
 
-				render_box(box, new float[4] { 1.f, 1.f, 1.f, 1.f }, 1.f);
+				//if (settings::visuals::players::box)
+				//	render_manager::render_box(box, settings::visuals::players::colors::box, 1.f);
 			}
 			else
 			{

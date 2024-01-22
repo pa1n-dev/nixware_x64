@@ -167,6 +167,7 @@
     <ClCompile Include="sdk\interfaces.cpp" />
     <ClCompile Include="sdk\math\math.cpp" />
     <ClCompile Include="sdk\math\vector.cpp" />
+    <ClCompile Include="utils\render_manager.cpp" />
     <ClCompile Include="utils\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,10 +194,10 @@
     <ClInclude Include="features\visuals\visuals.h" />
     <ClInclude Include="hooks\handles\html_panel\load_url.cpp" />
     <ClInclude Include="hooks\handles\html_panel\paint.cpp" />
-    <ClInclude Include="hooks\handles\paint_traverse.cpp" />
-    <ClInclude Include="hooks\handles\reset.cpp" />
+    <ClInclude Include="hooks\handles\panel\paint_traverse.cpp" />
+    <ClInclude Include="hooks\handles\d3d9\reset.cpp" />
     <ClInclude Include="hooks\handles\wndproc.cpp" />
-    <ClInclude Include="hooks\handles\present.cpp" />
+    <ClInclude Include="hooks\handles\d3d9\present.cpp" />
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />
     <ClInclude Include="sdk\math\math.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="sdk\source-sdk\i_view_render.h" />
     <ClInclude Include="sdk\structs.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="utils\render_manager.h" />
     <ClInclude Include="utils\utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

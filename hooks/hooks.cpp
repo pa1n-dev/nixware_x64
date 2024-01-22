@@ -3,21 +3,12 @@
 #include "../features/menu/menu.h"
 #include "../features/visuals/visuals.h"
 
-#include "../settings.h"
-
-#include "../dependencies/fonts/ubuntu_compressed.h"
-#include "../dependencies/imgui/imgui.h"
-#include "../dependencies/imgui/imgui_internal.h"
-#include "../dependencies/imgui/impl/imgui_impl_dx9.h"
-#include "../dependencies/imgui/impl/imgui_impl_win32.h"
-#include "../dependencies/imgui/freetype/imgui_freetype.h"
-
 #include "handles/wndproc.cpp"
-#include "handles/present.cpp"
-#include "handles/reset.cpp"
+#include "handles/d3d9/present.cpp"
+#include "handles/d3d9/reset.cpp"
 #include "handles/html_panel/load_url.cpp"
 #include "handles/html_panel/paint.cpp"
-#include "handles/paint_traverse.cpp"
+#include "handles/panel/paint_traverse.cpp"
 
 void hooks::initialize()
 {

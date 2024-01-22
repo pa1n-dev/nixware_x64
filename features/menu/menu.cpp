@@ -90,6 +90,7 @@ void menu::render()
             {
                 ImGui::Checkbox(xorstr("Enable"), &settings::visuals::players::enable);
                 ImGui::Checkbox(xorstr("Dormant"), &settings::visuals::players::dormant);
+                ImGui::Checkbox(xorstr("Box"), &settings::visuals::players::box); ImGui::ColorEdit4(xorstr("Box Color"), settings::visuals::players::colors::box, color_edit4_flags);
 
                 ImGui::EndChild();
             }

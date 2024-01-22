@@ -8,10 +8,20 @@
 #pragma comment(lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
+#include "../dependencies/fonts/ubuntu_compressed.h"
+#include "../dependencies/imgui/imgui.h"
+#include "../dependencies/imgui/imgui_internal.h"
+#include "../dependencies/imgui/impl/imgui_impl_dx9.h"
+#include "../dependencies/imgui/impl/imgui_impl_win32.h"
+#include "../dependencies/imgui/freetype/imgui_freetype.h"
+
+#include "../dependencies/xorstr/xorstr.h"
 #include "../dependencies/minhook/minhook.h"
 #include "../dependencies/memory/memory.h"
 
 #include "../sdk/interfaces.h"
+
+#include "../settings.h"
 
 namespace hooks
 {

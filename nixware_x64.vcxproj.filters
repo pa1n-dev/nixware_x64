@@ -81,6 +81,9 @@
     <ClCompile Include="sdk\math\math.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="utils\render_manager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\imgui\imconfig.h">
@@ -143,7 +146,7 @@
     <ClInclude Include="dependencies\minhook\hde\table64.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\present.cpp">
+    <ClInclude Include="hooks\handles\d3d9\present.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="hooks\handles\wndproc.cpp">
@@ -152,7 +155,7 @@
     <ClInclude Include="utils\utilities.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\reset.cpp">
+    <ClInclude Include="hooks\handles\d3d9\reset.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="features\menu\menu.h">
@@ -176,7 +179,7 @@
     <ClInclude Include="hooks\handles\html_panel\paint.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\paint_traverse.cpp">
+    <ClInclude Include="hooks\handles\panel\paint_traverse.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="settings.h">
@@ -204,6 +207,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\c_entity_list.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\render_manager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

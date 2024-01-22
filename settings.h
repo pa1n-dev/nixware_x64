@@ -31,6 +31,12 @@ namespace settings
         {
             inline bool enable = false;
             inline bool dormant = false;
+            inline bool box = false;
+
+            namespace colors
+            {
+                inline float box[4] = { 1.f, 1.f, 1.f, 1.f };
+            }
         }
 
         namespace entity
