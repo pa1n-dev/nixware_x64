@@ -25,5 +25,11 @@ injection via process hacker
 - Lua API
 - Bitch
 
+### Credits
+
+#### Maintainers / Devs
+- [pa1n](https://github.com/pa1n-dev)
+
 #### Testers
 - [theshezzee](https://github.com/THEshezzee)
+- [@Zitc_Hen](https://github.com/ZitcHen) (partial)
