@@ -2,15 +2,17 @@
 
 void visuals::render()
 {
+	using namespace ImGui;
+
 	if (!interfaces::engine->is_in_game())
 		return;
 
 	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
 
-	ImGuiIO& io = ImGui::GetIO();
-	ImGui::SetNextWindowPos(ImVec2(0, 0));
-	ImGui::SetNextWindowSize(io.DisplaySize);
-	if (ImGui::Begin(xorstr("Visuals"), NULL, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground))
+	ImGuiIO& io = GetIO();
+	SetNextWindowPos(ImVec2(0, 0));
+	SetNextWindowSize(io.DisplaySize);
+	if (Begin(xorstr("Visuals"), NULL, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground))
 	{
 		for (size_t i = 0; i < interfaces::entity_list->get_highest_entity_index(); i++)
 		{
@@ -51,6 +53,6 @@ void visuals::render()
 			}
 		}
 
-		ImGui::End();
+		End();
 	}
 }

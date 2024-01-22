@@ -6,6 +6,7 @@ bool utilities::game_is_full_loaded()
 		&& GetModuleHandleA(xorstr("engine.dll"))
 		&& GetModuleHandleA(xorstr("menusystem.dll"))
 		&& GetModuleHandleA(xorstr("gameoverlayrenderer64.dll"))
+		&& GetModuleHandleA(xorstr("materialsystem.dll"))
 		&& GetModuleHandleA(xorstr("vgui2.dll"));
 }
 

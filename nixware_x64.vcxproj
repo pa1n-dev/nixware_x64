@@ -204,6 +204,8 @@
     <ClInclude Include="sdk\interfaces.h" />
     <ClInclude Include="sdk\source-sdk\c_engine_client.h" />
     <ClInclude Include="sdk\source-sdk\c_entity_list.h" />
+    <ClInclude Include="sdk\source-sdk\c_material_system.h" />
+    <ClInclude Include="sdk\source-sdk\c_texture.h" />
     <ClInclude Include="sdk\source-sdk\c_view_setup.h" />
     <ClInclude Include="sdk\source-sdk\i_render_view.h" />
     <ClInclude Include="sdk\source-sdk\i_panel.h" />

@@ -1,18 +1,20 @@
 HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RECT* src, CONST RECT* dest, HWND wnd_override, CONST RGNDATA* dirty_region)
 {
+	using namespace ImGui;
+
 	static std::once_flag once;
 	std::call_once(once, [&]
 	{
 		HWND hwnd = FindWindowW(L"Valve001", 0);
 
-		ImGui::CreateContext();
+		CreateContext();
 		ImGui_ImplWin32_Init(hwnd);
 		ImGui_ImplWin32_GetDpiScaleForHwnd(hwnd);
 		ImGui_ImplDX9_Init(device);
 
-		ImGui::StyleColorsDark();
+		StyleColorsDark();
 
-		ImGuiIO& io = ImGui::GetIO();
+		ImGuiIO& io = GetIO();
 		io.IniFilename = nullptr;
 
 		ImFontConfig config = ImFontConfig();
@@ -21,8 +23,19 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 		io.Fonts->AddFontFromMemoryCompressedTTF(ubuntu_compressed_data, ubuntu_compressed_size, 13, &config, io.Fonts->GetGlyphRangesCyrillic());
 	});
 
-	if (ImGui::IsKeyPressed(ImGuiKey_Insert, false))
+	if (IsKeyPressed(ImGuiKey_Insert, false))
 		settings::menu::opened = !settings::menu::opened;
+
+
+	c_texture* rt = nullptr;
+	c_mat_render_context* ctx = interfaces::material_system->get_render_context();
+	if (ctx)
+	{
+		ctx->begin_render();
+		rt = ctx->get_render_target();
+		ctx->set_render_target(nullptr);
+		ctx->end_render();
+	}
 
 	IDirect3DStateBlock9* pixel_state = nullptr;
 	device->CreateStateBlock(D3DSBT_ALL, &pixel_state);
@@ -55,18 +68,29 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
+	NewFrame();
 
 	menu::render();
 	visuals::render();
 
-	ImGui::EndFrame();
-	ImGui::Render();
+	EndFrame();
+	Render();
 
-	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+	ImGui_ImplDX9_RenderDrawData(GetDrawData());
 	
 	pixel_state->Apply();
 	pixel_state->Release();
 	
+	if (rt)
+	{
+		c_mat_render_context* ctx = interfaces::material_system->get_render_context();
+		if (ctx)
+		{
+			ctx->begin_render();
+			ctx->set_render_target(rt);
+			ctx->end_render();
+		}
+	}
+
 	return originals::d3d9_present(device, src, dest, wnd_override, dirty_region);
 }

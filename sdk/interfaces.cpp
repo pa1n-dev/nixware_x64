@@ -21,4 +21,8 @@ void interfaces::initialize()
 	entity_list = memory::capture_interface<c_entity_list>(xorstr("client.dll"), xorstr("VClientEntityList003"));
 	if (!entity_list)
 		throw;
+
+	material_system = memory::capture_interface<c_material_system>(xorstr("materialsystem.dll"), xorstr("VMaterialSystem080"));
+	if (!material_system)
+		throw;
 }

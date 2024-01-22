@@ -16,14 +16,17 @@
 #include "source-sdk/i_view_render.h"
 #include "source-sdk/i_render_view.h"
 #include "source-sdk/c_entity_list.h"
+#include "source-sdk/c_texture.h"
+#include "source-sdk/c_material_system.h"
 
 namespace interfaces
 {
 	void initialize();
 
-	inline c_engine_client* engine;
-	inline i_panel*			panel;
-	inline i_view_render*	view_render;
-	inline i_render_view*	render_view;
-	inline c_entity_list*	entity_list;
+	inline c_engine_client*		engine;
+	inline i_panel*				panel;
+	inline i_view_render*		view_render;
+	inline i_render_view*		render_view;
+	inline c_entity_list*		entity_list;
+	inline c_material_system*	material_system;
 }

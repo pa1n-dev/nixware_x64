@@ -2,186 +2,188 @@
 
 void menu::render()
 {
+    using namespace ImGui;
+
     if (!settings::menu::opened)
         return;
     
-    ImGuiIO& io = ImGui::GetIO();
-    ImGuiStyle& style = ImGui::GetStyle();
+    ImGuiIO& io = GetIO();
+    ImGuiStyle& style = GetStyle();
 
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(settings::menu::colors::window_bg[0], settings::menu::colors::window_bg[1], settings::menu::colors::window_bg[2], settings::menu::colors::window_bg[3]));
-    ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(settings::menu::colors::window_bg[0], settings::menu::colors::window_bg[1], settings::menu::colors::window_bg[2], settings::menu::colors::window_bg[3]));
-    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(settings::menu::colors::child_bg[0], settings::menu::colors::child_bg[1], settings::menu::colors::child_bg[2], settings::menu::colors::child_bg[3]));
-    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(settings::menu::colors::text[0], settings::menu::colors::text[1], settings::menu::colors::text[2], settings::menu::colors::text[3]));
-    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(settings::menu::colors::frame_bg[0], settings::menu::colors::frame_bg[1], settings::menu::colors::frame_bg[2], settings::menu::colors::frame_bg[3]));
-    ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(settings::menu::colors::frame_hovered_bg[0], settings::menu::colors::frame_hovered_bg[1], settings::menu::colors::frame_hovered_bg[2], settings::menu::colors::frame_hovered_bg[3]));
-    ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(settings::menu::colors::frame_active_bg[0], settings::menu::colors::frame_active_bg[1], settings::menu::colors::frame_active_bg[2], settings::menu::colors::frame_active_bg[3]));
+    PushStyleColor(ImGuiCol_WindowBg, ImVec4(settings::menu::colors::window_bg[0], settings::menu::colors::window_bg[1], settings::menu::colors::window_bg[2], settings::menu::colors::window_bg[3]));
+    PushStyleColor(ImGuiCol_PopupBg, ImVec4(settings::menu::colors::window_bg[0], settings::menu::colors::window_bg[1], settings::menu::colors::window_bg[2], settings::menu::colors::window_bg[3]));
+    PushStyleColor(ImGuiCol_ChildBg, ImVec4(settings::menu::colors::child_bg[0], settings::menu::colors::child_bg[1], settings::menu::colors::child_bg[2], settings::menu::colors::child_bg[3]));
+    PushStyleColor(ImGuiCol_Text, ImVec4(settings::menu::colors::text[0], settings::menu::colors::text[1], settings::menu::colors::text[2], settings::menu::colors::text[3]));
+    PushStyleColor(ImGuiCol_FrameBg, ImVec4(settings::menu::colors::frame_bg[0], settings::menu::colors::frame_bg[1], settings::menu::colors::frame_bg[2], settings::menu::colors::frame_bg[3]));
+    PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(settings::menu::colors::frame_hovered_bg[0], settings::menu::colors::frame_hovered_bg[1], settings::menu::colors::frame_hovered_bg[2], settings::menu::colors::frame_hovered_bg[3]));
+    PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(settings::menu::colors::frame_active_bg[0], settings::menu::colors::frame_active_bg[1], settings::menu::colors::frame_active_bg[2], settings::menu::colors::frame_active_bg[3]));
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(720, 355));
+    PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(720, 355));
 
-    ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x / 2.f, io.DisplaySize.y / 2.f), ImGuiCond_Once, ImVec2(0.5f, 0.5f));
-    ImGui::SetNextWindowSize(ImVec2(720, 355), ImGuiCond_Once);
+    SetNextWindowPos(ImVec2(io.DisplaySize.x / 2.f, io.DisplaySize.y / 2.f), ImGuiCond_Once, ImVec2(0.5f, 0.5f));
+    SetNextWindowSize(ImVec2(720, 355), ImGuiCond_Once);
 
-    if (ImGui::Begin(xorstr("Nixware"), NULL, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar))
+    if (Begin(xorstr("Nixware"), NULL, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar))
     {
-        ImGui::BeginTabBar(xorstr("Tabs"));
+        BeginTabBar(xorstr("Tabs"));
 
-        if (ImGui::BeginTabItem(xorstr("Aimbot")))
+        if (BeginTabItem(xorstr("Aimbot")))
         {
-            ImVec2 child_size = ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, ImGui::GetWindowHeight() - (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
+            ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-            if (ImGui::BeginChild(xorstr("Globals"), child_size))
+            if (BeginChild(xorstr("Globals"), child_size))
             {
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Accuracy"), child_size))
+            if (BeginChild(xorstr("Accuracy"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Visuals"), child_size))
+            if (BeginChild(xorstr("Visuals"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::EndTabItem();
+            EndTabItem();
         }
 
-        if (ImGui::BeginTabItem(xorstr("AntiAim")))
+        if (BeginTabItem(xorstr("AntiAim")))
         {
-            ImVec2 child_size = ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, ImGui::GetWindowHeight() - (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
+            ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-            if (ImGui::BeginChild(xorstr("AntiAim"), child_size))
+            if (BeginChild(xorstr("AntiAim"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("FakeLag's"), child_size))
+            if (BeginChild(xorstr("FakeLag's"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Visuals"), child_size))
+            if (BeginChild(xorstr("Visuals"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::EndTabItem();
+            EndTabItem();
         }
 
-        if (ImGui::BeginTabItem(xorstr("Visuals")))
+        if (BeginTabItem(xorstr("Visuals")))
         {
-            ImVec2 child_size = ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, ImGui::GetWindowHeight() - (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
+            ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-            if (ImGui::BeginChild(xorstr("Players"), child_size))
+            if (BeginChild(xorstr("Players"), child_size))
             {
-                ImGui::Checkbox(xorstr("Enable"), &settings::visuals::players::enable);
-                ImGui::Checkbox(xorstr("Dormant"), &settings::visuals::players::dormant);
-                ImGui::Checkbox(xorstr("Box"), &settings::visuals::players::box); ImGui::ColorEdit4(xorstr("Box Color"), settings::visuals::players::colors::box, color_edit4_flags);
+                Checkbox(xorstr("Enable"), &settings::visuals::players::enable);
+                Checkbox(xorstr("Dormant"), &settings::visuals::players::dormant);
+                Checkbox(xorstr("Box"), &settings::visuals::players::box); ColorEdit4(xorstr("Box Color"), settings::visuals::players::colors::box, color_edit4_flags);
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Entity"), child_size))
+            if (BeginChild(xorstr("Entity"), child_size))
             {
-                ImGui::Checkbox(xorstr("Enable"), &settings::visuals::entity::enable);
+                Checkbox(xorstr("Enable"), &settings::visuals::entity::enable);
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Misc"), child_size))
+            if (BeginChild(xorstr("Misc"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::EndTabItem();
+            EndTabItem();
         }
 
-        if (ImGui::BeginTabItem(xorstr("Misc")))
+        if (BeginTabItem(xorstr("Misc")))
         {
-            ImVec2 child_size = ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x)) / 2, ImGui::GetWindowHeight() - (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
+            ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x)) / 2, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-            if (ImGui::BeginChild(xorstr("Globals"), child_size))
+            if (BeginChild(xorstr("Globals"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Movement"), child_size))
+            if (BeginChild(xorstr("Movement"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::EndTabItem();
+            EndTabItem();
         }
 
-        if (ImGui::BeginTabItem(xorstr("Lua")))
+        if (BeginTabItem(xorstr("Lua")))
         {
 
-            ImGui::EndTabItem();
+            EndTabItem();
         }
 
-        if (ImGui::BeginTabItem(xorstr("Settings")))
+        if (BeginTabItem(xorstr("Settings")))
         {
-            ImVec2 child_size = ImVec2((ImGui::GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, ImGui::GetWindowHeight() - (ImGui::GetCursorPosY() + style.ItemInnerSpacing.y * 2));
+            ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-            if (ImGui::BeginChild(xorstr("Info"), child_size))
+            if (BeginChild(xorstr("Info"), child_size))
             {
-                ImGui::LabelText("Last update:", __DATE__);
+                LabelText("Last update:", __DATE__);
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Menu"), child_size))
+            if (BeginChild(xorstr("Menu"), child_size))
             {
-                ImGui::LabelText(xorstr("WindowBg"));       ImGui::ColorEdit4(xorstr("WindowBg"), settings::menu::colors::window_bg, color_edit4_flags);
-                ImGui::LabelText(xorstr("ChildBg"));        ImGui::ColorEdit4(xorstr("ChildBg"), settings::menu::colors::child_bg, color_edit4_flags);
-                ImGui::LabelText(xorstr("Text"));           ImGui::ColorEdit4(xorstr("Text"), settings::menu::colors::text, color_edit4_flags);
-                ImGui::LabelText(xorstr("FrameBg"));        ImGui::ColorEdit4(xorstr("FrameBg"), settings::menu::colors::frame_bg, color_edit4_flags);
-                ImGui::LabelText(xorstr("FrameHoveredBg")); ImGui::ColorEdit4(xorstr("FrameHoveredBg"), settings::menu::colors::frame_hovered_bg, color_edit4_flags);
-                ImGui::LabelText(xorstr("FrameActiveBg"));  ImGui::ColorEdit4(xorstr("FrameActiveBg"), settings::menu::colors::frame_active_bg, color_edit4_flags);
+                LabelText(xorstr("WindowBg"));       ColorEdit4(xorstr("WindowBg"), settings::menu::colors::window_bg, color_edit4_flags);
+                LabelText(xorstr("ChildBg"));        ColorEdit4(xorstr("ChildBg"), settings::menu::colors::child_bg, color_edit4_flags);
+                LabelText(xorstr("Text"));           ColorEdit4(xorstr("Text"), settings::menu::colors::text, color_edit4_flags);
+                LabelText(xorstr("FrameBg"));        ColorEdit4(xorstr("FrameBg"), settings::menu::colors::frame_bg, color_edit4_flags);
+                LabelText(xorstr("FrameHoveredBg")); ColorEdit4(xorstr("FrameHoveredBg"), settings::menu::colors::frame_hovered_bg, color_edit4_flags);
+                LabelText(xorstr("FrameActiveBg"));  ColorEdit4(xorstr("FrameActiveBg"), settings::menu::colors::frame_active_bg, color_edit4_flags);
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::SameLine();
+            SameLine();
 
-            if (ImGui::BeginChild(xorstr("Configs"), child_size))
+            if (BeginChild(xorstr("Configs"), child_size))
             {
 
-                ImGui::EndChild();
+                EndChild();
             }
 
-            ImGui::EndTabItem();
+            EndTabItem();
         }
 
-        ImGui::EndTabBar();
-        ImGui::End();
+        EndTabBar();
+        End();
     }
 
-    ImGui::PopStyleColor(7);
-    ImGui::PopStyleVar();
+    PopStyleColor(7);
+    PopStyleVar();
 }
