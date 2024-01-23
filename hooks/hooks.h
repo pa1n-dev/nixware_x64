@@ -34,6 +34,7 @@ namespace hooks
 			inline void(__thiscall* html_panel_load_url)(void*, const char*);
 			inline int(__thiscall* html_panel_paint)(void*);
 			inline void(__fastcall* panel_paint_traverse)(i_panel*, v_panel, bool, bool);
+			inline void(__thiscall* hl_client_create_move)(c_hl_client*, int, float, bool);
 		}
 
 		LRESULT CALLBACK wndproc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param);
@@ -42,6 +43,7 @@ namespace hooks
 		void __fastcall html_panel_load_url(void* rcx, const char* url);
 		int __fastcall html_panel_paint(void* rcx);
 		void panel_paint_traverse(i_panel* self, v_panel panel, bool force_repaint, bool allow_force);
+		void __fastcall hl_client_create_move(c_hl_client* hl_client, int sequence_number, float input_sample_frametime, bool active);
 	}
 }
 

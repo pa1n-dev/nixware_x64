@@ -9,6 +9,7 @@
 #include "handles/html_panel/load_url.cpp"
 #include "handles/html_panel/paint.cpp"
 #include "handles/panel/paint_traverse.cpp"
+#include "handles/hl_client/create_move.cpp"
 
 void hooks::initialize()
 {
@@ -29,6 +30,9 @@ void hooks::initialize()
 
 	if (MH_CreateHook((PVOID)memory::get_virtual((PVOID**)interfaces::panel, 41), &handles::panel_paint_traverse, (LPVOID*)&handles::originals::panel_paint_traverse) != MH_OK)
 		throw;
+
+    if (MH_CreateHook((PVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 21), &handles::hl_client_create_move, (LPVOID*)&handles::originals::hl_client_create_move) != MH_OK)
+        throw;
 
     if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
         throw;

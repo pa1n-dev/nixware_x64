@@ -10,6 +10,15 @@ bool utilities::game_is_full_loaded()
 		&& GetModuleHandleA(xorstr("vgui2.dll"));
 }
 
+void utilities::attach_console()
+{
+	AllocConsole();
+	freopen(xorstr("conin$"), "r", stdin);
+	freopen(xorstr("conout$"), "w", stdout);
+	freopen(xorstr("conout$"), "w", stderr);
+	SetConsoleTitleA(xorstr("Nixware"));
+}
+
 bool utilities::screen_transform(const c_vector& in, c_vector& out)
 {
 	auto exception_filter = [](int code, PEXCEPTION_POINTERS ex)

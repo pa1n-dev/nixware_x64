@@ -25,4 +25,8 @@ void interfaces::initialize()
 	material_system = memory::capture_interface<c_material_system>(xorstr("materialsystem.dll"), xorstr("VMaterialSystem080"));
 	if (!material_system)
 		throw;
+
+	hl_client = memory::capture_interface<c_hl_client>(xorstr("client.dll"), xorstr("VClient017"));
+	if (!hl_client)
+		throw;
 }

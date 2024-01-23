@@ -218,5 +218,11 @@
     <ClInclude Include="sdk\source-sdk\c_collidable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\source-sdk\c_hl_client.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\hl_client\create_move.cpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

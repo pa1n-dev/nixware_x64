@@ -19,6 +19,7 @@
 #include "source-sdk/c_entity_list.h"
 #include "source-sdk/c_texture.h"
 #include "source-sdk/c_material_system.h"
+#include "source-sdk/c_hl_client.h"
 
 namespace interfaces
 {
@@ -30,4 +31,5 @@ namespace interfaces
 	inline i_render_view*		render_view;
 	inline c_entity_list*		entity_list;
 	inline c_material_system*	material_system;
+	inline c_hl_client*			hl_client;
 }
