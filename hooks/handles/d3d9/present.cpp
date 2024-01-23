@@ -76,10 +76,10 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 	Render();
 
 	ImGui_ImplDX9_RenderDrawData(GetDrawData());
-	
+
 	pixel_state->Apply();
 	pixel_state->Release();
-	
+
 	if (rt)
 	{
 		c_mat_render_context* ctx = interfaces::material_system->get_render_context();
@@ -90,6 +90,7 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 			ctx->end_render();
 		}
 	}
+
 
 	return originals::d3d9_present(device, src, dest, wnd_override, dirty_region);
 }

@@ -10,6 +10,56 @@ bool utilities::game_is_full_loaded()
 		&& GetModuleHandleA(xorstr("vgui2.dll"));
 }
 
+bool utilities::screen_transform(const c_vector& in, c_vector& out)
+{
+	auto exception_filter = [](int code, PEXCEPTION_POINTERS ex)
+		{
+			return EXCEPTION_EXECUTE_HANDLER;
+		};
+
+	__try
+	{
+		const D3DMATRIX& world_matrix = globals::world_to_screen;
+
+		const auto w = world_matrix.m[3][0] * in.x + world_matrix.m[3][1] * in.y + world_matrix.m[3][2] * in.z + world_matrix.m[3][3];
+		if (w < 0.001f)
+		{
+			out.x *= 100000;
+			out.y *= 100000;
+			return false;
+		}
+
+		out.x = world_matrix.m[0][0] * in.x + world_matrix.m[0][1] * in.y + world_matrix.m[0][2] * in.z + world_matrix.m[0][3];
+		out.y = world_matrix.m[1][0] * in.x + world_matrix.m[1][1] * in.y + world_matrix.m[1][2] * in.z + world_matrix.m[1][3];
+		out.z = 0.0f;
+
+		out.x /= w;
+		out.y /= w;
+
+		return true;
+	}
+	__except (exception_filter(GetExceptionCode(), GetExceptionInformation()))
+	{
+		out.x *= 100000;
+		out.y *= 100000;
+		return false;
+	}
+}
+
+bool utilities::world_to_screen(const c_vector& in, c_vector& out)
+{
+	if (!screen_transform(in, out))
+		return false;
+
+	int w, h;
+	interfaces::engine->get_screen_size(w, h);
+
+	out.x = (w / 2.0f) + (out.x * w) / 2.0f;
+	out.y = (h / 2.0f) - (out.y * h) / 2.0f;
+
+	return true;
+}
+
 bool utilities::get_entity_box(c_base_entity* entity, box_t& box)
 {
 	c_vector pos = entity->get_render_origin();
@@ -29,7 +79,7 @@ bool utilities::get_entity_box(c_base_entity* entity, box_t& box)
 
 	for (int i = 0; i < 8; ++i)
 	{
-		if (!math::world_to_screen(points[i], screen_points[i]))
+		if (!world_to_screen(points[i], screen_points[i]))
 			return false;
 	}
 

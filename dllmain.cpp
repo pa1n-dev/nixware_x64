@@ -7,6 +7,8 @@ void initialize()
 
     interfaces::initialize();
     hooks::initialize();
+
+    interfaces::engine->client_cmd_unrestricted(xorstr("gmod_mcore_test 0; alias gmod_mcore_test ''"));
 }
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD ul_reason_for_call, LPVOID)

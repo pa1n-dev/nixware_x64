@@ -122,7 +122,6 @@ c_vector c_vector::operator/(const c_vector& other) const
 	return { x / other.x, y / other.y, z / other.z };
 }
 
-
 c_vector& c_vector::operator+=(const c_vector& other)
 {
 	x += other.x;

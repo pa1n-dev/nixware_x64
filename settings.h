@@ -5,7 +5,7 @@ namespace globals
 {
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
-    inline std::atomic<D3DMATRIX> world_to_screen;
+    inline D3DMATRIX world_to_screen;
 }
 
 namespace settings
@@ -29,9 +29,9 @@ namespace settings
     {
         namespace players
         {
-            inline bool enable = true;
-            inline bool dormant = true;
-            inline bool box = true;
+            inline bool enable = false;
+            inline bool dormant = false;
+            inline bool box = false;
 
             namespace colors
             {

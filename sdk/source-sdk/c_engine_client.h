@@ -35,4 +35,9 @@ public:
 	{
 		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 26)(this);
 	}
+
+	void client_cmd_unrestricted(const char* cmd_string)
+	{
+		return memory::call_v_function<void(__thiscall*)(void*, const char*)>(this, 106)(this, cmd_string);
+	}
 };

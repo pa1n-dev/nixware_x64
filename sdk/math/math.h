@@ -16,6 +16,4 @@ namespace math
 
 	void angle_to_vectors(const q_angle& ang, c_vector& forward, c_vector& right, c_vector& up);
 	void vector_to_angle(const c_vector& forward, q_angle& out);
-	bool screen_transform(const c_vector& in, c_vector& out);
-	bool world_to_screen(const c_vector& in, c_vector& out);
 }

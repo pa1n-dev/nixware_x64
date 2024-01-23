@@ -3,5 +3,5 @@
 
 namespace visuals
 {
-	void render();
+	void render() noexcept;
 }
