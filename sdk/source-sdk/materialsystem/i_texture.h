@@ -1,6 +1,6 @@
 #pragma once
 
-class c_texture
+class i_texture
 {
 public:
 	const char* get_name()

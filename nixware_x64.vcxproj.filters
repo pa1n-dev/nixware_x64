@@ -161,7 +161,7 @@
     <ClInclude Include="dependencies\xorstr\xorstr.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\i_panel.h">
+    <ClInclude Include="sdk\source-sdk\vgui\i_panel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\interfaces.h">
@@ -194,34 +194,49 @@
     <ClInclude Include="sdk\math\math.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\i_render_view.h">
+    <ClInclude Include="sdk\source-sdk\client\i_render_view.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_view_setup.h">
+    <ClInclude Include="sdk\source-sdk\client\c_view_setup.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\i_view_render.h">
+    <ClInclude Include="sdk\source-sdk\client\i_view_render.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_entity_list.h">
+    <ClInclude Include="sdk\source-sdk\server\c_entity_list.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="utils\render_manager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_material_system.h">
+    <ClInclude Include="sdk\source-sdk\materialsystem\c_material_system.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_texture.h">
+    <ClInclude Include="sdk\source-sdk\materialsystem\i_texture.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_collidable.h">
+    <ClInclude Include="sdk\source-sdk\engine\c_collideable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_hl_client.h">
+    <ClInclude Include="sdk\source-sdk\client\c_hl_client.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="hooks\handles\hl_client\create_move.cpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\client\c_input.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\shared\c_user_cmd.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\definitions.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\tier1\checksum_crc.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\tier0\platform.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

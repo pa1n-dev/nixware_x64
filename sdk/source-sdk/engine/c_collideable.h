@@ -1,6 +1,6 @@
 #pragma once
 
-class c_collidable
+class c_collideable
 {
 public:
 	c_vector& mins()

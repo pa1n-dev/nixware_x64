@@ -22,9 +22,9 @@ void utilities::attach_console()
 bool utilities::screen_transform(const c_vector& in, c_vector& out)
 {
 	auto exception_filter = [](int code, PEXCEPTION_POINTERS ex)
-		{
-			return EXCEPTION_EXECUTE_HANDLER;
-		};
+	{
+		return EXCEPTION_EXECUTE_HANDLER;
+	};
 
 	__try
 	{

@@ -153,3 +153,8 @@ c_vector& c_vector::operator/=(const c_vector& other)
 	z /= other.z;
 	return *this;
 }
+
+c_vector::operator std::string() const 
+{
+	return std::string("x: " + std::to_string(this->x) + " y: " + std::to_string(this->y) + " z: " + std::to_string(this->z));
+}

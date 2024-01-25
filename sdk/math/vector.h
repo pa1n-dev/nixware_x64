@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class c_vector
 {
@@ -34,6 +35,8 @@ public:
 	c_vector& operator-=(const c_vector& other);
 	c_vector& operator*=(const c_vector& other);
 	c_vector& operator/=(const c_vector& other);
+
+	operator std::string() const;
 };
 
 using q_angle = c_vector;

@@ -29,4 +29,8 @@ void interfaces::initialize()
 	hl_client = memory::capture_interface<c_hl_client>(xorstr("client.dll"), xorstr("VClient017"));
 	if (!hl_client)
 		throw;
+
+	input = memory::get_vmt_from_instruction<c_input>((uintptr_t)memory::pattern_scanner("client.dll", "48 8B 0D ? ? ? ? 48 8B 01 48 FF A0 90 00 00 00 CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC 48 8B 0D ? ? ? ?"));
+	if (!input)
+		throw;
 }

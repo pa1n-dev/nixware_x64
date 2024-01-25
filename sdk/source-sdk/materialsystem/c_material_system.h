@@ -13,14 +13,14 @@ public:
         return memory::call_v_function<void(__thiscall*)(void*)>(this, 1)(this);
     }
 
-    void set_render_target(c_texture* texture)
+    void set_render_target(i_texture* texture)
     {
-        return memory::call_v_function<void(__thiscall*)(void*, c_texture*)>(this, 4)(this, texture);
+        return memory::call_v_function<void(__thiscall*)(void*, i_texture*)>(this, 4)(this, texture);
     }
 
-    c_texture* get_render_target()
+    i_texture* get_render_target()
     {
-        return memory::call_v_function<c_texture* (__thiscall*)(void*)>(this, 5)(this);
+        return memory::call_v_function<i_texture * (__thiscall*)(void*)>(this, 5)(this);
     }
 };
 
