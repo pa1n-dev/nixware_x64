@@ -9,7 +9,7 @@
 #pragma comment (lib, "d3dx9.lib")
 
 #include "../dependencies/xorstr/xorstr.h"
-#include "../dependencies/minhook/minhook.h"
+#include "../dependencies/minhook/min_hook.h"
 #include "../dependencies/memory/memory.h"
 
 #include "../utils/utilities.h"
