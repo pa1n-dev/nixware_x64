@@ -6,11 +6,12 @@
 
 c_vector::c_vector()
 {
-	make_inf();
+	make_zero();
 }
 
 c_vector::c_vector(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
 {
+
 }
 
 void c_vector::make_inf()
@@ -58,6 +59,16 @@ void c_vector::clamp()
 		this->y -= 360.0f;
 
 	this->z = 0.0f;
+}
+
+float c_vector::dot(const c_vector& other) const
+{
+	return (x * other.x + y * other.y + z * other.z);
+}
+
+float c_vector::dot(const float* other) const
+{
+	return (x * other[0] + y * other[1] + z * other[2]);
 }
 
 float c_vector::length() const
@@ -122,6 +133,26 @@ c_vector c_vector::operator/(const c_vector& other) const
 	return { x / other.x, y / other.y, z / other.z };
 }
 
+c_vector c_vector::operator+(float other) const
+{
+	return { x + other, y + other, z + other };
+}
+
+c_vector c_vector::operator-(float other) const
+{
+	return { x - other, y - other, z - other };
+}
+
+c_vector c_vector::operator*(float other) const
+{
+	return { x * other, y * other, z * other };
+}
+
+c_vector c_vector::operator/(float other) const
+{
+	return { x / other, y / other, z / other };
+}
+
 c_vector& c_vector::operator+=(const c_vector& other)
 {
 	x += other.x;
@@ -157,4 +188,35 @@ c_vector& c_vector::operator/=(const c_vector& other)
 c_vector::operator std::string() const 
 {
 	return std::string("x: " + std::to_string(this->x) + " y: " + std::to_string(this->y) + " z: " + std::to_string(this->z));
+}
+
+c_vector_aligned::c_vector_aligned()
+{
+	x = y = z = w = 0.f;
+}
+
+c_vector_aligned::c_vector_aligned(float _x, float _y, float _z)
+{
+	x = _x;
+	y = _y;
+	z = _z;
+	w = 0;
+}
+
+c_vector_aligned::c_vector_aligned(const c_vector& other)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+	w = 0;
+}
+
+c_vector_aligned& c_vector_aligned::operator=(const c_vector& other)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+	w = 0;
+
+	return *this;
 }

@@ -1,24 +1,24 @@
-void hooks::handles::panel_paint_traverse(i_panel* rcx, v_panel panel, bool force_repaint, bool allow_force)
+void hooks::handles::panel_paint_traverse(i_panel* panel, v_panel v_panel, bool force_repaint, bool allow_force)
 {
-	const char* name = interfaces::panel->get_name(panel);
+	const char* name = interfaces::panel->get_name(v_panel);
 
 	if (!globals::overlay_popup_panel)
 	{
 		if (strcmp(xorstr("OverlayPopupPanel"), name) == 0)
-			globals::overlay_popup_panel = panel;
+			globals::overlay_popup_panel = v_panel;
 	}
-	else if (globals::overlay_popup_panel == panel)
+	else if (globals::overlay_popup_panel == v_panel)
 	{
-		interfaces::panel->set_key_board_input_enabled(panel, settings::menu::opened);
-		interfaces::panel->set_mouse_input_enabled(panel, settings::menu::opened);
+		interfaces::panel->set_key_board_input_enabled(v_panel, settings::menu::opened);
+		interfaces::panel->set_mouse_input_enabled(v_panel, settings::menu::opened);
 	}
 
 	if (!globals::mat_system_top_panel)
 	{
 		if (strcmp(xorstr("MatSystemTopPanel"), name) == 0)
-			globals::mat_system_top_panel = panel;
+			globals::mat_system_top_panel = v_panel;
 	}
-	else if (globals::mat_system_top_panel == panel)
+	else if (globals::mat_system_top_panel == v_panel)
 	{
 		if (interfaces::engine->is_in_game())
 		{
@@ -27,5 +27,5 @@ void hooks::handles::panel_paint_traverse(i_panel* rcx, v_panel panel, bool forc
 		}
 	}
 
-	originals::panel_paint_traverse(rcx, panel, force_repaint, allow_force);
+	originals::panel_paint_traverse(panel, v_panel, force_repaint, allow_force);
 }

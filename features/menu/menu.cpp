@@ -34,6 +34,11 @@ void menu::render() noexcept
 
         if (BeginChild(xorstr("Globals"), child_size))
         {
+            Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable);
+            Checkbox(xorstr("Silent"), &settings::aimbot::globals::silent);
+            Checkbox(xorstr("Automatic fire"), &settings::aimbot::globals::automatic_fire);
+            SliderInt(xorstr("Fov"), &settings::aimbot::globals::fov, 0, 360, xorstr("%d"), ImGuiSliderFlags_NoInput);
+
             EndChild();
         }
 

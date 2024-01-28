@@ -1,4 +1,5 @@
 #include "visuals.h"
+#include "../aimbot/aimbot.h"
 
 void visuals::render() noexcept
 {
@@ -42,6 +43,7 @@ void visuals::render() noexcept
 
 			if (settings::visuals::players::box)
 				render_manager::box(box, settings::visuals::players::colors::box, 1.f);
+
 		}
 		else if (settings::visuals::entity::enable)
 		{

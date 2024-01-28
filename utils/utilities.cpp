@@ -19,6 +19,28 @@ void utilities::attach_console()
 	SetConsoleTitleA(xorstr("Nixware"));
 }
 
+c_vector utilities::calc_angle(const c_vector& from, const c_vector& to)
+{
+	c_vector ang;
+	const auto delta = from - to;
+	const auto length = delta.length2d();
+
+	ang.y = atanf(delta.y / delta.x) * 57.295779513082f;
+	ang.x = atanf(-delta.z / length) * -57.295779513082f;
+
+	if (delta.x >= 0.f)
+		ang.y += 180.f;
+
+	return ang;
+}
+
+float utilities::get_fov(const c_vector& from, const c_vector& to)
+{
+	auto delta = to - from;
+	delta.normalize();
+	return sqrtf(powf(delta.x, 2) + powf(delta.y, 2));
+}
+
 bool utilities::screen_transform(const c_vector& in, c_vector& out)
 {
 	auto exception_filter = [](int code, PEXCEPTION_POINTERS ex)

@@ -25,6 +25,17 @@ namespace settings
         } 
     }
 
+    namespace aimbot
+    {
+        namespace globals
+        {
+            inline bool enable = false;
+            inline bool silent = false;
+            inline bool automatic_fire = false;
+            inline int fov = 0;
+        }
+    }
+
     namespace visuals
     {
         namespace players

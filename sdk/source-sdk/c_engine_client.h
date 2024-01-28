@@ -31,6 +31,11 @@ public:
 		return memory::call_v_function<int(__thiscall*)(void*)>(this, 12)(this);
 	}
 
+	void set_view_angles(q_angle& angle)
+	{
+		return memory::call_v_function<void(__thiscall*)(void*, q_angle&)>(this, 20)(this, angle);
+	}
+
 	bool is_in_game()
 	{
 		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 26)(this);

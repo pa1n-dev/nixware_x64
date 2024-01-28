@@ -67,3 +67,10 @@ void math::vector_to_angle(const c_vector& forward, q_angle& out)
 	out[1] = yaw;
 	out[2] = 0;
 }
+
+void math::vector_transform(const c_vector& vector, const matrix3x4_t& matrix, c_vector& out)
+{
+	out[0] = vector.dot(matrix[0]) + matrix[0][3];
+	out[1] = vector.dot(matrix[1]) + matrix[1][3];
+	out[2] = vector.dot(matrix[2]) + matrix[2][3];
+}

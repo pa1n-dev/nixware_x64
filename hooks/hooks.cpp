@@ -2,6 +2,8 @@
 
 #include "../features/menu/menu.h"
 #include "../features/visuals/visuals.h"
+#include "../features/aimbot/aimbot.h"
+#include "../features/aimbot/predict_spread.h"
 
 #include "handles/wndproc.cpp"
 #include "handles/d3d9/present.cpp"
