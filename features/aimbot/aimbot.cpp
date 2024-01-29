@@ -18,6 +18,9 @@ void aimbot::run(c_user_cmd* cmd)
 	if (!target_info.entity)
 		return;
 
+	if (!settings::aimbot::globals::hotkey.check())
+		return;
+
 	cmd->view_angles = target_info.shoot_angle;
 
 	if (!settings::aimbot::globals::silent)

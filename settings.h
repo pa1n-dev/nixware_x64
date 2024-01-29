@@ -1,5 +1,6 @@
 #pragma once
 #include "sdk/interfaces.h"
+#include "utils/hotkey.h"
 
 namespace globals
 {
@@ -30,6 +31,7 @@ namespace settings
         namespace globals
         {
             inline bool enable = false;
+            inline hotkey_t hotkey;
             inline bool silent = false;
             inline bool automatic_fire = false;
             inline int fov = 0;

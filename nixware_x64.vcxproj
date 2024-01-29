@@ -240,6 +240,7 @@
     <ClInclude Include="sdk\source-sdk\tier1\checksum_crc.h" />
     <ClInclude Include="sdk\source-sdk\tier0\platform.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="utils\hotkey.h" />
     <ClInclude Include="utils\render_manager.h" />
     <ClInclude Include="utils\utilities.h" />
   </ItemGroup>

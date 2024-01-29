@@ -299,5 +299,8 @@
     <ClInclude Include="sdk\source-sdk\i_engine_trace.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="utils\hotkey.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

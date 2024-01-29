@@ -2,8 +2,6 @@
 
 void menu::render() noexcept
 {
-    using namespace ImGui;
-
     if (!settings::menu::opened)
         return;
     
@@ -34,7 +32,7 @@ void menu::render() noexcept
 
         if (BeginChild(xorstr("Globals"), child_size))
         {
-            Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable);
+            Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable); custom::hotkey(xorstr("Hotkey"), &settings::aimbot::globals::hotkey);
             Checkbox(xorstr("Silent"), &settings::aimbot::globals::silent);
             Checkbox(xorstr("Automatic fire"), &settings::aimbot::globals::automatic_fire);
             SliderInt(xorstr("Fov"), &settings::aimbot::globals::fov, 0, 360, xorstr("%d"), ImGuiSliderFlags_NoInput);
@@ -191,4 +189,127 @@ void menu::render() noexcept
 
     PopStyleColor(7);
     PopStyleVar();
+}
+
+void menu::custom::hotkey(const char* label, hotkey_t* hotkey) noexcept
+{
+    ImGuiWindow* window = GetCurrentWindow();
+    if (window->SkipItems)
+        return;
+
+    SameLine();
+
+    ImGuiContext& g = *GImGui;
+    const ImGuiStyle& style = g.Style;
+    const ImGuiID id = window->GetID(label);
+
+    const float width = GetColumnWidth();
+    const ImVec2 pos = window->DC.CursorPos;
+
+    char text[64] = { };
+    sprintf_s(text, sizeof(text), "[  %s  ]", hotkey->key != 0 && g.ActiveId != id ? key_names[hotkey->key] : g.ActiveId == id ? "WAIT KEY" : "NONE");
+    const ImVec2 text_size = CalcTextSize(text, NULL, true);
+
+    const ImRect total_bb(ImVec2(pos.x + width - (text_size.x + 10.f), pos.y - style.FramePadding.y), ImVec2(pos.x + width, pos.y + text_size.y));
+
+    ItemSize(total_bb);
+    if (!ItemAdd(total_bb, id))
+        return;
+
+    const bool hovered = ItemHoverable(total_bb, id);
+    if (hovered)
+        SetHoveredID(id);
+
+    if (hovered && (g.IO.MouseClicked[0] || g.IO.MouseDoubleClicked[0]))
+    {
+        if (g.ActiveId != id)
+        {
+            memset(g.IO.MouseDown, 0, sizeof(g.IO.MouseDown));
+            memset(g.IO.KeysDown, 0, sizeof(g.IO.KeysDown));
+            hotkey->key = 0;
+        }
+
+        SetActiveID(id, window);
+    }
+
+    bool changed = false;
+    if (int key = hotkey->key; g.ActiveId == id)
+    {
+        for (int n = 0; n < IM_ARRAYSIZE(g.IO.MouseDown); n++)
+        {
+            if (IsMouseDown(n))
+            {
+                switch (n)
+                {
+                case 0:
+                    key = VK_LBUTTON;
+                    break;
+                case 1:
+                    key = VK_RBUTTON;
+                    break;
+                case 2:
+                    key = VK_MBUTTON;
+                    break;
+                case 3:
+                    key = VK_XBUTTON1;
+                    break;
+                case 4:
+                    key = VK_XBUTTON2;
+                    break;
+                }
+
+                changed = true;
+                ClearActiveID();
+            }
+        }
+
+        if (!changed)
+        {
+            for (int n = VK_BACK; n <= VK_RMENU; n++)
+            {
+                if (IsKeyDown((ImGuiKey)n))
+                {
+                    key = n;
+                    changed = true;
+                    ClearActiveID();
+                }
+            }
+        }
+
+        if (IsKeyPressed(ImGuiKey_Escape))
+        {
+            hotkey->key = 0;
+            ClearActiveID();
+        }
+        else
+            hotkey->key = key;
+    }
+
+    RenderText(total_bb.Min, text);
+
+    PushStyleColor(ImGuiCol_PopupBg, ImVec4(0, 0, 0, 0));
+    PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(80, 65));
+    PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 5));
+
+    if (BeginPopupContextItem("HotKeyContext"))
+    {
+        SetWindowPos(ImVec2(total_bb.Min.x, total_bb.Max.y));
+
+        if (Selectable("Always on", hotkey->type == hotkey_t::always_on))
+            hotkey->type = hotkey_t::always_on;
+
+        if (Selectable("Hold", hotkey->type == hotkey_t::hold))
+            hotkey->type = hotkey_t::hold;
+
+        if (Selectable("Toggle", hotkey->type == hotkey_t::toggle))
+            hotkey->type = hotkey_t::toggle;
+
+        if (Selectable("Force disable", hotkey->type == hotkey_t::force_disable))
+            hotkey->type = hotkey_t::force_disable;
+
+        End();
+    }
+
+    PopStyleColor();
+    PopStyleVar(2);
 }
