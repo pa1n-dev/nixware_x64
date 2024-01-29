@@ -206,6 +206,9 @@ void menu::custom::hotkey(const char* label, hotkey_t* hotkey) noexcept
     const float width = GetColumnWidth();
     const ImVec2 pos = window->DC.CursorPos;
 
+    char context_name[64] = { };
+    sprintf(context_name, "HotKeyContext%s", label);
+
     char text[64] = { };
     sprintf_s(text, sizeof(text), "[  %s  ]", hotkey->key != 0 && g.ActiveId != id ? key_names[hotkey->key] : g.ActiveId == id ? "WAIT KEY" : "NONE");
     const ImVec2 text_size = CalcTextSize(text, NULL, true);
@@ -291,7 +294,7 @@ void menu::custom::hotkey(const char* label, hotkey_t* hotkey) noexcept
     PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(80, 65));
     PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 5));
 
-    if (BeginPopupContextItem("HotKeyContext"))
+    if (BeginPopupContextItem(context_name))
     {
         SetWindowPos(ImVec2(total_bb.Min.x, total_bb.Max.y));
 
