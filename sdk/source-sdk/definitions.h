@@ -26,6 +26,62 @@
 #define IN_GRENADE1		(1 << 23)
 #define IN_GRENADE2		(1 << 24)
 
+#define FL_ONGROUND             (1 << 0)
+#define FL_DUCKING              (1 << 1)
+#define FL_ANIMDUCKING          (1 << 2)
+#define FL_WATERJUMP            (1 << 3)
+#define FL_ONTRAIN              (1 << 4)
+#define FL_INRAIN               (1 << 5)
+#define FL_FROZEN               (1 << 6)
+#define FL_ATCONTROLS           (1 << 7)
+#define FL_CLIENT               (1 << 8)
+#define FL_FAKECLIENT           (1 << 9)
+#define FL_INWATER              (1 << 10)
+#define FL_FLY                  (1 << 11)
+#define FL_SWIM                 (1 << 12)
+#define FL_CONVEYOR             (1 << 13)
+#define FL_NPC                  (1 << 14)
+#define FL_GODMODE              (1 << 15)
+#define FL_NOTARGET             (1 << 16)
+#define FL_AIMTARGET            (1 << 17)
+#define FL_PARTIALGROUND        (1 << 18)
+#define FL_STATICPROP           (1 << 19)
+#define FL_GRAPHED              (1 << 20)
+#define FL_GRENADE              (1 << 21)
+#define FL_STEPMOVEMENT         (1 << 22)
+#define FL_DONTTOUCH            (1 << 23)
+#define FL_BASEVELOCITY         (1 << 24)
+#define FL_WORLDBRUSH           (1 << 25)
+#define FL_OBJECT               (1 << 26)
+#define FL_KILLME               (1 << 27)
+#define FL_ONFIRE               (1 << 28)
+#define FL_DISSOLVING           (1 << 29)
+#define FL_TRANSRAGDOLL         (1 << 30)
+#define FL_UNBLOCKABLE_BY_PLAYER (1u << 31)
+
+#define HITGROUP_GENERIC	0
+#define HITGROUP_HEAD		1
+#define HITGROUP_CHEST		2
+#define HITGROUP_STOMACH	3
+#define HITGROUP_LEFTARM	4
+#define HITGROUP_RIGHTARM	5
+#define HITGROUP_LEFTLEG	6
+#define HITGROUP_RIGHTLEG	7
+#define HITGROUP_GEAR		10
+
+#define MOVETYPE_NONE		0	
+#define MOVETYPE_ISOMETRIC	1
+#define MOVETYPE_WALK		2	
+#define MOVETYPE_STEP		3	
+#define MOVETYPE_FLY		4	
+#define MOVETYPE_FLYGRAVITY	5
+#define MOVETYPE_VPHYSICS	6
+#define MOVETYPE_PUSH		7
+#define MOVETYPE_NOCLIP		8
+#define MOVETYPE_LADDER		9
+#define MOVETYPE_OBSERVER	10
+#define MOVETYPE_CUSTOM		11
+
 #define NUM_BYTES 256
 #define CRC32_INIT_VALUE 0xFFFFFFFFUL
 #define CRC32_XOR_VALUE  0xFFFFFFFFUL

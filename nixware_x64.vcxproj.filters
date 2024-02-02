@@ -75,10 +75,7 @@
     <ClCompile Include="features\visuals\visuals.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="sdk\math\vector.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="sdk\math\math.cpp">
+    <ClCompile Include="sdk\source-sdk\math\vector.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="features\aimbot\predict_spread.cpp">
@@ -90,13 +87,22 @@
     <ClCompile Include="features\aimbot\aimbot.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="sdk\math\quaternion.cpp">
+    <ClCompile Include="sdk\source-sdk\math\quaternion.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="sdk\math\radian_euler.cpp">
+    <ClCompile Include="sdk\source-sdk\math\radian_euler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="features\aimbot\penetrate_walls.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="features\miscellaneous\movement.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\lua_utilities.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\source-sdk\math\math.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,13 +209,10 @@
     <ClInclude Include="sdk\source-sdk\c_engine_client.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\math\vector.h">
+    <ClInclude Include="sdk\source-sdk\math\vector.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\entity\c_base_entity.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\math\math.h">
+    <ClInclude Include="sdk\source-sdk\math\math.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\client\i_render_view.h">
@@ -266,9 +269,6 @@
     <ClInclude Include="features\aimbot\aimbot.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\entity\c_base_combat_weapon.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="sdk\source-sdk\engine\c_render.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -284,10 +284,10 @@
     <ClInclude Include="sdk\source-sdk\studio.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\math\quaternion.h">
+    <ClInclude Include="sdk\source-sdk\math\quaternion.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\math\radian_euler.h">
+    <ClInclude Include="sdk\source-sdk\math\radian_euler.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\engine\c_model_info.h">
@@ -300,6 +300,30 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="utils\hotkey.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="features\miscellaneous\movement.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\lua\interface.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\lua\shared.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\lua\user_type.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\entity\c_base_combat_weapon.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\entity\c_base_entity.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\lua_utilities.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\view_render\render_view.cpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

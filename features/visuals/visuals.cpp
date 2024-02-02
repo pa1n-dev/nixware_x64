@@ -3,8 +3,6 @@
 
 void visuals::render() noexcept
 {
-	using namespace ImGui;
-
 	if (!interfaces::engine->is_in_game())
 		return;
 
@@ -49,6 +47,21 @@ void visuals::render() noexcept
 		{
 
 		}
+	}
+
+	ImVec2 center(io.DisplaySize.x / 2, io.DisplaySize.y / 2);
+
+	if (settings::aimbot::visuals::snaplines && aimbot::target_info.entity)
+	{
+		c_vector pos;
+		if (utilities::world_to_screen(aimbot::target_info.shoot_pos, pos))
+			render_manager::line(center, ImVec2(pos.x, pos.y), settings::aimbot::visuals::colors::snaplines, 1.f);
+	}
+
+	if (settings::aimbot::visuals::fov)
+	{
+		float radius = tan(math::deg2rad((float)settings::aimbot::globals::fov) / 2) / tan(math::deg2rad(globals::fov) / 2) * io.DisplaySize.x;
+		render_manager::circle(center, radius, settings::aimbot::visuals::colors::fov, 1000, 1.f);
 	}
 
 	End();

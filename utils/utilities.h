@@ -14,8 +14,8 @@ namespace utilities
 {
 	bool game_is_full_loaded();
 	void attach_console();
-	c_vector calc_angle(const c_vector& from, const c_vector& to);
-	float get_fov(const c_vector& from, const c_vector& to);
+	q_angle calc_angle(const c_vector& from, const c_vector& to);
+	float get_fov(const q_angle& from, const q_angle& to);
 	bool screen_transform(const c_vector& in, c_vector& out);
 	bool world_to_screen(const c_vector& in, c_vector& out);
 	bool get_entity_box(c_base_entity* entity, box_t& box);

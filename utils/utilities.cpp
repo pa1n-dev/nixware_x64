@@ -7,6 +7,7 @@ bool utilities::game_is_full_loaded()
 		&& GetModuleHandleA(xorstr("menusystem.dll"))
 		&& GetModuleHandleA(xorstr("gameoverlayrenderer64.dll"))
 		&& GetModuleHandleA(xorstr("materialsystem.dll"))
+		&& GetModuleHandleA(xorstr("lua_shared.dll"))
 		&& GetModuleHandleA(xorstr("vgui2.dll"));
 }
 
@@ -19,14 +20,13 @@ void utilities::attach_console()
 	SetConsoleTitleA(xorstr("Nixware"));
 }
 
-c_vector utilities::calc_angle(const c_vector& from, const c_vector& to)
+q_angle utilities::calc_angle(const c_vector& from, const c_vector& to)
 {
-	c_vector ang;
-	const auto delta = from - to;
-	const auto length = delta.length2d();
+	q_angle ang;
+	c_vector delta = from - to;
 
 	ang.y = atanf(delta.y / delta.x) * 57.295779513082f;
-	ang.x = atanf(-delta.z / length) * -57.295779513082f;
+	ang.x = atanf(-delta.z / delta.length2d()) * -57.295779513082f;
 
 	if (delta.x >= 0.f)
 		ang.y += 180.f;
@@ -34,9 +34,9 @@ c_vector utilities::calc_angle(const c_vector& from, const c_vector& to)
 	return ang;
 }
 
-float utilities::get_fov(const c_vector& from, const c_vector& to)
+float utilities::get_fov(const q_angle& from, const q_angle& to)
 {
-	auto delta = to - from;
+	c_vector delta = to - from;
 	delta.normalize();
 	return sqrtf(powf(delta.x, 2) + powf(delta.y, 2));
 }

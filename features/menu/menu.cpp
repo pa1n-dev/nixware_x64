@@ -32,10 +32,12 @@ void menu::render() noexcept
 
         if (BeginChild(xorstr("Globals"), child_size))
         {
-            Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable); custom::hotkey(xorstr("Hotkey"), &settings::aimbot::globals::hotkey);
+            Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable); custom::hotkey(xorstr("Aimbot Hotkey"), &settings::aimbot::globals::hotkey);
             Checkbox(xorstr("Silent"), &settings::aimbot::globals::silent);
             Checkbox(xorstr("Automatic fire"), &settings::aimbot::globals::automatic_fire);
             SliderInt(xorstr("Fov"), &settings::aimbot::globals::fov, 0, 360, xorstr("%d"), ImGuiSliderFlags_NoInput);
+            Combo(xorstr("Hitbox"), &settings::aimbot::globals::hitbox, xorstr("Head\0" "Chest\0" "Stomach\0" "Hitscan\0"));
+            Combo(xorstr("Priority"), &settings::aimbot::globals::priority, xorstr("Fov\0" "Distance\0" "Health\0"));
 
             EndChild();
         }
@@ -44,6 +46,8 @@ void menu::render() noexcept
 
         if (BeginChild(xorstr("Accuracy"), child_size))
         {
+            SliderFloat(xorstr("Smooth"), &settings::aimbot::accuracy::smooth, 0.f, 20.f, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
+
 
             EndChild();
         }
@@ -52,6 +56,8 @@ void menu::render() noexcept
 
         if (BeginChild(xorstr("Visuals"), child_size))
         {
+            Checkbox(xorstr("Fov"), &settings::aimbot::visuals::fov); ColorEdit4(xorstr("Fov"), settings::aimbot::visuals::colors::fov, color_edit4_flags);
+            Checkbox(xorstr("Snaplines"), &settings::aimbot::visuals::snaplines); ColorEdit4(xorstr("Snaplines"), settings::aimbot::visuals::colors::snaplines, color_edit4_flags);
 
             EndChild();
         }

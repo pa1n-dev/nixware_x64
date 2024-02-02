@@ -1,26 +1,12 @@
 #include "math.h"
-#include "../interfaces.h"
-#include "../../settings.h"
-
-template <typename T>
-T math::rad2deg(T x)
-{
-	return x * (static_cast<T>(180) / static_cast<T>(PI_F));
-}
-
-template <typename T>
-T math::deg2rad(T x)
-{
-	return x * (static_cast<T>(PI_F) / static_cast<T>(180));
-}
 
 void math::angle_to_vectors(const q_angle& ang, c_vector& forward, c_vector& right, c_vector& up)
 {
 	float sr, sp, sy, cr, cp, cy;
 
-	float rad_x = math::deg2rad(ang.x);
-	float rad_y = math::deg2rad(ang.y);
-	float rad_z = math::deg2rad(ang.z);
+	float rad_x = deg2rad(ang.x);
+	float rad_y = deg2rad(ang.y);
+	float rad_z = deg2rad(ang.z);
 
 	sp = sin(rad_x); cp = cos(rad_x);
 	sy = sin(rad_y); cy = cos(rad_y);
@@ -37,6 +23,23 @@ void math::angle_to_vectors(const q_angle& ang, c_vector& forward, c_vector& rig
 	up.x = (cr * sp * cy + -sr * -sy);
 	up.y = (cr * sp * sy + -sr * cy);
 	up.z = cr * cp;
+}
+
+void math::angle_to_vector(const q_angle& ang, c_vector& forward)
+{
+	float sr, sp, sy, cr, cp, cy;
+
+	float rad_x = deg2rad(ang.x);
+	float rad_y = deg2rad(ang.y);
+	float rad_z = deg2rad(ang.z);
+
+	sp = sin(rad_x); cp = cos(rad_x);
+	sy = sin(rad_y); cy = cos(rad_y);
+	sr = sin(rad_z); cr = cos(rad_z);
+
+	forward.x = cp * cy;
+	forward.y = cp * sy;
+	forward.z = -sp;
 }
 
 void math::vector_to_angle(const c_vector& forward, q_angle& out)

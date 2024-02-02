@@ -133,22 +133,22 @@ c_vector c_vector::operator/(const c_vector& other) const
 	return { x / other.x, y / other.y, z / other.z };
 }
 
-c_vector c_vector::operator+(float other) const
+c_vector c_vector::operator+(const float& other) const
 {
 	return { x + other, y + other, z + other };
 }
 
-c_vector c_vector::operator-(float other) const
+c_vector c_vector::operator-(const float& other) const
 {
 	return { x - other, y - other, z - other };
 }
 
-c_vector c_vector::operator*(float other) const
+c_vector c_vector::operator*(const float& other) const
 {
 	return { x * other, y * other, z * other };
 }
 
-c_vector c_vector::operator/(float other) const
+c_vector c_vector::operator/(const float& other) const
 {
 	return { x / other, y / other, z / other };
 }
@@ -182,6 +182,38 @@ c_vector& c_vector::operator/=(const c_vector& other)
 	x /= other.x;
 	y /= other.y;
 	z /= other.z;
+	return *this;
+}
+
+c_vector& c_vector::operator+=(const float& other)
+{
+	x += other;
+	y += other;
+	z += other;
+	return *this;
+}
+
+c_vector& c_vector::operator-=(const float& other)
+{
+	x -= other;
+	y -= other;
+	z -= other;
+	return *this;
+}
+
+c_vector& c_vector::operator*=(const float& other)
+{
+	x *= other;
+	y *= other;
+	z *= other;
+	return *this;
+}
+
+c_vector& c_vector::operator/=(const float& other)
+{
+	x /= other;
+	y /= other;
+	z /= other;
 	return *this;
 }
 

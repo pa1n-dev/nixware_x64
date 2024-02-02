@@ -7,6 +7,7 @@ namespace globals
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
     inline D3DMATRIX world_to_screen;
+    inline float fov = 0;
 }
 
 namespace settings
@@ -35,6 +36,25 @@ namespace settings
             inline bool silent = false;
             inline bool automatic_fire = false;
             inline int fov = 0;
+            inline int hitbox = 0;
+            inline int priority = 0;
+        }
+
+        namespace accuracy
+        {
+            inline float smooth = 0;
+        }
+
+        namespace visuals
+        {
+            inline bool fov = false;
+            inline bool snaplines = false;
+
+            namespace colors
+            {
+                inline float fov[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float snaplines[4] = { 1.f, 1.f, 1.f, 1.f };
+            }
         }
     }
 

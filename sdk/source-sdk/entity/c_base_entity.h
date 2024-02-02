@@ -5,17 +5,22 @@ class c_base_entity
 public:
 	c_collideable* get_collidable()
 	{
-		return memory::call_v_function<c_collideable*(__thiscall*)(void*)>(this, 3)(this);
+		return memory::call_v_function<c_collideable * (__thiscall*)(void*)>(this, 3)(this);
 	}
 
 	i_client_renderable* get_client_renderable()
 	{
-		return memory::call_v_function<i_client_renderable*(__thiscall*)(void*)>(this, 5)(this);
+		return memory::call_v_function<i_client_renderable * (__thiscall*)(void*)>(this, 5)(this);
 	}
 
 	c_vector& get_render_origin()
 	{
-		return memory::call_v_function<c_vector&(__thiscall*)(void*)>(this, 9)(this);
+		return memory::call_v_function<c_vector & (__thiscall*)(void*)>(this, 9)(this);
+	}
+
+	int get_health()
+	{
+		return memory::call_v_function<int(__thiscall*)(void*)>(this, 108)(this);
 	}
 
 	bool is_alive()
@@ -31,6 +36,16 @@ public:
 	bool is_dormant()
 	{
 		return *(bool*)((uintptr_t)this + 0x1FA);
+	}
+
+	int get_move_type()
+	{
+		return *(int*)((uintptr_t)this + 0x1F4);
+	}
+
+	int get_flags()
+	{
+		return *(int*)((uintptr_t)this + 0x440);
 	}
 
 	c_vector get_eye_position()
@@ -50,13 +65,13 @@ public:
 
 	c_base_combat_weapon* get_active_weapon()
 	{
-		using get_active_weapon_t = c_base_combat_weapon*(__fastcall*)(void*);
+		using get_active_weapon_t = c_base_combat_weapon * (__fastcall*)(void*);
 
 		static get_active_weapon_t get_active_weapon;
 
 		if (!get_active_weapon)
 			get_active_weapon = (get_active_weapon_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("40 53 48 83 EC 20 48 3B 0D ? ? ? ?"));
-		
+
 		return get_active_weapon(this);
 	}
 };

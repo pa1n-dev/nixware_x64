@@ -6,19 +6,23 @@
 #include "../dependencies/memory/memory.h"
 #include "../dependencies/xorstr/xorstr.h"
 
-#include "math/vector.h"
-#include "math/quaternion.h"
-#include "math/radian_euler.h"
-#include "math/math.h"
+#include "source-sdk/math/vector.h"
+#include "source-sdk/math/quaternion.h"
+#include "source-sdk/math/radian_euler.h"
+#include "source-sdk/math/math.h"
 
 #include "source-sdk/definitions.h"
+#include "source-sdk/lua/user_type.h"
+#include "source-sdk/lua/interface.h"
+#include "source-sdk/lua/shared.h"
+
 #include "source-sdk/c_engine_client.h"
 #include "source-sdk/studio.h"
 #include "source-sdk/engine/c_collideable.h"
 #include "source-sdk/engine/c_render.h"
 #include "source-sdk/engine/c_model_info.h"
-#include "source-sdk/entity/c_base_combat_weapon.h"
 #include "source-sdk/entity/i_client_renderable.h"
+#include "source-sdk/entity/c_base_combat_weapon.h"
 #include "source-sdk/entity/c_base_entity.h"
 #include "source-sdk/vgui/i_panel.h"
 #include "source-sdk/vgui/c_engine_vgui.h"
@@ -49,6 +53,7 @@ namespace interfaces
 	inline c_engine_vgui*		engine_vgui;
 	inline c_model_info*		model_info;
 	inline i_engine_trace*		engine_trace;
+	inline c_lua_shared*		lua_shared;
 	inline i_view_render*		view_render;
 	inline c_input*				input;
 	inline c_render*			render;

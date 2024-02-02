@@ -11,7 +11,7 @@ struct hotkey_t
         hold,
         toggle,
         force_disable
-    } type;
+    } type = hold;
 
     inline bool check()
     {
@@ -21,7 +21,7 @@ struct hotkey_t
             return true;
 
         case hold:
-            return (key != 0 && GetAsyncKeyState(key));
+            return (key != 0 && GetAsyncKeyState(key) & 0x8000);
 
         case toggle:
         {
@@ -34,7 +34,8 @@ struct hotkey_t
         }
 
         case force_disable:
-            return (key != 0 && !GetAsyncKeyState(key));
+            return (key != 0 && !(GetAsyncKeyState(key) & 0x8001));
+
         }
 
         return false;
@@ -45,7 +46,7 @@ private:
     {
         static bool key_press[256];
 
-        if (GetAsyncKeyState(key))
+        if (GetAsyncKeyState(key) & 0x8000)
         {
             if (!key_press[key])
             {

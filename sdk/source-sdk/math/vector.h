@@ -38,15 +38,20 @@ public:
 	c_vector operator*(const c_vector& other) const;
 	c_vector operator/(const c_vector& other) const;
 
-	c_vector operator+(float other) const;
-	c_vector operator-(float other) const;
-	c_vector operator*(float other) const;
-	c_vector operator/(float other) const;
+	c_vector operator+(const float& other) const;
+	c_vector operator-(const float& other) const;
+	c_vector operator*(const float& other) const;
+	c_vector operator/(const float& other) const;
 
 	c_vector& operator+=(const c_vector& other);
 	c_vector& operator-=(const c_vector& other);
 	c_vector& operator*=(const c_vector& other);
 	c_vector& operator/=(const c_vector& other);
+
+	c_vector& operator+=(const float& other);
+	c_vector& operator-=(const float& other);
+	c_vector& operator*=(const float& other);
+	c_vector& operator/=(const float& other);
 
 	operator std::string() const;
 };

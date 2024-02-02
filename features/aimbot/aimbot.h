@@ -1,6 +1,13 @@
 #pragma once
 #include "../../hooks/hooks.h"
 
+struct priority_info_t
+{
+	float fov = FLT_MAX;
+	float distance = FLT_MAX;
+	float health = FLT_MAX;
+};
+
 struct target_info_t
 {
 	c_base_entity* entity = nullptr;
@@ -8,12 +15,14 @@ struct target_info_t
 	c_vector shoot_pos;
 	q_angle shoot_angle;
 
-	float fov = FLT_MAX;
+	priority_info_t priority_info;
 };
 
 namespace aimbot
 {
+	inline target_info_t target_info;
+
 	void run(c_user_cmd* cmd);
-	target_info_t find_best_target(c_user_cmd* cmd, c_base_entity* local_player, c_base_combat_weapon* weapon);
+	target_info_t find_best_target(c_user_cmd* cmd, c_base_entity* local_player);
 	bool get_hit_position(c_base_entity* local_player, c_base_entity* entity, c_vector& shoot_pos);
 }

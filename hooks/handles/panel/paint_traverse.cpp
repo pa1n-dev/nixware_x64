@@ -1,4 +1,4 @@
-void hooks::handles::panel_paint_traverse(i_panel* panel, v_panel v_panel, bool force_repaint, bool allow_force)
+void hooks::handles::paint_traverse(i_panel* panel, v_panel v_panel, bool force_repaint, bool allow_force)
 {
 	const char* name = interfaces::panel->get_name(v_panel);
 
@@ -27,5 +27,5 @@ void hooks::handles::panel_paint_traverse(i_panel* panel, v_panel v_panel, bool 
 		}
 	}
 
-	originals::panel_paint_traverse(panel, v_panel, force_repaint, allow_force);
+	originals::paint_traverse(panel, v_panel, force_repaint, allow_force);
 }

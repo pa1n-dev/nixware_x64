@@ -1,4 +1,4 @@
-HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RECT* src, CONST RECT* dest, HWND wnd_override, CONST RGNDATA* dirty_region)
+HRESULT APIENTRY hooks::handles::present(IDirect3DDevice9* device, CONST RECT* src, CONST RECT* dest, HWND wnd_override, CONST RGNDATA* dirty_region)
 {
 	using namespace ImGui;
 
@@ -92,5 +92,5 @@ HRESULT APIENTRY hooks::handles::d3d9_present(IDirect3DDevice9* device, CONST RE
 	}
 
 
-	return originals::d3d9_present(device, src, dest, wnd_override, dirty_region);
+	return originals::present(device, src, dest, wnd_override, dirty_region);
 }

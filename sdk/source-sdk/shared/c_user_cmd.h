@@ -19,7 +19,7 @@ public:
 	bool		has_been_predicted;
 	char		buttons_pressed[5];
 	char		scroll_wheel_speed;
-	bool		world_clicking;
+	bool		is_world_clicking;
 	c_vector	world_click_direction;
 	bool		is_typing;
 	c_vector	motion_sensor_positions[20];
@@ -47,7 +47,7 @@ public:
 		crc32_process_buffer(&crc, &has_been_predicted, sizeof(has_been_predicted));
 		crc32_process_buffer(&crc, &buttons_pressed, sizeof(buttons_pressed));
 		crc32_process_buffer(&crc, &scroll_wheel_speed, sizeof(scroll_wheel_speed));
-		crc32_process_buffer(&crc, &world_clicking, sizeof(world_clicking));
+		crc32_process_buffer(&crc, &is_world_clicking, sizeof(is_world_clicking));
 		crc32_process_buffer(&crc, &world_click_direction, sizeof(world_click_direction));
 		crc32_process_buffer(&crc, &is_typing, sizeof(is_typing));
 		crc32_process_buffer(&crc, &motion_sensor_positions, sizeof(motion_sensor_positions));
