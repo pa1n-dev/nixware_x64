@@ -25,4 +25,5 @@ namespace aimbot
 	void run(c_user_cmd* cmd);
 	target_info_t find_best_target(c_user_cmd* cmd, c_base_entity* local_player);
 	bool get_hit_position(c_base_entity* local_player, c_base_entity* entity, c_vector& shoot_pos);
+	void smooth(c_user_cmd* cmd, q_angle& angle);
 }

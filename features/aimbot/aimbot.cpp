@@ -32,6 +32,8 @@ void aimbot::run(c_user_cmd* cmd)
 	if (!settings::aimbot::globals::hotkey.check())
 		return;
 
+	smooth(cmd, target_info.shoot_angle);
+
 	cmd->view_angles = target_info.shoot_angle;
 
 	if (!settings::aimbot::globals::silent)
@@ -157,4 +159,19 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 	}
 
 	return false;
+}
+
+void aimbot::smooth(c_user_cmd* cmd, q_angle& angle)
+{
+	if (!settings::aimbot::accuracy::smooth)
+		return;
+
+	angle.normalize();
+	angle.clamp();
+
+	q_angle delta = angle - cmd->view_angles;
+	delta.normalize();
+	delta.clamp();
+
+	angle = cmd->view_angles + delta / settings::aimbot::accuracy::smooth;
 }
