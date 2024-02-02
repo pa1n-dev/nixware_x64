@@ -63,7 +63,7 @@ target_info_t aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_pla
 		q_angle shoot_angle = utilities::calc_angle(eye_position, shoot_pos);
 
 		float fov = utilities::get_fov(cmd->view_angles, shoot_angle);
-
+		std::cout << fov << std::endl;
 		if (fov > settings::aimbot::globals::fov)
 			continue;
 		

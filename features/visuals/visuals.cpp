@@ -60,7 +60,7 @@ void visuals::render() noexcept
 
 	if (settings::aimbot::visuals::fov)
 	{
-		float radius = tan(math::deg2rad((float)settings::aimbot::globals::fov) / 2) / tan(math::deg2rad(globals::fov) / 2) * io.DisplaySize.x;
+		float radius = tan(math::deg2rad((float)settings::aimbot::globals::fov) / 2) / tan(math::deg2rad(globals::fov - 1.3085f) / 2) * io.DisplaySize.x;
 		render_manager::circle(center, radius, settings::aimbot::visuals::colors::fov, 1000, 1.f);
 	}
 

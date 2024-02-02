@@ -26,7 +26,7 @@ q_angle utilities::calc_angle(const c_vector& from, const c_vector& to)
 	c_vector delta = from - to;
 
 	ang.y = atanf(delta.y / delta.x) * 57.295779513082f;
-	ang.x = atanf(-delta.z / delta.length2d()) * -57.295779513082f;
+	ang.x = atanf(-delta.z / delta.length_2d()) * -57.295779513082f;
 
 	if (delta.x >= 0.f)
 		ang.y += 180.f;
@@ -36,9 +36,12 @@ q_angle utilities::calc_angle(const c_vector& from, const c_vector& to)
 
 float utilities::get_fov(const q_angle& from, const q_angle& to)
 {
-	c_vector delta = to - from;
-	delta.normalize();
-	return sqrtf(powf(delta.x, 2) + powf(delta.y, 2));
+	c_vector from_forward, to_forward;
+
+	math::angle_to_vector(from, from_forward);
+	math::angle_to_vector(to, to_forward);
+
+	return math::rad2deg(acos(from_forward.dot(to_forward) / from_forward.length_sqr()));
 }
 
 bool utilities::screen_transform(const c_vector& in, c_vector& out)

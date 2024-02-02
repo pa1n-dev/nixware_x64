@@ -21,8 +21,10 @@ public:
 	float dot(const c_vector& other) const;
 	float dot(const float* other) const;
 
+	float length_sqr() const;
+	float length_2d_sqr() const;
 	float length() const;
-	float length2d() const;
+	float length_2d() const;
 	float distance_to(const c_vector& to) const;
 
 	bool is_valid() const;

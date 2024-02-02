@@ -71,14 +71,24 @@ float c_vector::dot(const float* other) const
 	return (x * other[0] + y * other[1] + z * other[2]);
 }
 
-float c_vector::length() const
+float c_vector::length_sqr() const
 {
-	return sqrt(x * x + y * y + z * z);
+	return (x * x + y * y + z * z);
 }
 
-float c_vector::length2d() const
+float c_vector::length_2d_sqr() const
 {
-	return sqrt(x * x + y * y);
+	return (x * x + y * y);
+}
+
+float c_vector::length() const
+{
+	return sqrt(length_sqr());
+}
+
+float c_vector::length_2d() const
+{
+	return sqrt(length_2d_sqr());
 }
 
 float c_vector::distance_to(const c_vector& to) const
