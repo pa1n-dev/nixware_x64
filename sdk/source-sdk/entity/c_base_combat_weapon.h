@@ -3,6 +3,11 @@
 class c_base_combat_weapon
 {
 public:
+	bool push_entity()
+	{
+		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 172)(this);
+	}
+
 	const char* get_class_name()
 	{
 		return memory::call_v_function<const char* (__thiscall*)(void*)>(this, 367)(this);

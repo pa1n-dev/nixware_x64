@@ -57,4 +57,8 @@ void interfaces::initialize()
 	global_vars = *(c_global_vars**)memory::relative_to_absolute((uintptr_t)(memory::pattern_scanner(xorstr("client.dll"), xorstr("48 8B 05 ? ? ? ? 83 78 14 01 75 09"))), 0x3, 7);
 	if (!global_vars)
 		throw;
+
+	random_stream = memory::get_vmt_from_instruction<c_uniform_random_stream>((uintptr_t)GetProcAddress(GetModuleHandleA("vstdlib.dll"), "RandomSeed"), 0x2);
+	if (!random_stream)
+		throw;
 }

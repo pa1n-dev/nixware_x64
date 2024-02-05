@@ -13,6 +13,7 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 	c_user_cmd old_cmd = *cmd;
 
 	aimbot::run(cmd);
+	predict_spread::run(cmd);
 	movement::fix_movement(cmd, old_cmd);
 
 	verified_cmd->m_cmd = *cmd;

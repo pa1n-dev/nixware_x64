@@ -13,6 +13,7 @@
 #include "handles/html_panel/paint.cpp"
 #include "handles/panel/paint_traverse.cpp"
 #include "handles/hl_client/create_move.cpp"
+#include "handles/hl_client/frame_stage_notify.cpp"
 #include "handles/view_render/render_view.cpp"
 
 void hooks::initialize()
@@ -33,6 +34,9 @@ void hooks::initialize()
 		throw;
 
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 21), &handles::create_move, (LPVOID*)&handles::originals::create_move))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 35), &handles::frame_stage_notify, (LPVOID*)&handles::originals::frame_stage_notify))
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::view_render, 6), &handles::render_view, (LPVOID*)&handles::originals::render_view))

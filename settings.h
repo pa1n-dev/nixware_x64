@@ -42,6 +42,8 @@ namespace settings
 
         namespace accuracy
         {
+            inline bool predict_spread = false;
+            inline bool disable_recoil = false;
             inline float smooth = 0;
         }
 

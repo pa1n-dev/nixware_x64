@@ -29,15 +29,25 @@ namespace memory
 	}
 
 	template<typename T>
-	inline T* get_vmt_from_instruction(uintptr_t address)
+	T* get_vmt_from_instruction(uintptr_t address)
 	{
 		uintptr_t step = 3;
-		uintptr_t instructionSize = 7;
+		uintptr_t instruction_size = 7;
 		uintptr_t instruction = address;
 
-		uintptr_t relativeAddress = *(DWORD*)(instruction + step);
-		uintptr_t realAddress = instruction + instructionSize + relativeAddress;
-		return *(T**)(realAddress);
+		uintptr_t relative_address = *(DWORD*)(instruction + step);
+		uintptr_t real_address = instruction + instruction_size + relative_address;
+		return *(T**)(real_address);
+	}
+
+	template<typename T>
+	T* get_vmt_from_instruction(uintptr_t address, size_t offset)
+	{
+		uintptr_t step = 3;
+		uintptr_t instruction_size = 7;
+		uintptr_t instruction = address + offset;
+
+		return *(T**)(relative_to_absolute(instruction, step, instruction_size));
 	}
 
 	template<typename T>

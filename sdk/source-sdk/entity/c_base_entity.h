@@ -33,6 +33,11 @@ public:
 		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 130)(this);
 	}
 
+	bool push_entity()
+	{
+		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 172)(this);
+	}
+
 	bool is_dormant()
 	{
 		return *(bool*)((uintptr_t)this + 0x1FA);
@@ -46,6 +51,11 @@ public:
 	int get_flags()
 	{
 		return *(int*)((uintptr_t)this + 0x440);
+	}
+
+	q_angle& get_punch_angle()
+	{
+		return *(q_angle*)((uintptr_t)this + 0x2A00);
 	}
 
 	c_vector get_eye_position()
@@ -65,7 +75,7 @@ public:
 
 	c_base_combat_weapon* get_active_weapon()
 	{
-		using get_active_weapon_t = c_base_combat_weapon * (__fastcall*)(void*);
+		using get_active_weapon_t = c_base_combat_weapon* (__fastcall*)(void*);
 
 		static get_active_weapon_t get_active_weapon;
 

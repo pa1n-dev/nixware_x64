@@ -205,6 +205,7 @@
     <ClInclude Include="features\miscellaneous\movement.h" />
     <ClInclude Include="features\visuals\visuals.h" />
     <ClInclude Include="hooks\handles\hl_client\create_move.cpp" />
+    <ClInclude Include="hooks\handles\hl_client\frame_stage_notify.cpp" />
     <ClInclude Include="hooks\handles\html_panel\load_url.cpp" />
     <ClInclude Include="hooks\handles\html_panel\paint.cpp" />
     <ClInclude Include="hooks\handles\panel\paint_traverse.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="hooks\handles\d3d9\present.cpp" />
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />
+    <ClInclude Include="sdk\source-sdk\c_uniform_random_stream.h" />
     <ClInclude Include="sdk\source-sdk\entity\c_base_combat_weapon.h" />
     <ClInclude Include="sdk\source-sdk\entity\c_base_entity.h" />
     <ClInclude Include="sdk\source-sdk\lua\interface.h" />
@@ -241,6 +243,8 @@
     <ClInclude Include="sdk\source-sdk\definitions.h" />
     <ClInclude Include="sdk\source-sdk\client\i_render_view.h" />
     <ClInclude Include="sdk\source-sdk\studio.h" />
+    <ClInclude Include="sdk\source-sdk\tier1\checksum_md5.h" />
+    <ClInclude Include="sdk\source-sdk\tier1\str_tool.h" />
     <ClInclude Include="sdk\source-sdk\vgui\c_engine_vgui.h" />
     <ClInclude Include="sdk\source-sdk\vgui\i_panel.h" />
     <ClInclude Include="sdk\source-sdk\client\i_view_render.h" />

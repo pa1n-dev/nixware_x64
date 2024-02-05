@@ -36,6 +36,7 @@ namespace hooks
 			inline int(__thiscall* html_panel_paint)(void*);
 			inline void(__fastcall* paint_traverse)(i_panel*, v_panel, bool, bool);
 			inline void(__thiscall* create_move)(c_hl_client*, int, float, bool);
+			inline void(__thiscall* frame_stage_notify)(c_hl_client*, int);
 			inline void(__thiscall* render_view)(i_view_render*, c_view_setup&, int, int);
 		}
 
@@ -45,7 +46,8 @@ namespace hooks
 		void __fastcall html_panel_load_url(void* html_panel, const char* url);
 		int __fastcall html_panel_paint(void* html_panel);
 		void paint_traverse(i_panel* panel, v_panel v_panel, bool force_repaint, bool allow_force);
-		void __fastcall create_move(c_hl_client* hl_client, int sequence_number, float input_sample_frametime, bool active);
+		void __fastcall create_move(c_hl_client* client, int sequence_number, float input_sample_frametime, bool active);
+		void __fastcall frame_stage_notify(c_hl_client* client, int stage);
 		void __fastcall render_view(i_view_render* view_render, c_view_setup& view, int flags, int to_draw);
 	}
 }

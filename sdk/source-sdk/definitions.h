@@ -85,14 +85,28 @@
 #define NUM_BYTES 256
 #define CRC32_INIT_VALUE 0xFFFFFFFFUL
 #define CRC32_XOR_VALUE  0xFFFFFFFFUL
+#define MD5_DIGEST_LENGTH 16  
+#define MD5_BIT_LENGTH ( MD5_DIGEST_LENGTH * sizeof(unsigned char) )
+
+#define F1(x, y, z) (z ^ (x & (y ^ z)))
+#define F2(x, y, z) F1(z, x, y)
+#define F3(x, y, z) (x ^ y ^ z)
+#define F4(x, y, z) (y ^ (x | ~z))
+
+#define MD5STEP(f, w, x, y, z, data, s) ( w += f(x, y, z) + data,  w = w<<s | w>>(32-s),  w += x )
+
+#define RTL_NUMBER_OF_V2(A) (sizeof(*RtlpNumberOf(A))+0)
+#define ARRAYSIZE(A)    RTL_NUMBER_OF_V2(A)
+#define _ARRAYSIZE(A)   RTL_NUMBER_OF_V1(A)
+#define Q_ARRAYSIZE(p)		ARRAYSIZE(p)
+
+#define Q_BINARYTOHEX v_binarytohex
 
 #define MAX_STUDIO_BONES 128
 
 #define BONE_USED_MASK				0x0007FF00
 #define BONE_USED_BY_ANYTHING		0x0007FF00
 #define BONE_USED_BY_HITBOX			0x00000100
-
-#pragma region MASKS
 
 #define   DISPSURF_FLAG_SURFACE           (1<<0)
 #define   DISPSURF_FLAG_WALKABLE          (1<<1)
@@ -184,5 +198,3 @@
 #define   MASK_SPLITAREAPORTAL          (CONTENTS_WATER|CONTENTS_SLIME)
 #define   MASK_CURRENT                  (CONTENTS_CURRENT_0|CONTENTS_CURRENT_90|CONTENTS_CURRENT_180|CONTENTS_CURRENT_270|CONTENTS_CURRENT_UP|CONTENTS_CURRENT_DOWN)
 #define   MASK_DEADSOLID                (CONTENTS_SOLID|CONTENTS_PLAYERCLIP|CONTENTS_WINDOW|CONTENTS_GRATE)
-
-#pragma endregion

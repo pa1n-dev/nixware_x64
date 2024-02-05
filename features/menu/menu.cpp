@@ -46,8 +46,9 @@ void menu::render() noexcept
 
         if (BeginChild(xorstr("Accuracy"), child_size))
         {
+            Checkbox(xorstr("Predict spread"), &settings::aimbot::accuracy::predict_spread);
+            Checkbox(xorstr("Disable recoil"), &settings::aimbot::accuracy::disable_recoil);
             SliderFloat(xorstr("Smooth"), &settings::aimbot::accuracy::smooth, 0.f, 20.f, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
-
 
             EndChild();
         }

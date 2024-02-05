@@ -34,28 +34,32 @@
 #include "source-sdk/materialsystem/c_material_system.h"
 #include "source-sdk/client/c_hl_client.h"
 #include "source-sdk/tier0/platform.h"
+#include "source-sdk/tier1/str_tool.h"
 #include "source-sdk/tier1/checksum_crc.h"
+#include "source-sdk/tier1/checksum_md5.h"
 #include "source-sdk/shared/c_user_cmd.h"
 #include "source-sdk/client/c_input.h"
 #include "source-sdk/c_global_vars.h"
 #include "source-sdk/i_engine_trace.h"
+#include "source-sdk/c_uniform_random_stream.h"
 
 namespace interfaces
 {
 	void initialize();
 
-	inline c_engine_client*		engine;
-	inline i_panel*				panel;
-	inline i_render_view*		render_view;
-	inline c_entity_list*		entity_list;
-	inline c_material_system*	material_system;
-	inline c_hl_client*			hl_client;
-	inline c_engine_vgui*		engine_vgui;
-	inline c_model_info*		model_info;
-	inline i_engine_trace*		engine_trace;
-	inline c_lua_shared*		lua_shared;
-	inline i_view_render*		view_render;
-	inline c_input*				input;
-	inline c_render*			render;
-	inline c_global_vars*		global_vars;
+	inline c_engine_client*			engine;
+	inline i_panel*					panel;
+	inline i_render_view*			render_view;
+	inline c_entity_list*			entity_list;
+	inline c_material_system*		material_system;
+	inline c_hl_client*				hl_client;
+	inline c_engine_vgui*			engine_vgui;
+	inline c_model_info*			model_info;
+	inline i_engine_trace*			engine_trace;
+	inline c_lua_shared*			lua_shared;
+	inline i_view_render*			view_render;
+	inline c_input*					input;
+	inline c_render*				render;
+	inline c_global_vars*			global_vars;
+	inline c_uniform_random_stream* random_stream;
 }

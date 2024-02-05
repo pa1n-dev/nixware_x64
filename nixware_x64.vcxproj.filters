@@ -326,5 +326,17 @@
     <ClInclude Include="hooks\handles\view_render\render_view.cpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\source-sdk\c_uniform_random_stream.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\tier1\checksum_md5.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\tier1\str_tool.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\hl_client\frame_stage_notify.cpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
