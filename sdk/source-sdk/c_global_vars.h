@@ -9,7 +9,7 @@ public:
 	float			curtime;
 	float			frametime;
 	int				max_clients;
-	int				tickcount;
+	int				tick_count;
 	float			interval_per_tick;
 	float			interpolation_amount;
 	int				sim_ticks_this_frame;

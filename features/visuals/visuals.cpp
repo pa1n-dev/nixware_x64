@@ -1,7 +1,7 @@
 #include "visuals.h"
 #include "../aimbot/aimbot.h"
 
-void visuals::render() noexcept
+void visuals::render()
 {
 	if (!interfaces::engine->is_in_game())
 		return;

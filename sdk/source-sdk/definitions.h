@@ -1,5 +1,7 @@
 #pragma once
 
+#define MULTIPLAYER_BACKUP 90
+
 #define IN_ATTACK		(1 << 0)
 #define IN_JUMP			(1 << 1)
 #define IN_DUCK			(1 << 2)

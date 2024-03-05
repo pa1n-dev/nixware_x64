@@ -23,11 +23,14 @@ void predict_spread::run(c_user_cmd* cmd)
 
 	if (strstr(weapon_base, xorstr("bobs_")))
 		return engine_spread(cmd, lua_utilities::get_weapon_spread(weapon));
+
+	if (strstr(weapon_base, xorstr("swb_base")))
+		return cone_spread(cmd, local_player, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
 }
 
 void predict_spread::engine_spread(c_user_cmd* cmd, float spread_multiplier)
 {
-	if (!spread_multiplier)
+	if (spread_multiplier == 0.f)
 		return;
 
 	c_vector spread, dir, forward, right, up;
@@ -52,4 +55,23 @@ void predict_spread::engine_spread(c_user_cmd* cmd, float spread_multiplier)
 	out.clamp();
 
 	cmd->view_angles += cmd->view_angles - out;
+}
+
+void predict_spread::cone_spread(c_user_cmd* cmd, c_base_entity* local_player, float cone, float seed)
+{
+	if (cone == 0.f || seed == 0.f)
+		return;
+
+	lua_utilities::random_seed(seed);
+
+	q_angle out;
+	out.x = lua_utilities::rand(-cone, cone);
+	out.y = lua_utilities::rand(-cone, cone);
+	out.z = 0;
+	out *= 25;
+
+	out.normalize();
+	out.clamp();
+
+	cmd->view_angles -= out;
 }

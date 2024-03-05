@@ -26,6 +26,7 @@ public:
 	bool		forced;
 
 public:
+	//https://media.discordapp.net/attachments/1194221664339234816/1211398926536540251/image.png?ex=65ee0e2a&is=65db992a&hm=8e22e874ad2032183f553e690226f9417e2bda58afff099a0407f7b8b16c54be&=&format=webp&quality=lossless
 	crc32_t get_checksum() const
 	{
 		crc32_t crc{};
@@ -45,13 +46,6 @@ public:
 		crc32_process_buffer(&crc, &mouse_x, sizeof(mouse_x));
 		crc32_process_buffer(&crc, &mouse_y, sizeof(mouse_y));
 		crc32_process_buffer(&crc, &has_been_predicted, sizeof(has_been_predicted));
-		crc32_process_buffer(&crc, &buttons_pressed, sizeof(buttons_pressed));
-		crc32_process_buffer(&crc, &scroll_wheel_speed, sizeof(scroll_wheel_speed));
-		crc32_process_buffer(&crc, &is_world_clicking, sizeof(is_world_clicking));
-		crc32_process_buffer(&crc, &world_click_direction, sizeof(world_click_direction));
-		crc32_process_buffer(&crc, &is_typing, sizeof(is_typing));
-		crc32_process_buffer(&crc, &motion_sensor_positions, sizeof(motion_sensor_positions));
-		crc32_process_buffer(&crc, &forced, sizeof(forced));
 		crc32_final(&crc);
 
 		return crc;
@@ -61,6 +55,6 @@ public:
 class c_verified_user_cmd
 {
 public:
-	c_user_cmd  m_cmd;
-	int			m_crc;
+	c_user_cmd		m_cmd;
+	crc32_t			m_crc;
 };

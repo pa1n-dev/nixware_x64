@@ -1,6 +1,6 @@
 #include "menu.h"
 
-void menu::render() noexcept
+void menu::render()
 {
     if (!settings::menu::opened)
         return;
@@ -48,6 +48,7 @@ void menu::render() noexcept
         {
             Checkbox(xorstr("Predict spread"), &settings::aimbot::accuracy::predict_spread);
             Checkbox(xorstr("Disable recoil"), &settings::aimbot::accuracy::disable_recoil);
+            SliderFloat(xorstr("Backtrack"), &settings::aimbot::accuracy::backtrack, 0.f, 1.f, xorstr("%.3f ms"), ImGuiSliderFlags_NoInput);
             SliderFloat(xorstr("Smooth"), &settings::aimbot::accuracy::smooth, 0.f, 20.f, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
 
             EndChild();
@@ -59,6 +60,7 @@ void menu::render() noexcept
         {
             Checkbox(xorstr("Fov"), &settings::aimbot::visuals::fov); ColorEdit4(xorstr("Fov"), settings::aimbot::visuals::colors::fov, color_edit4_flags);
             Checkbox(xorstr("Snaplines"), &settings::aimbot::visuals::snaplines); ColorEdit4(xorstr("Snaplines"), settings::aimbot::visuals::colors::snaplines, color_edit4_flags);
+            Checkbox(xorstr("Backtrack"), &settings::aimbot::visuals::backtrack);
 
             EndChild();
         }
@@ -198,7 +200,7 @@ void menu::render() noexcept
     PopStyleVar();
 }
 
-void menu::custom::hotkey(const char* label, hotkey_t* hotkey) noexcept
+void menu::custom::hotkey(const char* label, hotkey_t* hotkey)
 {
     ImGuiWindow* window = GetCurrentWindow();
     if (window->SkipItems)

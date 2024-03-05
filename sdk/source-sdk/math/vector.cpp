@@ -262,3 +262,8 @@ c_vector_aligned& c_vector_aligned::operator=(const c_vector& other)
 
 	return *this;
 }
+
+c_vector_2d::c_vector_2d()
+{
+	x = y = 0.f;
+}

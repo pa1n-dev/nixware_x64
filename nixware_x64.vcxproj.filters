@@ -21,9 +21,6 @@
     <ClCompile Include="dependencies\imgui\imgui.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="dependencies\imgui\imgui_demo.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="dependencies\imgui\imgui_draw.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -105,6 +102,15 @@
     <ClCompile Include="sdk\source-sdk\math\math.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="features\aimbot\backtrack\history.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="features\aimbot\backtrack\lag_compensation.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\hotkey.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\imgui\imconfig.h">
@@ -167,17 +173,11 @@
     <ClInclude Include="dependencies\minhook\minhook\hde\table64.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\d3d9\present.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="hooks\handles\wndproc.cpp">
+    <ClInclude Include="hooks\handles\wndproc.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="utils\utilities.h">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="hooks\handles\d3d9\reset.cpp">
-      <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="features\menu\menu.h">
       <Filter>Файлы заголовков</Filter>
@@ -193,15 +193,6 @@
     </ClInclude>
     <ClInclude Include="features\visuals\visuals.h">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="hooks\handles\html_panel\load_url.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="hooks\handles\html_panel\paint.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="hooks\handles\panel\paint_traverse.cpp">
-      <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="settings.h">
       <Filter>Файлы заголовков</Filter>
@@ -263,9 +254,6 @@
     <ClInclude Include="dependencies\minhook\min_hook.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\hl_client\create_move.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="features\aimbot\aimbot.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -296,7 +284,7 @@
     <ClInclude Include="features\aimbot\penetrate_walls.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\i_engine_trace.h">
+    <ClInclude Include="sdk\source-sdk\engine\i_engine_trace.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="utils\hotkey.h">
@@ -323,10 +311,10 @@
     <ClInclude Include="utils\lua_utilities.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\view_render\render_view.cpp">
+    <ClInclude Include="hooks\handles\view_render\render_view.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_uniform_random_stream.h">
+    <ClInclude Include="sdk\source-sdk\vstdlib\c_uniform_random_stream.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\tier1\checksum_md5.h">
@@ -335,7 +323,64 @@
     <ClInclude Include="sdk\source-sdk\tier1\str_tool.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="hooks\handles\hl_client\frame_stage_notify.cpp">
+    <ClInclude Include="sdk\source-sdk\vstdlib\c_cvar.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\engine\c_net_channel.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\tier1\c_utl_vector.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\tier1\c_utl_memory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\net_channel\send_datagram.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\engine\c_model_render.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\model_render\draw_model_execute.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\panel\paint_traverse.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\d3d9\reset.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\d3d9\present.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\html_panel\paint.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\html_panel\load_url.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\hl_client\frame_stage_notify.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\hl_client\create_move.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="features\aimbot\backtrack\history.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="features\aimbot\backtrack\lag_compensation.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\hl_client\write_user_cmd_delta_to_buffer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\entity\i_client_networkable.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\c_hl2mp_player_anim_state.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\c_multiplayer_anim_state.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

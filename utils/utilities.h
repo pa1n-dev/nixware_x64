@@ -14,6 +14,9 @@ namespace utilities
 {
 	bool game_is_full_loaded();
 	void attach_console();
+	bool is_key_pressed(int key);
+	int time_to_ticks(float time);
+	float ticks_to_time(int ticks);
 	q_angle calc_angle(const c_vector& from, const c_vector& to);
 	float get_fov(const q_angle& from, const q_angle& to);
 	bool screen_transform(const c_vector& in, c_vector& out);

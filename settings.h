@@ -44,13 +44,15 @@ namespace settings
         {
             inline bool predict_spread = false;
             inline bool disable_recoil = false;
-            inline float smooth = 0;
+            inline float backtrack = 0;
+            inline float smooth = 0.f;
         }
 
         namespace visuals
         {
             inline bool fov = false;
             inline bool snaplines = false;
+            inline bool backtrack = false;
 
             namespace colors
             {

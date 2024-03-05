@@ -15,7 +15,6 @@ HRESULT APIENTRY hooks::handles::present(IDirect3DDevice9* device, CONST RECT* s
 		StyleColorsDark();
 
 		ImGuiIO& io = GetIO();
-		io.IniFilename = nullptr;
 
 		ImFontConfig config = ImFontConfig();
 		config.FontBuilderFlags = ImGuiFreeTypeBuilderFlags_MonoHinting;

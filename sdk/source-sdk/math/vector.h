@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 
-using matrix3x4_t = float[3][4];
-using matrix4x4_t = float[16];
+using matrix3x4 = float[3][4];
+using matrix4x4 = float[16];
 
 class c_vector
 {
@@ -68,6 +68,14 @@ public:
 	c_vector_aligned& operator=(const c_vector& other);
 
 	float w;
+};
+
+class c_vector_2d
+{
+public:
+	float x, y;
+
+	c_vector_2d();
 };
 
 using q_angle = c_vector;

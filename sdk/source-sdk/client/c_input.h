@@ -38,51 +38,7 @@ enum
 class c_input
 {
 public:
-	virtual void			init_all();
-	virtual void			shutdown_all();
-	virtual int				get_button_bits(int);
-	virtual void			create_move(int sequence_number, float input_sample_frametime, bool active);
-	virtual void			extra_mouse_sample(float frametime, bool active);
-	virtual bool			write_usercmd_delta_to_buffer(void* buf, int from, int to, bool is_new_command);
-	virtual void			encode_usercmd_to_buffer(void*& buf, int slot);
-	virtual void			decode_usercmd_from_buffer(void*& buf, int slot);
-	virtual void*			get_usercmd(int sequence_number);
-	virtual void			make_weapon_selection(void* weapon);
-	virtual float			key_state(int32_t* key);
-	virtual int				key_event(int down, int32_t keynum, const char* psz_current_binding);
-	virtual void*			find_key(const char* name);
-	virtual void			controller_commands(void);
-	virtual void			joystick_advanced(void);
-	virtual void			joystick_set_sample_time(float frametime);
-	virtual void			in_set_sample_time(float frametime);
-	virtual void			accumulate_mouse(void);
-	virtual void			activate_mouse(void);
-	virtual void			deactivate_mouse(void);
-	virtual void			clear_states(void);
-	virtual float			get_look_spring(void);
-	virtual void			get_fullscreen_mouse_pos(int* mx, int* my, int* unclampedx = NULL, int* unclampedy = NULL);
-	virtual void			set_fullscreen_mouse_pos(int mx, int my);
-	virtual void			reset_mouse(void);
-	virtual float			get_last_forward_move(void);
-	virtual float			joystick_get_forward(void);
-	virtual float			joystick_get_side(void);
-	virtual float			joystick_get_pitch(void);
-	virtual float			joystick_get_yaw(void);
-	virtual void			clear_input_button(int bits);
-	virtual void			cam_think(void);
-	virtual int				cam_is_third_person(void);
-	virtual void			cam_to_third_person(void);
-	virtual void			cam_to_first_person(void);
-	virtual void			cam_start_mouse_move(void);
-	virtual void			cam_end_mouse_move(void);
-	virtual void			cam_start_distance(void);
-	virtual void			cam_end_distance(void);
-	virtual int				cam_intercepting_mouse(void);
-	virtual void			cam_to_orthographic();
-	virtual bool			cam_is_orthographic() const;
-	virtual void			cam_orthographic_size(float& w, float& h) const;
-	virtual float			cam_cap_yaw(float f_val);
-
+	char                    pad[8];
 	bool					mouse_initialized;
 	bool					mouse_active;
 	bool					joystick_advanced_init;

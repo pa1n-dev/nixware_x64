@@ -5,5 +5,5 @@ namespace visuals
 {
 	using namespace ImGui;
 
-	void render() noexcept;
+	void render();
 }

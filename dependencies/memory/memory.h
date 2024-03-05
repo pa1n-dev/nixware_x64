@@ -14,7 +14,7 @@ namespace memory
 		return static_cast<T*>(temp(interface_name.c_str(), 0));
 	}
 
-	constexpr auto relative_to_absolute(uintptr_t address, int offset, int instruction_size = 6) noexcept
+	constexpr auto relative_to_absolute(uintptr_t address, int offset, int instruction_size = 6)
 	{
 		auto instruction = address + offset;
 
@@ -60,5 +60,5 @@ namespace memory
 		return function;
 	}
 
-	uint8_t* pattern_scanner(const std::string& module_name, const std::string& signature) noexcept;
+	uint8_t* pattern_scanner(const std::string& module_name, const std::string& signature);
 }

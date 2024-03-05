@@ -1,6 +1,6 @@
 #include "memory.h"
 
-uint8_t* memory::pattern_scanner(const std::string& module_name, const std::string& signature) noexcept
+uint8_t* memory::pattern_scanner(const std::string& module_name, const std::string& signature)
 {
 	auto* const module_handle = GetModuleHandleA(module_name.c_str());
 

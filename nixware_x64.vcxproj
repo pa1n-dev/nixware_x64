@@ -48,9 +48,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClCompile Include="dependencies\imgui\freetype\imgui_freetype.cpp" />
     <ClCompile Include="dependencies\imgui\imgui.cpp" />
-    <ClCompile Include="dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_widgets.cpp" />
@@ -162,6 +161,8 @@
     <ClCompile Include="dependencies\minhook\minhook\trampoline.c" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="features\aimbot\aimbot.cpp" />
+    <ClCompile Include="features\aimbot\backtrack\history.cpp" />
+    <ClCompile Include="features\aimbot\backtrack\lag_compensation.cpp" />
     <ClCompile Include="features\aimbot\penetrate_walls.cpp" />
     <ClCompile Include="features\aimbot\predict_spread.cpp" />
     <ClCompile Include="features\menu\menu.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="sdk\source-sdk\math\radian_euler.cpp" />
     <ClCompile Include="sdk\source-sdk\math\vector.cpp" />
     <ClCompile Include="utils\lua_utilities.cpp" />
+    <ClCompile Include="utils\hotkey.cpp" />
     <ClCompile Include="utils\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -199,23 +201,34 @@
     <ClInclude Include="dependencies\minhook\minhook\trampoline.h" />
     <ClInclude Include="dependencies\xorstr\xorstr.h" />
     <ClInclude Include="features\aimbot\aimbot.h" />
+    <ClInclude Include="features\aimbot\backtrack\history.h" />
+    <ClInclude Include="features\aimbot\backtrack\lag_compensation.h" />
     <ClInclude Include="features\aimbot\penetrate_walls.h" />
     <ClInclude Include="features\aimbot\predict_spread.h" />
     <ClInclude Include="features\menu\menu.h" />
     <ClInclude Include="features\miscellaneous\movement.h" />
     <ClInclude Include="features\visuals\visuals.h" />
-    <ClInclude Include="hooks\handles\hl_client\create_move.cpp" />
-    <ClInclude Include="hooks\handles\hl_client\frame_stage_notify.cpp" />
-    <ClInclude Include="hooks\handles\html_panel\load_url.cpp" />
-    <ClInclude Include="hooks\handles\html_panel\paint.cpp" />
-    <ClInclude Include="hooks\handles\panel\paint_traverse.cpp" />
-    <ClInclude Include="hooks\handles\d3d9\reset.cpp" />
-    <ClInclude Include="hooks\handles\view_render\render_view.cpp" />
-    <ClInclude Include="hooks\handles\wndproc.cpp" />
-    <ClInclude Include="hooks\handles\d3d9\present.cpp" />
+    <ClInclude Include="hooks\handles\hl_client\create_move.h" />
+    <ClInclude Include="hooks\handles\hl_client\frame_stage_notify.h" />
+    <ClInclude Include="hooks\handles\hl_client\write_user_cmd_delta_to_buffer.h" />
+    <ClInclude Include="hooks\handles\html_panel\load_url.h" />
+    <ClInclude Include="hooks\handles\html_panel\paint.h" />
+    <ClInclude Include="hooks\handles\model_render\draw_model_execute.h" />
+    <ClInclude Include="hooks\handles\net_channel\send_datagram.h" />
+    <ClInclude Include="hooks\handles\panel\paint_traverse.h" />
+    <ClInclude Include="hooks\handles\d3d9\reset.h" />
+    <ClInclude Include="hooks\handles\view_render\render_view.h" />
+    <ClInclude Include="hooks\handles\wndproc.h" />
+    <ClInclude Include="hooks\handles\d3d9\present.h" />
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />
-    <ClInclude Include="sdk\source-sdk\c_uniform_random_stream.h" />
+    <ClInclude Include="sdk\source-sdk\c_hl2mp_player_anim_state.h" />
+    <ClInclude Include="sdk\source-sdk\c_multiplayer_anim_state.h" />
+    <ClInclude Include="sdk\source-sdk\entity\i_client_networkable.h" />
+    <ClInclude Include="sdk\source-sdk\vstdlib\c_cvar.h" />
+    <ClInclude Include="sdk\source-sdk\vstdlib\c_uniform_random_stream.h" />
+    <ClInclude Include="sdk\source-sdk\engine\c_model_render.h" />
+    <ClInclude Include="sdk\source-sdk\engine\c_net_channel.h" />
     <ClInclude Include="sdk\source-sdk\entity\c_base_combat_weapon.h" />
     <ClInclude Include="sdk\source-sdk\entity\c_base_entity.h" />
     <ClInclude Include="sdk\source-sdk\lua\interface.h" />
@@ -232,7 +245,7 @@
     <ClInclude Include="sdk\source-sdk\engine\c_model_info.h" />
     <ClInclude Include="sdk\source-sdk\engine\c_render.h" />
     <ClInclude Include="sdk\source-sdk\entity\i_client_renderable.h" />
-    <ClInclude Include="sdk\source-sdk\i_engine_trace.h" />
+    <ClInclude Include="sdk\source-sdk\engine\i_engine_trace.h" />
     <ClInclude Include="sdk\source-sdk\server\c_entity_list.h" />
     <ClInclude Include="sdk\source-sdk\client\c_hl_client.h" />
     <ClInclude Include="sdk\source-sdk\client\c_input.h" />
@@ -244,6 +257,8 @@
     <ClInclude Include="sdk\source-sdk\client\i_render_view.h" />
     <ClInclude Include="sdk\source-sdk\studio.h" />
     <ClInclude Include="sdk\source-sdk\tier1\checksum_md5.h" />
+    <ClInclude Include="sdk\source-sdk\tier1\c_utl_memory.h" />
+    <ClInclude Include="sdk\source-sdk\tier1\c_utl_vector.h" />
     <ClInclude Include="sdk\source-sdk\tier1\str_tool.h" />
     <ClInclude Include="sdk\source-sdk\vgui\c_engine_vgui.h" />
     <ClInclude Include="sdk\source-sdk\vgui\i_panel.h" />

@@ -2,11 +2,11 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 {
 	originals::create_move(client, sequence_number, input_sample_frametime, active);
 
-	c_user_cmd* cmd = interfaces::input->cmds + (sequence_number % 90);
+	c_user_cmd* cmd = interfaces::input->cmds + (sequence_number % MULTIPLAYER_BACKUP);
 	if (!cmd)
 		return;
 
-	c_verified_user_cmd* verified_cmd = interfaces::input->verified_cmds + (sequence_number % 90);
+	c_verified_user_cmd* verified_cmd = interfaces::input->verified_cmds + (sequence_number % MULTIPLAYER_BACKUP);
 	if (!verified_cmd)
 		return;
 
@@ -15,7 +15,9 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 	aimbot::run(cmd);
 	predict_spread::run(cmd);
 	movement::fix_movement(cmd, old_cmd);
-
+	
 	verified_cmd->m_cmd = *cmd;
 	verified_cmd->m_crc = cmd->get_checksum();
+
+	lag_compensation::write_user_cmd_delta_to_buffer_callback();
 }

@@ -7,7 +7,8 @@ The cheat almost completely repeats the old nixware menu, which is why it has su
 - OBS Bypass
 - Custom menu background
 - Custom loading screen
-  
+- Backtrack ([cl_interp abuse](https://www.unknowncheats.me/forum/garry-s-mod/414371-cl_interp-abuse-1-backtrack-fakeping.html)) (not 100% accuracy)
+
 #### Screenshots
 ![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/c21beff3-5d31-45c7-a8ca-fafbeb5318a3)
 

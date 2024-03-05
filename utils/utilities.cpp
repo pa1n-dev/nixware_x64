@@ -8,6 +8,7 @@ bool utilities::game_is_full_loaded()
 		&& GetModuleHandleA(xorstr("gameoverlayrenderer64.dll"))
 		&& GetModuleHandleA(xorstr("materialsystem.dll"))
 		&& GetModuleHandleA(xorstr("lua_shared.dll"))
+		&& GetModuleHandleA(xorstr("vstdlib.dll"))
 		&& GetModuleHandleA(xorstr("vgui2.dll"));
 }
 
@@ -18,6 +19,34 @@ void utilities::attach_console()
 	freopen(xorstr("conout$"), "w", stdout);
 	freopen(xorstr("conout$"), "w", stderr);
 	SetConsoleTitleA(xorstr("Nixware"));
+}
+
+bool utilities::is_key_pressed(int key)
+{
+	static bool key_press[256];
+
+	if (GetAsyncKeyState(key) & 0x8000)
+	{
+		if (!key_press[key])
+		{
+			key_press[key] = true;
+			return true;
+		}
+	}
+	else
+		key_press[key] = false;
+
+	return false;
+}
+
+int utilities::time_to_ticks(float time)
+{
+	return (int)(0.5f + time / interfaces::global_vars->interval_per_tick);
+}
+
+float utilities::ticks_to_time(int ticks)
+{
+	return interfaces::global_vars->interval_per_tick * ticks;
 }
 
 q_angle utilities::calc_angle(const c_vector& from, const c_vector& to)
@@ -96,7 +125,7 @@ bool utilities::world_to_screen(const c_vector& in, c_vector& out)
 
 bool utilities::get_entity_box(c_base_entity* entity, box_t& box)
 {
-	c_vector pos = entity->get_render_origin();
+	c_vector pos = entity->get_abs_origin();
 	c_vector min = pos + entity->get_collidable()->mins();
 	c_vector max = pos + entity->get_collidable()->maxs();
 

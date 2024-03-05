@@ -42,6 +42,14 @@ void interfaces::initialize()
 	if (!lua_shared)
 		throw;
 
+	cvar = memory::capture_interface<c_cvar>(xorstr("vstdlib.dll"), xorstr("VEngineCvar007"));
+	if (!cvar)
+		throw;
+
+	model_render = memory::capture_interface<c_model_render>(xorstr("engine.dll"), xorstr("VEngineModel016"));
+	if (!model_render)
+		throw;
+
 	view_render = memory::get_vmt_from_instruction<i_view_render>((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 8B 0D ? ? ? ? 48 8B 01 FF 50 18 48 8B 0D ? ? ? ? E8 ? ? ? ?")));
 	if (!view_render)
 		throw;
@@ -58,7 +66,7 @@ void interfaces::initialize()
 	if (!global_vars)
 		throw;
 
-	random_stream = memory::get_vmt_from_instruction<c_uniform_random_stream>((uintptr_t)GetProcAddress(GetModuleHandleA("vstdlib.dll"), "RandomSeed"), 0x2);
+	random_stream = memory::get_vmt_from_instruction<c_uniform_random_stream>((uintptr_t)GetProcAddress(GetModuleHandleA(xorstr("vstdlib.dll")), xorstr("RandomSeed")), 0x2);
 	if (!random_stream)
 		throw;
 }

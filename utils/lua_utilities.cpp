@@ -66,3 +66,59 @@ float lua_utilities::get_weapon_spread(c_base_combat_weapon* weapon)
 
 	return value;
 }
+
+float lua_utilities::get_weapon_cur_cone(c_base_combat_weapon* weapon)
+{
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	if (!lua)
+		return 0.f;
+
+	weapon->push_entity();
+
+	lua->get_field(-1, xorstr("CurCone"));
+	if (!lua->is_type(-1, 3))
+	{
+		lua->pop(2);
+		return 0.f;
+	}
+
+	float value = lua->get_number(-1);
+
+	lua->pop(2);
+
+	return value;
+}
+
+void lua_utilities::random_seed(float seed)
+{
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	if (!lua)
+		return;
+
+	lua->push_special(lua_special_glob);
+	lua->get_field(-1, xorstr("math"));
+	lua->get_field(-1, xorstr("randomseed"));
+	lua->push_number(seed);
+	lua->call(1, 0);
+
+	lua->pop(2);
+}
+
+float lua_utilities::rand(float min, float max)
+{
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	if (!lua)
+		return 0;
+
+	lua->push_special(lua_special_glob);
+	lua->get_field(-1, xorstr("math"));
+	lua->get_field(-1, xorstr("Rand"));
+	lua->push_number(min);
+	lua->push_number(max);
+	lua->call(2, 1);
+
+	float value = (float)lua->get_number(-1);
+	lua->pop(3);
+
+	return value;
+}

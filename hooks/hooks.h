@@ -1,7 +1,11 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include <mutex>
+#include <list>
+#include <deque>
+#include <thread>
+#include <algorithm>
+#include <map>
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -34,21 +38,27 @@ namespace hooks
 			inline HRESULT(APIENTRY* present) (IDirect3DDevice9*, CONST RECT*, CONST RECT*, HWND, CONST RGNDATA*);
 			inline void(__thiscall* html_panel_load_url)(void*, const char*);
 			inline int(__thiscall* html_panel_paint)(void*);
+			inline int(__thiscall* send_datagram)(c_net_channel*, void*);
 			inline void(__fastcall* paint_traverse)(i_panel*, v_panel, bool, bool);
 			inline void(__thiscall* create_move)(c_hl_client*, int, float, bool);
-			inline void(__thiscall* frame_stage_notify)(c_hl_client*, int);
+			inline bool(*write_user_cmd_delta_to_buffer)(c_hl_client*, void*, int, int, bool);
+			inline void(__thiscall* frame_stage_notify)(c_hl_client*, ñlient_frame_stage_t);
 			inline void(__thiscall* render_view)(i_view_render*, c_view_setup&, int, int);
+			inline void(__thiscall* draw_model_execute)(c_model_render*, void*, model_render_info_t&, matrix3x4*);
 		}
 
-		LRESULT CALLBACK wndproc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param);
-		HRESULT APIENTRY present(IDirect3DDevice9* device, CONST RECT* src, CONST RECT* dest, HWND wnd_override, CONST RGNDATA* dirty_region);
-		HRESULT APIENTRY reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* presentation_parameters);
-		void __fastcall html_panel_load_url(void* html_panel, const char* url);
-		int __fastcall html_panel_paint(void* html_panel);
-		void paint_traverse(i_panel* panel, v_panel v_panel, bool force_repaint, bool allow_force);
-		void __fastcall create_move(c_hl_client* client, int sequence_number, float input_sample_frametime, bool active);
-		void __fastcall frame_stage_notify(c_hl_client* client, int stage);
-		void __fastcall render_view(i_view_render* view_render, c_view_setup& view, int flags, int to_draw);
+		LRESULT CALLBACK wndproc(HWND, UINT, WPARAM, LPARAM);
+		HRESULT APIENTRY present(IDirect3DDevice9*, CONST RECT*, CONST RECT*, HWND, CONST RGNDATA*);
+		HRESULT APIENTRY reset(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*);
+		void __fastcall html_panel_load_url(void*, const char*);
+		int __fastcall html_panel_paint(void*);
+		int __fastcall send_datagram(c_net_channel*, void*);
+		void paint_traverse(i_panel*, v_panel, bool, bool);
+		void __fastcall create_move(c_hl_client*, int, float, bool);
+		bool write_user_cmd_delta_to_buffer(c_hl_client*, void*, int, int, bool);
+		void __fastcall frame_stage_notify(c_hl_client*, ñlient_frame_stage_t);
+		void __fastcall render_view(i_view_render*, c_view_setup&, int, int);
+		void __fastcall draw_model_execute(c_model_render*, void*, model_render_info_t&, matrix3x4*);
 	}
 }
 

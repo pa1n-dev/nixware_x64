@@ -10,6 +10,5 @@ int __fastcall hooks::handles::html_panel_paint(void* html_panel)
         run_javascript(html_panel, xorstr("function UpdateBackground() { $('body').css({ 'background-image': scope.InGame ? 'none' : 'url(\"http://somestuff.tech.xsph.ru/img/kami.gif\")', 'background-size' : scope.InGame ? 'auto' : 'cover', 'background-repeat' : scope.InGame ? 'repeat' : 'no-repeat' }); } setInterval(UpdateBackground, 1);"));
     });
 
-
     return originals::html_panel_paint(html_panel);
 }

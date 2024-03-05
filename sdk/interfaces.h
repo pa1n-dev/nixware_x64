@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cstdint>
 #include <d3dx9.h>
 
 #include "../dependencies/memory/memory.h"
@@ -16,14 +17,23 @@
 #include "source-sdk/lua/interface.h"
 #include "source-sdk/lua/shared.h"
 
-#include "source-sdk/c_engine_client.h"
 #include "source-sdk/studio.h"
+#include "source-sdk/tier0/platform.h"
+#include "source-sdk/tier1/str_tool.h"
+#include "source-sdk/tier1/checksum_crc.h"
+#include "source-sdk/tier1/checksum_md5.h"
+#include "source-sdk/tier1/c_utl_memory.h"
+#include "source-sdk/tier1/c_utl_vector.h"
 #include "source-sdk/engine/c_collideable.h"
 #include "source-sdk/engine/c_render.h"
-#include "source-sdk/engine/c_model_info.h"
+#include "source-sdk/c_multiplayer_anim_state.h"
+#include "source-sdk/c_hl2mp_player_anim_state.h"
 #include "source-sdk/entity/i_client_renderable.h"
+#include "source-sdk/entity/i_client_networkable.h"
 #include "source-sdk/entity/c_base_combat_weapon.h"
 #include "source-sdk/entity/c_base_entity.h"
+#include "source-sdk/engine/c_model_render.h"
+#include "source-sdk/engine/c_model_info.h"
 #include "source-sdk/vgui/i_panel.h"
 #include "source-sdk/vgui/c_engine_vgui.h"
 #include "source-sdk/client/c_view_setup.h"
@@ -32,16 +42,15 @@
 #include "source-sdk/server/c_entity_list.h"
 #include "source-sdk/materialsystem/i_texture.h"
 #include "source-sdk/materialsystem/c_material_system.h"
-#include "source-sdk/client/c_hl_client.h"
-#include "source-sdk/tier0/platform.h"
-#include "source-sdk/tier1/str_tool.h"
-#include "source-sdk/tier1/checksum_crc.h"
-#include "source-sdk/tier1/checksum_md5.h"
+#include "source-sdk/engine/c_net_channel.h"
+#include "source-sdk/engine/i_engine_trace.h"
 #include "source-sdk/shared/c_user_cmd.h"
 #include "source-sdk/client/c_input.h"
+#include "source-sdk/client/c_hl_client.h"
+#include "source-sdk/vstdlib/c_uniform_random_stream.h"
+#include "source-sdk/vstdlib/c_cvar.h"
 #include "source-sdk/c_global_vars.h"
-#include "source-sdk/i_engine_trace.h"
-#include "source-sdk/c_uniform_random_stream.h"
+#include "source-sdk/c_engine_client.h"
 
 namespace interfaces
 {
@@ -57,9 +66,11 @@ namespace interfaces
 	inline c_model_info*			model_info;
 	inline i_engine_trace*			engine_trace;
 	inline c_lua_shared*			lua_shared;
+	inline c_cvar*					cvar;
 	inline i_view_render*			view_render;
 	inline c_input*					input;
 	inline c_render*				render;
 	inline c_global_vars*			global_vars;
 	inline c_uniform_random_stream* random_stream;
+	inline c_model_render*			model_render;
 }

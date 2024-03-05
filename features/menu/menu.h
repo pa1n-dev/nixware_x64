@@ -7,11 +7,11 @@ namespace menu
 
 	const ImGuiColorEditFlags color_edit4_flags = ImGuiColorEditFlags_NoBorder | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_AlphaPreview;
 
-	void render() noexcept;
+	void render();
 
 	namespace custom
 	{
-        void hotkey(const char* label, hotkey_t* hotkey) noexcept;
+        void hotkey(const char* label, hotkey_t* hotkey);
 
         const char* const key_names[] =
         {

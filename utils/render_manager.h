@@ -26,9 +26,9 @@ namespace render_manager
 		GetWindowDrawList()->AddText(from, GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), text);
 	}
 
-	inline void circle(ImVec2 center, float radius, float color[4], int num_segments, float thickness)
+	inline void circle(ImVec2 position, float radius, float color[4], int num_segments, float thickness)
 	{
-		GetWindowDrawList()->AddCircle(center, radius, GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), num_segments, thickness);
+		GetWindowDrawList()->AddCircle(position, radius, GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), num_segments, thickness);
 	}
 
 	inline void rect(ImVec2 from, ImVec2 to, float color[4], float rounding, ImDrawFlags flags, float thickness)

@@ -23,5 +23,5 @@ namespace math
 	void angle_to_vectors(const q_angle& ang, c_vector& forward, c_vector& right, c_vector& up);
 	void angle_to_vector(const q_angle& ang, c_vector& forward);
 	void vector_to_angle(const c_vector& forward, q_angle& out);
-	void vector_transform(const c_vector& vector, const matrix3x4_t& matrix, c_vector& out);
+	void vector_transform(const c_vector& vector, const matrix3x4& matrix, c_vector& out);
 }

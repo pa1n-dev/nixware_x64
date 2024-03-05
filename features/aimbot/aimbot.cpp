@@ -1,5 +1,7 @@
-#include "aimbot.h"
+ #include "aimbot.h"
 #include "penetrate_walls.h"
+#include "backtrack/history.h"
+#include "backtrack/lag_compensation.h"
 
 void aimbot::run(c_user_cmd* cmd)
 {
@@ -32,7 +34,10 @@ void aimbot::run(c_user_cmd* cmd)
 	if (!settings::aimbot::globals::hotkey.check())
 		return;
 
-	smooth(cmd, target_info.shoot_angle);
+	if (lag_compensation::get_is_locked())
+		return;
+
+	smooth(cmd->view_angles, target_info.shoot_angle);
 
 	cmd->view_angles = target_info.shoot_angle;
 
@@ -41,15 +46,30 @@ void aimbot::run(c_user_cmd* cmd)
 
 	if (settings::aimbot::globals::automatic_fire)
 		cmd->buttons |= IN_ATTACK;
+
+	bool adjust_interp;
+	history::can_restore_to_simulation_time(target_info.simulation_time, &adjust_interp);
+
+	if (adjust_interp)
+	{
+		float interp = utilities::ticks_to_time(interfaces::global_vars->tick_count) - target_info.simulation_time;
+		lag_compensation::update_desired_values(true, interp, 1.f);
+	}
+	else
+	{
+		cmd->tick_count = utilities::time_to_ticks(target_info.simulation_time);
+		//lag_compensation::update_desired_values(false, 0.f, 0.f);
+	}
 }
 
-target_info_t aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_player)
+aimbot::target_info_t aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_player)
 {
 	target_info_t target_info;
 	priority_info_t& priority_info = target_info.priority_info;
 
-	c_vector eye_position = local_player->get_eye_position();
-	c_vector render_origin = local_player->get_render_origin();
+	const c_vector& eye_position = local_player->get_eye_position();
+	const c_vector& abs_origin = local_player->get_abs_origin();
+	const q_angle& view_angles = cmd->view_angles;
 
 	for (size_t i = 1; i <= interfaces::entity_list->get_highest_entity_index(); i++)
 	{
@@ -58,60 +78,86 @@ target_info_t aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_pla
 		if (!entity || !entity->is_player() || !entity->is_alive() || entity->is_dormant() || entity == local_player)
 			continue;
 
+		float simulation_time = entity->get_simulation_time();
+
 		c_vector shoot_pos;
+
 		if (!get_hit_position(local_player, entity, shoot_pos))
-			continue;
+		{
+			if (settings::aimbot::accuracy::backtrack)
+			{
+				std::vector<history::snapshot*> records;
+				history::get_usable_records_for_entity(entity, &records, 0.f, settings::aimbot::accuracy::backtrack);
+
+				if (records.empty())
+					continue;
+
+				auto record = records.back();
+
+				if (!get_hit_position(local_player, entity, shoot_pos, record->bone_to_world))
+					continue;
+
+				simulation_time = record->simulation_time;
+			}
+			else
+				continue;
+		}
 
 		q_angle shoot_angle = utilities::calc_angle(eye_position, shoot_pos);
 
-		float fov = utilities::get_fov(cmd->view_angles, shoot_angle);
+		float fov = utilities::get_fov(view_angles, shoot_angle);
 
 		if (fov > settings::aimbot::globals::fov)
 			continue;
 		
-		int distance = entity->get_render_origin().distance_to(render_origin);
+		int distance = entity->get_abs_origin().distance_to(abs_origin);
 		int health = entity->get_health();
 
-		switch (settings::aimbot::globals::priority)
+        bool should_skip = false;
+        switch (settings::aimbot::globals::priority) 
 		{
-		case 0:
-			if (fov > priority_info.fov)
-				continue;
+            case 0: should_skip = fov > priority_info.fov; break;
+            case 1: should_skip = distance > priority_info.distance; break;
+            case 2: should_skip = health > priority_info.health; break;
+        }
 
-			priority_info.fov = fov;
-			break;
-		case 1:
-			if (distance > priority_info.distance)
-				continue;
-
-			priority_info.distance = distance;
-			break;
-		case 2:
-			if (health > priority_info.health)
-				continue;
-
-			priority_info.health = health;
-			break;
-		}
-
-		target_info.entity = entity;
-		target_info.shoot_pos = shoot_pos;
-		target_info.shoot_angle = shoot_angle;
+        if (should_skip)
+            continue;
 
 		priority_info.fov = fov;
 		priority_info.distance = distance;
 		priority_info.health = health;
+
+		target_info.entity = entity;
+		target_info.shoot_pos = shoot_pos;
+		target_info.shoot_angle = shoot_angle;
+		target_info.simulation_time = simulation_time;
 	}
 
 	return target_info;
 }
 
-bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity, c_vector& shoot_pos)
+bool aimbot::check_hitbox_group(int group) 
 {
-	matrix3x4_t matrix[MAX_STUDIO_BONES];
+	switch (settings::aimbot::globals::hitbox) 
+	{
+	case 0: return group == HITGROUP_HEAD;
+	case 1: return group == HITGROUP_CHEST;
+	case 2: return group == HITGROUP_STOMACH;
+	default: return true;
+	}
+}
 
-	if (!entity->get_client_renderable()->setup_bones(matrix, MAX_STUDIO_BONES, BONE_USED_BY_HITBOX, interfaces::global_vars->curtime))
-		return false;
+bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity, c_vector& shoot_pos, matrix3x4* bone_to_world)
+{
+	if (bone_to_world == nullptr)
+	{
+		bone_to_world = new matrix3x4[MAX_STUDIO_BONES];
+
+		entity->invalidate_bone_cache();
+		if (!entity->get_client_renderable()->setup_bones(bone_to_world, MAX_STUDIO_BONES, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))
+			return false;
+	}
 
 	void* model = entity->get_client_renderable()->get_model();
 	if (!model)
@@ -133,12 +179,12 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 		if (!hitbox)
 			continue;
 
-		if ((settings::aimbot::globals::hitbox == 0 && hitbox->group != HITGROUP_HEAD) || (settings::aimbot::globals::hitbox == 1 && hitbox->group != HITGROUP_CHEST) || (settings::aimbot::globals::hitbox == 2 && hitbox->group != HITGROUP_STOMACH))
+		if (!check_hitbox_group(hitbox->group))
 			continue;
 
 		c_vector mins, maxs;
-		math::vector_transform(hitbox->bb_min, matrix[hitbox->bone], mins);
-		math::vector_transform(hitbox->bb_max, matrix[hitbox->bone], maxs);
+		math::vector_transform(hitbox->bb_min, bone_to_world[hitbox->bone], mins);
+		math::vector_transform(hitbox->bb_max, bone_to_world[hitbox->bone], maxs);
 		shoot_pos = (mins + maxs) * 0.5;
 
 		if (penetrate_walls::is_visible(local_player, entity, shoot_pos))
@@ -147,21 +193,20 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 		found_hitbox = true;
 	}
 	
-	if (found_hitbox)
+	if (!found_hitbox)
 	{
-		c_vector pos = entity->get_render_origin();
-		c_vector mins = pos + entity->get_collidable()->mins();
-		c_vector maxs = pos + entity->get_collidable()->maxs();
+		const c_vector& pos = entity->get_abs_origin();
+		const c_vector& mins = pos + entity->get_collidable()->mins();
+		const c_vector& maxs = pos + entity->get_collidable()->maxs();
 		shoot_pos = (mins + maxs) * 0.5;
 
-		if (penetrate_walls::is_visible(local_player, entity, shoot_pos))
-			return true;
+		return penetrate_walls::is_visible(local_player, entity, shoot_pos);
 	}
 
 	return false;
 }
 
-void aimbot::smooth(c_user_cmd* cmd, q_angle& angle)
+void aimbot::smooth(const q_angle& view_angles, q_angle& angle)
 {
 	if (!settings::aimbot::accuracy::smooth)
 		return;
@@ -169,9 +214,9 @@ void aimbot::smooth(c_user_cmd* cmd, q_angle& angle)
 	angle.normalize();
 	angle.clamp();
 
-	q_angle delta = angle - cmd->view_angles;
+	q_angle delta = angle - view_angles;
 	delta.normalize();
 	delta.clamp();
 
-	angle = cmd->view_angles + delta / settings::aimbot::accuracy::smooth;
+	angle = view_angles + delta / settings::aimbot::accuracy::smooth;
 }
