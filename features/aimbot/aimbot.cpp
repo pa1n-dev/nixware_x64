@@ -84,30 +84,28 @@ aimbot::target_info_t aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* l
 
 		if (!get_hit_position(local_player, entity, shoot_pos))
 		{
-			if (settings::aimbot::accuracy::backtrack)
-			{
-				std::vector<history::snapshot*> records;
-				history::get_usable_records_for_entity(entity, &records, 0.f, settings::aimbot::accuracy::backtrack);
-
-				if (records.empty())
-					continue;
-
-				auto record = records.back();
-
-				if (!get_hit_position(local_player, entity, shoot_pos, record->bone_to_world))
-					continue;
-
-				simulation_time = record->simulation_time;
-			}
-			else
+			if (!settings::aimbot::accuracy::backtrack)
 				continue;
+
+			std::vector<history::snapshot*> records;
+			history::get_usable_records_for_entity(entity, &records, 0.f, settings::aimbot::accuracy::backtrack);
+
+			if (records.empty())
+				continue;
+
+			auto record = records.back();
+
+			if (!get_hit_position(local_player, entity, shoot_pos, record->bone_to_world))
+				continue;
+
+			simulation_time = record->simulation_time;
 		}
 
 		q_angle shoot_angle = utilities::calc_angle(eye_position, shoot_pos);
 
 		float fov = utilities::get_fov(view_angles, shoot_angle);
 
-		if (fov > settings::aimbot::globals::fov)
+		if (fov >= settings::aimbot::globals::fov)
 			continue;
 		
 		int distance = entity->get_abs_origin().distance_to(abs_origin);

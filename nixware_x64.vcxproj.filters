@@ -383,5 +383,11 @@
     <ClInclude Include="sdk\source-sdk\c_multiplayer_anim_state.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\source-sdk\client\i_client_mode.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\client_mode_shared\override_view.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

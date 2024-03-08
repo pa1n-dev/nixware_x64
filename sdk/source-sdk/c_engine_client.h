@@ -46,6 +46,11 @@ public:
 		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 27)(this);
 	}
 
+	float get_screen_aspect_ratio()
+	{
+		return memory::call_v_function<float(__thiscall*)(void*)>(this, 95)(this);
+	}
+
 	c_net_channel* get_net_channel_info()
 	{
 		return memory::call_v_function<c_net_channel* (__thiscall*)(void*)>(this, 72)(this);

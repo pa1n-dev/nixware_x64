@@ -14,6 +14,7 @@
 #include "handles/d3d9/reset.h"
 #include "handles/html_panel/load_url.h"
 #include "handles/html_panel/paint.h"
+#include "handles/client_mode_shared/override_view.h"
 #include "handles/net_channel/send_datagram.h"
 #include "handles/panel/paint_traverse.h"
 #include "handles/hl_client/create_move.h"
@@ -34,6 +35,9 @@ void hooks::initialize()
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("menusystem.dll"), xorstr("40 57 48 83 EC 40 48 8B F9")), &handles::html_panel_paint, (LPVOID*)&handles::originals::html_panel_paint))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("client.dll"), xorstr("40 55 53 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B DA")), &handles::override_view, (LPVOID*)&handles::originals::override_view))
         throw;
 
     //if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("40 55 53 56 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ?")), &handles::send_datagram, (LPVOID*)&handles::originals::send_datagram))

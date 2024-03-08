@@ -38,6 +38,7 @@ namespace hooks
 			inline HRESULT(APIENTRY* present) (IDirect3DDevice9*, CONST RECT*, CONST RECT*, HWND, CONST RGNDATA*);
 			inline void(__thiscall* html_panel_load_url)(void*, const char*);
 			inline int(__thiscall* html_panel_paint)(void*);
+			inline bool(__thiscall* override_view)(void*, c_view_setup*);
 			inline int(__thiscall* send_datagram)(c_net_channel*, void*);
 			inline void(__fastcall* paint_traverse)(i_panel*, v_panel, bool, bool);
 			inline void(__thiscall* create_move)(c_hl_client*, int, float, bool);
@@ -52,6 +53,7 @@ namespace hooks
 		HRESULT APIENTRY reset(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*);
 		void __fastcall html_panel_load_url(void*, const char*);
 		int __fastcall html_panel_paint(void*);
+		bool __fastcall override_view(i_client_mode* ecx, c_view_setup* view_setup);
 		int __fastcall send_datagram(c_net_channel*, void*);
 		void paint_traverse(i_panel*, v_panel, bool, bool);
 		void __fastcall create_move(c_hl_client*, int, float, bool);

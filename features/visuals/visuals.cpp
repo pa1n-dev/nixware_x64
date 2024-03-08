@@ -60,8 +60,10 @@ void visuals::render()
 
 	if (settings::aimbot::visuals::fov)
 	{
-		float radius = tan(math::deg2rad((float)settings::aimbot::globals::fov) / 2) / tan(math::deg2rad(globals::fov - 1.3085f) / 2) * io.DisplaySize.x;
-		render_manager::circle(center, radius, settings::aimbot::visuals::colors::fov, 1000, 1.f);
+		float screen_fov = tanf(math::deg2rad(0.5f * globals::fov)) * ((io.DisplaySize.x / io.DisplaySize.y) / (4.f / 3.f));
+		float radius = tanf(math::deg2rad(settings::aimbot::globals::fov * 0.5) * 2) / screen_fov * (io.DisplaySize.x * 0.5);
+
+		render_manager::circle(center, radius, settings::aimbot::visuals::colors::fov, 100, 1.f);
 	}
 
 	End();

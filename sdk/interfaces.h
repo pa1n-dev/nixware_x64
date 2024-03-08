@@ -39,6 +39,7 @@
 #include "source-sdk/client/c_view_setup.h"
 #include "source-sdk/client/i_view_render.h"
 #include "source-sdk/client/i_render_view.h"
+#include "source-sdk/client/i_client_mode.h"
 #include "source-sdk/server/c_entity_list.h"
 #include "source-sdk/materialsystem/i_texture.h"
 #include "source-sdk/materialsystem/c_material_system.h"
@@ -67,10 +68,11 @@ namespace interfaces
 	inline i_engine_trace*			engine_trace;
 	inline c_lua_shared*			lua_shared;
 	inline c_cvar*					cvar;
+	inline c_model_render*			model_render;
+	inline i_client_mode*			client_mode;
 	inline i_view_render*			view_render;
 	inline c_input*					input;
 	inline c_render*				render;
 	inline c_global_vars*			global_vars;
 	inline c_uniform_random_stream* random_stream;
-	inline c_model_render*			model_render;
 }

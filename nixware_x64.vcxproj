@@ -208,6 +208,7 @@
     <ClInclude Include="features\menu\menu.h" />
     <ClInclude Include="features\miscellaneous\movement.h" />
     <ClInclude Include="features\visuals\visuals.h" />
+    <ClInclude Include="hooks\handles\client_mode_shared\override_view.h" />
     <ClInclude Include="hooks\handles\hl_client\create_move.h" />
     <ClInclude Include="hooks\handles\hl_client\frame_stage_notify.h" />
     <ClInclude Include="hooks\handles\hl_client\write_user_cmd_delta_to_buffer.h" />
@@ -222,6 +223,7 @@
     <ClInclude Include="hooks\handles\d3d9\present.h" />
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />
+    <ClInclude Include="sdk\source-sdk\client\i_client_mode.h" />
     <ClInclude Include="sdk\source-sdk\c_hl2mp_player_anim_state.h" />
     <ClInclude Include="sdk\source-sdk\c_multiplayer_anim_state.h" />
     <ClInclude Include="sdk\source-sdk\entity\i_client_networkable.h" />

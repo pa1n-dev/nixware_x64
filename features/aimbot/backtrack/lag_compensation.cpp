@@ -1,5 +1,6 @@
 #include "lag_compensation.h"
 
+//https://media.discordapp.net/attachments/1194221664339234816/1214847464277024768/image.png?ex=65fa99de&is=65e824de&hm=0d881e116dd3a29aaf32d926899891343d2fce9aa895e54b0c865aa28eaaad6d&=&format=webp&quality=lossless
 const char* host_cleanup_con_var_string_value(const char* str)
 {
 	using host_cleanup_con_var_string_value_t = const char*(*)(const char*);
@@ -104,10 +105,10 @@ void lag_compensation::update_desired_values(bool _interpolate, float _interp, f
 	has_to_change = true;
 }
 
-void lag_compensation::cancel_updates()
+/*void lag_compensation::cancel_updates()
 {
 	has_to_change = false;
-}
+}*/
 
 bool lag_compensation::get_is_locked()
 {

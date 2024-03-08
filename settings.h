@@ -35,7 +35,7 @@ namespace settings
             inline hotkey_t hotkey;
             inline bool silent = false;
             inline bool automatic_fire = false;
-            inline int fov = 0;
+            inline float fov = 0;
             inline int hitbox = 0;
             inline int priority = 0;
         }

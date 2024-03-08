@@ -35,7 +35,7 @@ void menu::render()
             Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable); custom::hotkey(xorstr("Aimbot Hotkey"), &settings::aimbot::globals::hotkey);
             Checkbox(xorstr("Silent"), &settings::aimbot::globals::silent);
             Checkbox(xorstr("Automatic fire"), &settings::aimbot::globals::automatic_fire);
-            SliderInt(xorstr("Fov"), &settings::aimbot::globals::fov, 0, 180, xorstr("%d"), ImGuiSliderFlags_NoInput);
+            SliderFloat(xorstr("Fov"), &settings::aimbot::globals::fov, 0.f, 180.f, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
             Combo(xorstr("Hitbox"), &settings::aimbot::globals::hitbox, xorstr("Head\0" "Chest\0" "Stomach\0" "Hitscan\0"));
             Combo(xorstr("Priority"), &settings::aimbot::globals::priority, xorstr("Fov\0" "Distance\0" "Health\0"));
 
