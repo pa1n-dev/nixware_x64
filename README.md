@@ -11,6 +11,7 @@ The cheat almost completely repeats the old nixware menu, which is why it has su
 
 #### Screenshots
 ![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/c21beff3-5d31-45c7-a8ca-fafbeb5318a3)
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/5873042b-de4d-4312-9434-7c46c36efbdf)
 
 #### How to use
 Select beta version:
