@@ -5,5 +5,5 @@ namespace predict_spread
 {
 	void run(c_user_cmd* cmd);
 	void engine_spread(c_user_cmd* cmd, float spread_multiplier);
-	void cone_spread(c_user_cmd* cmd, c_base_entity* local_player, float cone, float seed);
+	void cone_spread(c_user_cmd* cmd, float cone, float seed);
 }

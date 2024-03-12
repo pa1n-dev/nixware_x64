@@ -25,8 +25,8 @@ void predict_spread::run(c_user_cmd* cmd)
 		return engine_spread(cmd, lua_utilities::get_weapon_spread(weapon));
 
 	if (strstr(weapon_base, xorstr("swb_base")))
-		return cone_spread(cmd, local_player, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
-}
+		return cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
+} 
 
 void predict_spread::engine_spread(c_user_cmd* cmd, float spread_multiplier)
 {
@@ -57,7 +57,7 @@ void predict_spread::engine_spread(c_user_cmd* cmd, float spread_multiplier)
 	cmd->view_angles += cmd->view_angles - out;
 }
 
-void predict_spread::cone_spread(c_user_cmd* cmd, c_base_entity* local_player, float cone, float seed)
+void predict_spread::cone_spread(c_user_cmd* cmd, float cone, float seed)
 {
 	if (cone == 0.f || seed == 0.f)
 		return;

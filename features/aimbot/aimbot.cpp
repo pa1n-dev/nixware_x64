@@ -57,7 +57,7 @@ void aimbot::run(c_user_cmd* cmd)
 	}
 	else
 	{
-		cmd->tick_count = utilities::time_to_ticks(target_info.simulation_time);
+		//cmd->tick_count = utilities::time_to_ticks(target_info.simulation_time);
 		//lag_compensation::update_desired_values(false, 0.f, 0.f);
 	}
 }
@@ -68,7 +68,7 @@ aimbot::target_info_t aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* l
 	priority_info_t& priority_info = target_info.priority_info;
 
 	const c_vector& eye_position = local_player->get_eye_position();
-	const c_vector& abs_origin = local_player->get_abs_origin();
+	const c_vector& origin = local_player->get_abs_origin();
 	const q_angle& view_angles = cmd->view_angles;
 
 	for (size_t i = 1; i <= interfaces::entity_list->get_highest_entity_index(); i++)
@@ -87,28 +87,28 @@ aimbot::target_info_t aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* l
 			if (!settings::aimbot::accuracy::backtrack)
 				continue;
 
-			std::vector<history::snapshot*> records;
-			history::get_usable_records_for_entity(entity, &records, 0.f, settings::aimbot::accuracy::backtrack);
+			std::vector<lag_record> records;
+			history::get_usable_records(i, &records, settings::aimbot::accuracy::backtrack);
 
 			if (records.empty())
 				continue;
 
 			auto record = records.back();
 
-			if (!get_hit_position(local_player, entity, shoot_pos, record->bone_to_world))
+			if (!get_hit_position(local_player, entity, shoot_pos, record.bone_to_world))
 				continue;
 
-			simulation_time = record->simulation_time;
+			simulation_time = record.simulation_time;
 		}
 
 		q_angle shoot_angle = utilities::calc_angle(eye_position, shoot_pos);
 
 		float fov = utilities::get_fov(view_angles, shoot_angle);
 
-		if (fov >= settings::aimbot::globals::fov)
+		if (fov > settings::aimbot::globals::fov)
 			continue;
 		
-		int distance = entity->get_abs_origin().distance_to(abs_origin);
+		int distance = entity->get_abs_origin().distance_to(origin);
 		int health = entity->get_health();
 
         bool should_skip = false;

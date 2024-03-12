@@ -112,13 +112,13 @@ void lag_compensation::update_desired_values(bool _interpolate, float _interp, f
 
 bool lag_compensation::get_is_locked()
 {
-	/*static int last_tick_count = 0;
+	static int last_tick_count = 0;
 	if (!has_to_reset && reset_ticks > 0 && last_tick_count != interfaces::global_vars->tick_count)
 	{
 		last_tick_count = interfaces::global_vars->tick_count;
 
 		reset_ticks--;
-	}*/
+	}
 
-	return (has_to_reset /* || reset_ticks > 0 */ );
+	return (has_to_reset || reset_ticks > 0  );
 }

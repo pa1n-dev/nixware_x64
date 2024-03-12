@@ -173,8 +173,7 @@ void c_utl_memory<T, I>::grow(int num)
 
     int n_allocation_requested = m_n_allocation_count + num;
 
-    int n_new_allocation_count = utl_memory_calc_new_allocation_count(
-        m_n_allocation_count, m_n_grow_size, n_allocation_requested, sizeof(T));
+    int n_new_allocation_count = utl_memory_calc_new_allocation_count(m_n_allocation_count, m_n_grow_size, n_allocation_requested, sizeof(T));
 
     if ((int)(I)n_new_allocation_count < n_allocation_requested)
     {

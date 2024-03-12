@@ -202,7 +202,7 @@ inline char* md5_print(unsigned char* hash, int hash_len)
 	return sz_return;
 }
 
-inline unsigned int md5_pseudo_random(unsigned int nSeed)
+inline unsigned int md5_pseudo_random(unsigned int seed)
 {
 	md5_context_t ctx;
 	unsigned char digest[MD5_DIGEST_LENGTH];
@@ -210,7 +210,7 @@ inline unsigned int md5_pseudo_random(unsigned int nSeed)
 	memset(&ctx, 0, sizeof(ctx));
 
 	md5_init(&ctx);
-	md5_update(&ctx, (unsigned char*)&nSeed, sizeof(nSeed));
+	md5_update(&ctx, (unsigned char*)&seed, sizeof(seed));
 	md5_final(digest, &ctx);
 
 	return *(unsigned int*)(digest + 6);
