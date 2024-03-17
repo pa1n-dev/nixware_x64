@@ -178,6 +178,7 @@ void menu::render()
             LabelText(xorstr("FrameBg"));        ColorEdit4(xorstr("FrameBg"), settings::menu::colors::frame_bg, color_edit4_flags);
             LabelText(xorstr("FrameHoveredBg")); ColorEdit4(xorstr("FrameHoveredBg"), settings::menu::colors::frame_hovered_bg, color_edit4_flags);
             LabelText(xorstr("FrameActiveBg"));  ColorEdit4(xorstr("FrameActiveBg"), settings::menu::colors::frame_active_bg, color_edit4_flags);
+            Checkbox(xorstr("Custom loading screen"), &settings::menu::custom_loading_screen);
 
             EndChild();
         }
@@ -186,6 +187,10 @@ void menu::render()
 
         if (BeginChild(xorstr("Configs"), child_size))
         {
+            float column_width = GetColumnWidth() - 10.f;
+
+            if (ImGui::Button(xorstr("Unload cheat"), ImVec2(column_width, 35.f)))
+                hooks::unhook();
 
             EndChild();
         }

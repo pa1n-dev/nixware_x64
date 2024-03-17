@@ -15,6 +15,7 @@ namespace settings
     namespace menu
     {
         inline bool opened = false;
+        inline bool custom_loading_screen = true;
 
         namespace colors
         {

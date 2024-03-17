@@ -90,6 +90,5 @@ HRESULT APIENTRY hooks::handles::present(IDirect3DDevice9* device, CONST RECT* s
 		}
 	}
 
-
 	return originals::present(device, src, dest, wnd_override, dirty_region);
 }

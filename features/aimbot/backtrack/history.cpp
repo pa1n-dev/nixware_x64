@@ -135,14 +135,17 @@ void history::update()
 
 	for (size_t i = 1; i <= interfaces::entity_list->get_highest_entity_index(); i++)
 	{
+		c_base_entity* entity = interfaces::entity_list->get_entity(i);
+
+		if (!entity || !entity->is_player())
+			continue;
+
 		if (i == interfaces::engine->get_local_player())
 			continue;
 
-		c_base_entity* entity = interfaces::entity_list->get_entity(i);
-
 		auto& track = records[i - 1];
 
-		if (!entity)
+		if (!entity->is_alive())
 		{
 			if (!track.empty())
 				track.clear();
@@ -162,12 +165,9 @@ void history::update()
 			}
 			else
 			{
-				++it; // Move to the next element
+				++it;
 			}
 		}
-
-		if (!entity->is_player() || !entity->is_alive())
-			continue;
 
 		lag_record record;
 
@@ -176,7 +176,8 @@ void history::update()
 		record.vec_origin = entity->get_abs_origin();
 
 		entity->invalidate_bone_cache();
-		entity->get_client_renderable()->setup_bones(record.bone_to_world, MAX_STUDIO_BONES, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime);
+		if (!entity->get_client_renderable()->setup_bones(record.bone_to_world, MAX_STUDIO_BONES, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))
+			continue;
 
 		track.insert(track.begin(), record);
 	}

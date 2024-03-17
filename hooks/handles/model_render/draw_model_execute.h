@@ -11,7 +11,7 @@ void __fastcall hooks::handles::draw_model_execute(c_model_render* model_render,
         std::vector<lag_record> records;
         history::get_usable_records(info.entity_index, &records, settings::aimbot::accuracy::backtrack);
 
-        if (!records.empty()) 
+        if (!records.empty())
             originals::draw_model_execute(model_render, state, info, records.back().bone_to_world);
 	}
 

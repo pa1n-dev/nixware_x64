@@ -1,11 +1,5 @@
 #pragma once
 
-class c_studio_hdr
-{
-public:
-
-};
-
 class c_base_entity
 {
 public:
@@ -80,6 +74,16 @@ public:
 		return *(int*)((uintptr_t)this + 0x2D50);
 	}
 
+	int& get_sequence()
+	{
+		return *(int*)((uintptr_t)this + 0x1A00);
+	}
+
+	float& get_cycle()
+	{
+		return *(float*)((uintptr_t)this + 0x1A08);
+	}
+
 	bool& client_side_animation()
 	{
 		return *(bool*)((uintptr_t)this + 0x19D0);
@@ -89,11 +93,6 @@ public:
 	c_hl2mp_player_anim_state* get_anim_state()
 	{
 		return *(c_hl2mp_player_anim_state**)((uintptr_t)this + 0x3618);
-	}
-
-	q_angle& get_render_angles()
-	{
-		return *(q_angle*)((uintptr_t)(*(float**)((uintptr_t)(this) + 0x3618)) + 0x38);
 	}
 
 	q_angle& get_punch_angle()
@@ -109,6 +108,18 @@ public:
 	unsigned int& hitbox_bone_cache_handle()
 	{
 		return *(unsigned int*)((uintptr_t)this + 0x1A98);
+	}
+
+	void update_client_side_animations()
+	{
+		using update_client_side_animations_fn = void(__fastcall*)(void*);
+
+		static update_client_side_animations_fn update_client_side_animations;
+
+		if (!update_client_side_animations)
+			update_client_side_animations = (update_client_side_animations_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 83 EC 38 48 8B 0D ? ? ? ? 48 89 74 24 ? 48 89 7C 24 ?"));
+
+		update_client_side_animations(this);
 	}
 
 	c_vector get_eye_position()

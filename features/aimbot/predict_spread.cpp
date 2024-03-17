@@ -22,7 +22,7 @@ void predict_spread::run(c_user_cmd* cmd)
 	const char* weapon_base = lua_utilities::get_weapon_base(weapon);
 
 	if (strstr(weapon_base, xorstr("bobs_")))
-		return engine_spread(cmd, lua_utilities::get_weapon_spread(weapon));
+		return engine_spread(cmd, lua_utilities::get_m9k_spread(cmd, weapon));
 
 	if (strstr(weapon_base, xorstr("swb_base")))
 		return cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);

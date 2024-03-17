@@ -20,7 +20,7 @@ public:
 
     i_texture* get_render_target()
     {
-        return memory::call_v_function<i_texture * (__thiscall*)(void*)>(this, 5)(this);
+        return memory::call_v_function<i_texture* (__thiscall*)(void*)>(this, 5)(this);
     }
 };
 

@@ -39,7 +39,8 @@ const char* lua_utilities::get_weapon_base(c_base_combat_weapon* weapon)
 	return value;
 }
 
-float lua_utilities::get_weapon_spread(c_base_combat_weapon* weapon)
+
+float lua_utilities::get_m9k_spread(c_user_cmd* cmd, c_base_combat_weapon* weapon)
 {
 	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
 	if (!lua)
@@ -54,11 +55,23 @@ float lua_utilities::get_weapon_spread(c_base_combat_weapon* weapon)
 		return 0.f;
 	}
 
-	lua->get_field(-1, xorstr("Spread"));
-	if (!lua->is_type(-1, 3))
+	if (cmd->buttons & IN_ATTACK2)
 	{
-		lua->pop(3);
-		return 0.f;
+		lua->get_field(-1, xorstr("IronAccuracy"));
+		if (!lua->is_type(-1, 3))
+		{
+			lua->pop(3);
+			return 0.f;
+		}
+	}
+	else
+	{
+		lua->get_field(-1, xorstr("Spread"));
+		if (!lua->is_type(-1, 3))
+		{
+			lua->pop(3);
+			return 0.f;
+		}
 	}
 
 	double value = lua->get_number(-1);

@@ -1,6 +1,6 @@
 #pragma once
 
-class i_client_mode
+class c_studio_hdr
 {
 public:
 

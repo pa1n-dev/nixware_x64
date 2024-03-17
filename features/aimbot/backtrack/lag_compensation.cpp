@@ -22,12 +22,12 @@ void lag_compensation::write_user_cmd_delta_to_buffer_callback()
 		return;
 
 	c_net_channel* net_channel = interfaces::engine->get_net_channel_info();
-	if (net_channel == nullptr)
+	if (!net_channel)
 		return;
 
 	{
 		NET_SetConVar net_interpolate("cl_interpolate", interpolate == 0 ? "0" : "1");
-		net_channel->send_net_msg(net_interpolate);
+		net_channel->send_net_msg(net_interpolate, true);
 	}
 
 	{
@@ -35,7 +35,7 @@ void lag_compensation::write_user_cmd_delta_to_buffer_callback()
 		sprintf_s(buf, "%f", interp);
 
 		NET_SetConVar net_interp("cl_interp", host_cleanup_con_var_string_value(buf));
-		net_channel->send_net_msg(net_interp);
+		net_channel->send_net_msg(net_interp, true);
 	}
 
 	{
@@ -43,7 +43,7 @@ void lag_compensation::write_user_cmd_delta_to_buffer_callback()
 		sprintf_s(buf, "%f", ratio);
 
 		NET_SetConVar cl_interp_ratio("cl_interp_ratio", host_cleanup_con_var_string_value(buf));
-		net_channel->send_net_msg(cl_interp_ratio);
+		net_channel->send_net_msg(cl_interp_ratio, true);
 	}
 
 	has_to_change = false;
@@ -57,12 +57,12 @@ void lag_compensation::reset_values()
 	c_con_var* cl_interp_ratio = interfaces::cvar->find_var("cl_interp_ratio");
 
 	c_net_channel* net_channel = interfaces::engine->get_net_channel_info();
-	if (net_channel == nullptr)
+	if (!net_channel)
 		return;
 
 	{
 		NET_SetConVar net_interpolate("cl_interpolate", cl_interpolate->get_int() == 0 ? "0" : "1");
-		net_channel->send_net_msg(net_interpolate);
+		net_channel->send_net_msg(net_interpolate, true);
 	}
 
 	{
@@ -70,7 +70,7 @@ void lag_compensation::reset_values()
 		sprintf_s(buf, "%f", cl_interp->get_float());
 
 		NET_SetConVar net_interp("cl_interp", host_cleanup_con_var_string_value(buf));
-		net_channel->send_net_msg(net_interp);
+		net_channel->send_net_msg(net_interp, true);
 	}
 
 	{
@@ -78,7 +78,7 @@ void lag_compensation::reset_values()
 		sprintf_s(buf, "%f", cl_interp_ratio->get_float());
 
 		NET_SetConVar cl_interp_ratio("cl_interp_ratio", host_cleanup_con_var_string_value(buf));
-		net_channel->send_net_msg(cl_interp_ratio);
+		net_channel->send_net_msg(cl_interp_ratio, true);
 	}
 
 	reset_ticks = 3;

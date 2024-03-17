@@ -26,6 +26,7 @@
 #include "source-sdk/tier1/c_utl_vector.h"
 #include "source-sdk/engine/c_collideable.h"
 #include "source-sdk/engine/c_render.h"
+#include "source-sdk/c_studio_hdr.h"
 #include "source-sdk/c_multiplayer_anim_state.h"
 #include "source-sdk/c_hl2mp_player_anim_state.h"
 #include "source-sdk/entity/i_client_renderable.h"
@@ -39,7 +40,7 @@
 #include "source-sdk/client/c_view_setup.h"
 #include "source-sdk/client/i_view_render.h"
 #include "source-sdk/client/i_render_view.h"
-#include "source-sdk/client/i_client_mode.h"
+#include "source-sdk/client/i_client_mode_shared.h"
 #include "source-sdk/server/c_entity_list.h"
 #include "source-sdk/materialsystem/i_texture.h"
 #include "source-sdk/materialsystem/c_material_system.h"
@@ -69,7 +70,7 @@ namespace interfaces
 	inline c_lua_shared*			lua_shared;
 	inline c_cvar*					cvar;
 	inline c_model_render*			model_render;
-	inline i_client_mode*			client_mode;
+	inline i_client_mode_shared*	client_mode_shared;
 	inline i_view_render*			view_render;
 	inline c_input*					input;
 	inline c_render*				render;
