@@ -95,37 +95,38 @@ bool history::can_restore_to_simulation_time(float simulation_time, bool* need_t
 	return true;
 }
 
-void history::get_usable_records(int index, std::vector<lag_record>* out_records, float max_time)
+bool history::get_latest_record(int index, lag_record& out_record)
 {
 	c_base_entity* entity = interfaces::entity_list->get_entity(index);
+	if (!entity || !entity->is_player())
+		return false;
 
 	auto& track = records[index - 1];
-
 	if (track.empty())
-		return;
+		return false;
 
+	bool record_found = false;
 	c_vector prev_origin = entity->get_abs_origin();
 
 	for (const auto& record : track)
 	{
-		if (max_time != -1.f)
-		{
-			float delta = utilities::ticks_to_time(interfaces::global_vars->tick_count) - record.arrive_time;
-
-			if (delta > max_time)
-				break;
-		}
-
-		if (is_delta_too_big(record.vec_origin, prev_origin))
+		if (is_delta_too_big(record.origin, prev_origin))
 			break;
 
 		if (!can_restore_to_simulation_time(record.simulation_time))
 			break;
 
-		out_records->push_back(record);
+		float delta = utilities::ticks_to_time(interfaces::global_vars->tick_count) - record.arrive_time;
+		if (delta > settings::aimbot::accuracy::backtrack)
+			break;
 
-		prev_origin = record.vec_origin;
+		out_record = record;
+		prev_origin = record.origin;
+
+		record_found = true;
 	}
+
+	return record_found;
 }
 
 void history::update()
@@ -153,30 +154,29 @@ void history::update()
 			continue;
 		}
 
-		for (auto it = track.begin(); it != track.end(); )
-		{
-			const lag_record& record = *it;
-
-			float delta = utilities::ticks_to_time(interfaces::global_vars->tick_count) - record.arrive_time;
-
-			if (delta > 1.f)
-			{
-				it = track.erase(it);
-			}
-			else
-			{
-				++it;
-			}
-		}
+		track.erase(std::remove_if(track.begin(), track.end(), 
+		[](const lag_record& r) 
+		{ 
+			return utilities::ticks_to_time(interfaces::global_vars->tick_count) - r.simulation_time > 1.f; 
+		}), track.end());
 
 		lag_record record;
-
 		record.arrive_time = utilities::ticks_to_time(estimate_server_arrive_tick());
 		record.simulation_time = entity->get_simulation_time();
-		record.vec_origin = entity->get_abs_origin();
+		record.origin = entity->get_abs_origin();
+
+		void* model = entity->get_client_renderable()->get_model();
+		if (!model)
+			continue;
+
+		studiohdr_t* hdr = interfaces::model_info->get_studio_model(model);
+		if (!hdr)
+			continue;
+
+		record.bone_to_world.reset(new matrix3x4[hdr->num_bones]);
 
 		entity->invalidate_bone_cache();
-		if (!entity->get_client_renderable()->setup_bones(record.bone_to_world, MAX_STUDIO_BONES, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))
+		if (!entity->get_client_renderable()->setup_bones(record.bone_to_world.get(), hdr->num_bones, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))
 			continue;
 
 		track.insert(track.begin(), record);

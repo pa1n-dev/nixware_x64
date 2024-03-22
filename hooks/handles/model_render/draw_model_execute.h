@@ -8,11 +8,9 @@ void __fastcall hooks::handles::draw_model_execute(c_model_render* model_render,
 
 	if (settings::aimbot::visuals::backtrack && settings::aimbot::accuracy::backtrack)
 	{
-        std::vector<lag_record> records;
-        history::get_usable_records(info.entity_index, &records, settings::aimbot::accuracy::backtrack);
-
-        if (!records.empty())
-            originals::draw_model_execute(model_render, state, info, records.back().bone_to_world);
+        lag_record record;
+        if (history::get_latest_record(info.entity_index, record))
+            originals::draw_model_execute(model_render, state, info, record.bone_to_world.get());
 	}
 
     originals::draw_model_execute(model_render, state, info, bone_to_world);

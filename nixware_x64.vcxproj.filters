@@ -392,5 +392,11 @@
     <ClInclude Include="sdk\source-sdk\c_studio_hdr.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\source-sdk\i_prediction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\prediction\run_command.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

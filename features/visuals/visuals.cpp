@@ -41,7 +41,6 @@ void visuals::render()
 
 			if (settings::visuals::players::box)
 				render_manager::box(box, settings::visuals::players::colors::box, 1.f);
-
 		}
 		else if (settings::visuals::entity::enable)
 		{
@@ -51,10 +50,10 @@ void visuals::render()
 
 	ImVec2 center(io.DisplaySize.x / 2, io.DisplaySize.y / 2);
 
-	if (settings::aimbot::visuals::snaplines && aimbot::target_info.entity)
+	if (settings::aimbot::visuals::snaplines && aimbot::target.entity)
 	{
 		c_vector pos;
-		if (utilities::world_to_screen(aimbot::target_info.shoot_pos, pos))
+		if (utilities::world_to_screen(aimbot::target.shoot_pos, &pos))
 			render_manager::line(center, ImVec2(pos.x, pos.y), settings::aimbot::visuals::colors::snaplines, 1.f);
 	}
 

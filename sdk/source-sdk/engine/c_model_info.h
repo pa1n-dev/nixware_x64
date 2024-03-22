@@ -6,8 +6,8 @@ struct model_render_info_t
     q_angle				    angles;
     i_client_renderable*    renderable;
     const void*             model;
-    const matrix3x4*      model_to_world;
-    const matrix3x4*      lighting_offset;
+    const matrix3x4*        model_to_world;
+    const matrix3x4*        lighting_offset;
     const c_vector*         lighting_origin;
     int					    flags;
     int					    entity_index;

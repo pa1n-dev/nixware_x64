@@ -22,9 +22,31 @@
 #include "handles/hl_client/frame_stage_notify.h"
 #include "handles/view_render/render_view.h"
 #include "handles/model_render/draw_model_execute.h"
+#include "handles/prediction/run_command.h"
 
 void hooks::initialize()
 {
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::panel, 41), &handles::paint_traverse, (LPVOID*)&handles::originals::paint_traverse))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 21), &handles::create_move, (LPVOID*)&handles::originals::create_move))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 23), &handles::write_user_cmd_delta_to_buffer, (LPVOID*)&handles::originals::write_user_cmd_delta_to_buffer))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 35), &handles::frame_stage_notify, (LPVOID*)&handles::originals::frame_stage_notify))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::view_render, 6), &handles::render_view, (LPVOID*)&handles::originals::render_view))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::model_render, 20), &handles::draw_model_execute, (LPVOID*)&handles::originals::draw_model_execute))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::prediction, 17), &handles::run_command, (LPVOID*)&handles::originals::run_command))
+        throw;
+
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("gameoverlayrenderer64.dll"), xorstr("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 81 EC ? ? ? ? 4C 8B A4 24 ? ? ? ?")), &handles::present, (LPVOID*)&handles::originals::present))
         throw;
 
@@ -42,24 +64,6 @@ void hooks::initialize()
 
     //if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("40 55 53 56 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ?")), &handles::send_datagram, (LPVOID*)&handles::originals::send_datagram))
     //    throw; 
-
-	if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::panel, 41), &handles::paint_traverse, (LPVOID*)&handles::originals::paint_traverse))
-		throw;
-
-    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 21), &handles::create_move, (LPVOID*)&handles::originals::create_move))
-        throw;
-
-    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 23), &handles::write_user_cmd_delta_to_buffer, (LPVOID*)&handles::originals::write_user_cmd_delta_to_buffer))
-        throw;
-
-    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 35), &handles::frame_stage_notify, (LPVOID*)&handles::originals::frame_stage_notify))
-        throw;
-
-    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::view_render, 6), &handles::render_view, (LPVOID*)&handles::originals::render_view))
-        throw;
-
-    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::model_render, 20), &handles::draw_model_execute, (LPVOID*)&handles::originals::draw_model_execute))
-        throw;
 
     if (!min_hook.enable_hook())
         throw;

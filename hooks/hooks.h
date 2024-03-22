@@ -46,6 +46,7 @@ namespace hooks
 			inline void(__thiscall* frame_stage_notify)(c_hl_client*, ñlient_frame_stage_t);
 			inline void(__thiscall* render_view)(i_view_render*, c_view_setup&, int, int);
 			inline void(__thiscall* draw_model_execute)(c_model_render*, void*, model_render_info_t&, matrix3x4*);
+			inline void(__fastcall* run_command) (i_prediction*, c_base_entity*, c_user_cmd*, void*);
 		}
 
 		LRESULT CALLBACK wndproc(HWND, UINT, WPARAM, LPARAM);
@@ -61,6 +62,7 @@ namespace hooks
 		void __fastcall frame_stage_notify(c_hl_client*, ñlient_frame_stage_t);
 		void __fastcall render_view(i_view_render*, c_view_setup&, int, int);
 		void __fastcall draw_model_execute(c_model_render*, void*, model_render_info_t&, matrix3x4*);
+		void __fastcall run_command(i_prediction*, c_base_entity*, c_user_cmd*, void*);
 	}
 }
 

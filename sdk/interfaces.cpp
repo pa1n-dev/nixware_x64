@@ -50,6 +50,10 @@ void interfaces::initialize()
 	if (!model_render)
 		throw;
 
+	prediction = memory::capture_interface<i_prediction>(xorstr("client.dll"), xorstr("VClientPrediction001"));
+	if (!prediction)
+		throw;
+
 	view_render = memory::get_vmt_from_instruction<i_view_render>((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 8B 0D ? ? ? ? 48 8B 01 FF 50 18 48 8B 0D ? ? ? ? E8 ? ? ? ?")));
 	if (!view_render)
 		throw;

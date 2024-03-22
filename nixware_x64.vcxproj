@@ -218,6 +218,7 @@
     <ClInclude Include="hooks\handles\net_channel\send_datagram.h" />
     <ClInclude Include="hooks\handles\panel\paint_traverse.h" />
     <ClInclude Include="hooks\handles\d3d9\reset.h" />
+    <ClInclude Include="hooks\handles\prediction\run_command.h" />
     <ClInclude Include="hooks\handles\view_render\render_view.h" />
     <ClInclude Include="hooks\handles\wndproc.h" />
     <ClInclude Include="hooks\handles\d3d9\present.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="sdk\source-sdk\c_multiplayer_anim_state.h" />
     <ClInclude Include="sdk\source-sdk\c_studio_hdr.h" />
     <ClInclude Include="sdk\source-sdk\entity\i_client_networkable.h" />
+    <ClInclude Include="sdk\source-sdk\i_prediction.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_cvar.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_uniform_random_stream.h" />
     <ClInclude Include="sdk\source-sdk\engine\c_model_render.h" />

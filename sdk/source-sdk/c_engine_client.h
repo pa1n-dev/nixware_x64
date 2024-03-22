@@ -31,6 +31,11 @@ public:
 		return memory::call_v_function<int(__thiscall*)(void*)>(this, 12)(this);
 	}
 
+	void get_view_angles(q_angle& angle)
+	{
+		return memory::call_v_function<void(__thiscall*)(void*, q_angle&)>(this, 19)(this, angle);
+	}
+
 	void set_view_angles(q_angle& angle)
 	{
 		return memory::call_v_function<void(__thiscall*)(void*, q_angle&)>(this, 20)(this, angle);

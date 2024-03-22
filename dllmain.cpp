@@ -5,7 +5,7 @@ void initialize()
     while (!utilities::game_is_full_loaded())
         std::this_thread::sleep_for(std::chrono::milliseconds(25));
 
-    //utilities::attach_console();
+    utilities::attach_console();
 
     interfaces::initialize();
     hooks::initialize();

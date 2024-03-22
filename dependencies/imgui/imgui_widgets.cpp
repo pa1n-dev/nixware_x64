@@ -47,7 +47,6 @@ Index of this file:
 #include <stdint.h>     // intptr_t
 #endif
 
-#include <windows.h>
 #include <map>
 
 //-------------------------------------------------------------------------

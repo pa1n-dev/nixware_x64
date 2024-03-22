@@ -74,6 +74,11 @@ public:
 		return *(int*)((uintptr_t)this + 0x2D50);
 	}
 
+	int hitbox_set()
+	{
+		return *(int*)((uintptr_t)this + 5848);
+	}
+
 	int& get_sequence()
 	{
 		return *(int*)((uintptr_t)this + 0x1A00);

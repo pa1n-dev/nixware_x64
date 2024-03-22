@@ -53,6 +53,7 @@
 #include "source-sdk/vstdlib/c_cvar.h"
 #include "source-sdk/c_global_vars.h"
 #include "source-sdk/c_engine_client.h"
+#include "source-sdk/i_prediction.h"
 
 namespace interfaces
 {
@@ -76,4 +77,5 @@ namespace interfaces
 	inline c_render*				render;
 	inline c_global_vars*			global_vars;
 	inline c_uniform_random_stream* random_stream;
+	inline i_prediction*			prediction;
 }
