@@ -3,22 +3,23 @@ This is a cheat for [Garry's Mod](https://store.steampowered.com/app/4000/Garrys
 
 The cheat almost completely repeats the old nixware menu, which is why it has such a name
 
-#### Cool features
-- OBS Bypass
-- Custom menu background
-- Custom loading screen
-- Backtrack ([cl_interp abuse](https://www.unknowncheats.me/forum/garry-s-mod/414371-cl_interp-abuse-1-backtrack-fakeping.html)) (not 100% accuracy)
-
 #### Screenshots
 ![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/c21beff3-5d31-45c7-a8ca-fafbeb5318a3)
 ![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/5873042b-de4d-4312-9434-7c46c36efbdf)
 
-#### How to use
-Select beta version:
-
-![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/838dc11e-aceb-4c5a-84b3-c3ca4b54b06b)
-
-injection via process hacker
+#### Features
+- Aimbot (Silent, Automatic fire, Hitbox, Priority, Smooth)
+- Predict spread (m9k, swb)
+- Disable recoil
+- Backtrack
+- AntiAim (Fake duck)
+- Fakelag's
+- ThirdPerson
+- OBS Bypass
+- Custom menu background
+- Custom loading screen
+- [AnimFix](https://www.unknowncheats.me/forum/garry-s-mod/502883-animfix-fake-chams.html)
+- Backtrack ([cl_interp abuse](https://www.unknowncheats.me/forum/garry-s-mod/414371-cl_interp-abuse-1-backtrack-fakeping.html)) (not 100% accuracy)
 
 #### ToDo
 - Visuals
@@ -27,8 +28,20 @@ injection via process hacker
 - Lua API
 - Bitch
 
-### Credits
+#### How to use
+Open properties: 
 
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/fc20776e-2fd9-4b0c-a078-193f379b92dd)
+
+Select beta version:
+
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/e26b3f7f-0723-40be-8e45-cdf56df507b6)
+
+Also, when starting the game, select x64
+
+Afterwards you need to inject via process hacker
+
+### Credits
 #### Maintainers / Devs
 - [pa1n](https://github.com/pa1n-dev)
 

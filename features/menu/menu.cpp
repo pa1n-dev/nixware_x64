@@ -72,8 +72,13 @@ void menu::render()
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-        if (BeginChild(xorstr("AntiAim"), child_size))
+        if (BeginChild(xorstr("Globals"), child_size))
         {
+            Checkbox(xorstr("Enable"), &settings::antiaim::globals::enable); custom::hotkey(xorstr("AntiAim Hotkey"), &settings::antiaim::globals::hotkey);
+            Checkbox(xorstr("Fake duck"), &settings::antiaim::globals::fake_duck);
+            Checkbox(xorstr("Invert yaw"), &settings::antiaim::globals::invert_yaw);
+            Combo(xorstr("Yaw"), &settings::antiaim::globals::yaw, xorstr("LBY\0" "Spin\0"));
+            Combo(xorstr("Pitch"), &settings::antiaim::globals::pitch, xorstr("Down\0" "Up\0"));
 
             EndChild();
         }
@@ -82,6 +87,9 @@ void menu::render()
 
         if (BeginChild(xorstr("FakeLag's"), child_size))
         {
+            Checkbox(xorstr("Enable"), &settings::antiaim::fakelags::enable);
+            SliderInt(xorstr("Count"), &settings::antiaim::fakelags::count, 1, 24, xorstr("%d"), ImGuiSliderFlags_NoInput); /*sv_maxusrcmdprocessticks = 24*/
+            Combo(xorstr("Method"), &settings::antiaim::fakelags::method, xorstr("On Ground\0" "In Air\0" "On Move\0" "On Stand\0" "Always\0"));
 
             EndChild();
         }
@@ -136,6 +144,8 @@ void menu::render()
 
         if (BeginChild(xorstr("Globals"), child_size))
         {
+            Checkbox(xorstr("ThirdPerson"), &settings::miscellaneous::globals::third_person::enable); custom::hotkey(xorstr("Third person Hotkey"), &settings::miscellaneous::globals::third_person::hotkey);
+            SliderInt(xorstr("ThirdPerson Distance"), &settings::miscellaneous::globals::third_person::distance, 10, 200);
 
             EndChild();
         }
@@ -189,7 +199,7 @@ void menu::render()
         {
             float column_width = GetColumnWidth() - 10.f;
 
-            if (ImGui::Button(xorstr("Unload cheat"), ImVec2(column_width, 35.f)))
+            if (Button(xorstr("Unload cheat"), ImVec2(column_width, 35.f)))
                 hooks::unhook();
 
             EndChild();
@@ -221,10 +231,11 @@ void menu::custom::hotkey(const char* label, hotkey_t* hotkey)
     const ImVec2 pos = window->DC.CursorPos;
 
     char context_name[64] = { };
-    sprintf(context_name, "HotKeyContext%s", label);
+    ImFormatString(context_name, sizeof(context_name), "HotKeyContext%s", label);
 
     char text[64] = { };
-    sprintf_s(text, sizeof(text), "[  %s  ]", hotkey->key != 0 && g.ActiveId != id ? key_names[hotkey->key] : g.ActiveId == id ? "WAIT KEY" : "NONE");
+    ImFormatString(text, sizeof(text), "[  %s  ]", (hotkey->key != 0 && g.ActiveId != id) ? key_names[hotkey->key] : (g.ActiveId == id) ? "WAIT KEY" : "NONE");
+
     const ImVec2 text_size = CalcTextSize(text, NULL, true);
 
     const ImRect total_bb(ImVec2(pos.x + width - (text_size.x + 10.f), pos.y - style.FramePadding.y), ImVec2(pos.x + width, pos.y + text_size.y));

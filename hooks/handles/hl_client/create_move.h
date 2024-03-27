@@ -14,8 +14,15 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 
 	aimbot::run(cmd);
 	predict_spread::run(cmd);
-	movement::fix_movement(cmd, old_cmd);
-	
+
+	bool send_packet = fakelags::run(cmd);
+	antiaim::run(cmd, send_packet);
+
+	animfix::run(cmd, send_packet);
+	fakelags::apply(send_packet);
+
+	movement::fix(cmd, old_cmd);
+
 	verified_cmd->m_cmd = *cmd;
 	verified_cmd->m_crc = cmd->get_checksum();
 

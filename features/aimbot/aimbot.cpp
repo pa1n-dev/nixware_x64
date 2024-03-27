@@ -15,7 +15,7 @@ void aimbot::run(c_user_cmd* cmd)
 		return;
 
 	c_base_combat_weapon* weapon = local_player->get_active_weapon();
-	if (!weapon)
+	if (!weapon || !weapon->can_shoot() || weapon->is_holding_tool())
 		return;
 
 	target = find_best_target(cmd, local_player);
@@ -26,9 +26,6 @@ void aimbot::run(c_user_cmd* cmd)
 		return;
 
 	if (cmd->is_typing || cmd->is_world_clicking)
-		return;
-
-	if (weapon->is_holding_tool() || !weapon->can_shoot())
 		return;
 
 	if (!settings::aimbot::globals::hotkey.check())
@@ -155,7 +152,7 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 
 	if (!bone_to_world)
 	{
-		bone_to_world.reset(new matrix3x4[hdr->num_bones]);
+		bone_to_world = std::make_unique<matrix3x4[]>(hdr->num_bones);
 
 		entity->invalidate_bone_cache();
 		if (!entity->get_client_renderable()->setup_bones(bone_to_world.get(), hdr->num_bones, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))

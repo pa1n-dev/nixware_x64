@@ -104,7 +104,7 @@
 
 #define Q_BINARYTOHEX v_binarytohex
 
-#define MAX_STUDIO_BONES 128
+#define MAX_STUDIO_BONES 256
 
 #define BONE_USED_MASK				0x0007FF00
 #define BONE_USED_BY_ANYTHING		0x0007FF00

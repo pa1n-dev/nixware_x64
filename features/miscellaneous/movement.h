@@ -3,5 +3,5 @@
 
 namespace movement
 {
-	void fix_movement(c_user_cmd* cmd, c_user_cmd old_cmd);
+	void fix(c_user_cmd* cmd, c_user_cmd old_cmd);
 }

@@ -21,3 +21,8 @@ bool c_min_hook::enable_hook(PVOID hook)
 {
 	return MH_EnableHook(hook) == MH_OK;
 }
+
+bool c_min_hook::remove_all_hooks()
+{
+	return MH_DisableHook(MH_ALL_HOOKS) == MH_OK;
+}

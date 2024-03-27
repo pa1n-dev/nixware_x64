@@ -163,9 +163,13 @@
     <ClCompile Include="features\aimbot\aimbot.cpp" />
     <ClCompile Include="features\aimbot\backtrack\history.cpp" />
     <ClCompile Include="features\aimbot\backtrack\lag_compensation.cpp" />
+    <ClCompile Include="features\antiaim\animfix.cpp" />
+    <ClCompile Include="features\antiaim\antiaim.cpp" />
+    <ClCompile Include="features\antiaim\fakelags.cpp" />
     <ClCompile Include="features\aimbot\penetrate_walls.cpp" />
     <ClCompile Include="features\aimbot\predict_spread.cpp" />
     <ClCompile Include="features\menu\menu.cpp" />
+    <ClCompile Include="features\miscellaneous\miscellaneous.cpp" />
     <ClCompile Include="features\miscellaneous\movement.cpp" />
     <ClCompile Include="features\visuals\visuals.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
@@ -203,9 +207,13 @@
     <ClInclude Include="features\aimbot\aimbot.h" />
     <ClInclude Include="features\aimbot\backtrack\history.h" />
     <ClInclude Include="features\aimbot\backtrack\lag_compensation.h" />
+    <ClInclude Include="features\antiaim\animfix.h" />
+    <ClInclude Include="features\antiaim\antiaim.h" />
+    <ClInclude Include="features\antiaim\fakelags.h" />
     <ClInclude Include="features\aimbot\penetrate_walls.h" />
     <ClInclude Include="features\aimbot\predict_spread.h" />
     <ClInclude Include="features\menu\menu.h" />
+    <ClInclude Include="features\miscellaneous\miscellaneous.h" />
     <ClInclude Include="features\miscellaneous\movement.h" />
     <ClInclude Include="features\visuals\visuals.h" />
     <ClInclude Include="hooks\handles\client_mode_shared\override_view.h" />
@@ -215,6 +223,7 @@
     <ClInclude Include="hooks\handles\html_panel\load_url.h" />
     <ClInclude Include="hooks\handles\html_panel\paint.h" />
     <ClInclude Include="hooks\handles\model_render\draw_model_execute.h" />
+    <ClInclude Include="hooks\handles\multiplayer_anim_state\update.h" />
     <ClInclude Include="hooks\handles\net_channel\send_datagram.h" />
     <ClInclude Include="hooks\handles\panel\paint_traverse.h" />
     <ClInclude Include="hooks\handles\d3d9\reset.h" />
@@ -225,6 +234,7 @@
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />
     <ClInclude Include="sdk\source-sdk\client\i_client_mode_shared.h" />
+    <ClInclude Include="sdk\source-sdk\c_client_state.h" />
     <ClInclude Include="sdk\source-sdk\c_hl2mp_player_anim_state.h" />
     <ClInclude Include="sdk\source-sdk\c_multiplayer_anim_state.h" />
     <ClInclude Include="sdk\source-sdk\c_studio_hdr.h" />

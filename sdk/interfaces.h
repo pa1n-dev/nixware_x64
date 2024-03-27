@@ -54,6 +54,7 @@
 #include "source-sdk/c_global_vars.h"
 #include "source-sdk/c_engine_client.h"
 #include "source-sdk/i_prediction.h"
+#include "source-sdk/c_client_state.h"
 
 namespace interfaces
 {
@@ -71,11 +72,12 @@ namespace interfaces
 	inline c_lua_shared*			lua_shared;
 	inline c_cvar*					cvar;
 	inline c_model_render*			model_render;
-	inline i_client_mode_shared*	client_mode_shared;
+	inline i_prediction*			prediction;
 	inline i_view_render*			view_render;
 	inline c_input*					input;
 	inline c_render*				render;
 	inline c_global_vars*			global_vars;
+	inline c_client_state*			client_state;
 	inline c_uniform_random_stream* random_stream;
-	inline i_prediction*			prediction;
+	inline i_client_mode_shared*	client_mode_shared;
 }

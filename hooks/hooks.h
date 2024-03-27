@@ -47,6 +47,7 @@ namespace hooks
 			inline void(__thiscall* render_view)(i_view_render*, c_view_setup&, int, int);
 			inline void(__thiscall* draw_model_execute)(c_model_render*, void*, model_render_info_t&, matrix3x4*);
 			inline void(__fastcall* run_command) (i_prediction*, c_base_entity*, c_user_cmd*, void*);
+			inline void(__thiscall* multiplayer_anim_state_update)(void*, float, float);
 		}
 
 		LRESULT CALLBACK wndproc(HWND, UINT, WPARAM, LPARAM);
@@ -63,6 +64,7 @@ namespace hooks
 		void __fastcall render_view(i_view_render*, c_view_setup&, int, int);
 		void __fastcall draw_model_execute(c_model_render*, void*, model_render_info_t&, matrix3x4*);
 		void __fastcall run_command(i_prediction*, c_base_entity*, c_user_cmd*, void*);
+		void __fastcall multiplayer_anim_state_update(c_multiplayer_anim_state* anim_state, float yaw, float pitch);
 	}
 }
 

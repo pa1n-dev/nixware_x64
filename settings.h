@@ -25,7 +25,7 @@ namespace settings
             inline float frame_bg[4]            = { 0.2f, 0.2f, 0.2f, 1.f };
             inline float frame_hovered_bg[4]    = { 0.4f, 0.4f, 0.4f, 1.f };
             inline float frame_active_bg[4]     = { 1.f, 1.f, 1.f, 1.f };
-        } 
+        }
     }
 
     namespace aimbot
@@ -60,6 +60,49 @@ namespace settings
                 inline float fov[4] = { 1.f, 1.f, 1.f, 1.f };
                 inline float snaplines[4] = { 1.f, 1.f, 1.f, 1.f };
             }
+        }
+    }
+
+    namespace antiaim
+    {
+        namespace globals
+        {
+            inline bool enable = false;
+            inline hotkey_t hotkey;
+            inline int yaw = 0;
+            inline int pitch = 0;
+            inline bool invert_yaw = false;
+            inline bool fake_duck = false;
+        }
+
+        namespace fakelags
+        {
+            inline bool enable = false;
+            inline int count = 1;
+            inline int method = 0;
+        }
+
+        namespace visuals
+        {
+
+        }
+    }
+
+    namespace miscellaneous
+    {
+        namespace globals
+        {
+            namespace third_person
+            {
+                inline bool enable = false;
+                inline hotkey_t hotkey;
+                inline int distance = 100;
+            }
+        }
+
+        namespace movement
+        {
+
         }
     }
 

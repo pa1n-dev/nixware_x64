@@ -173,7 +173,7 @@ void history::update()
 		if (!hdr)
 			continue;
 
-		record.bone_to_world.reset(new matrix3x4[hdr->num_bones]);
+		record.bone_to_world = std::make_unique<matrix3x4[]>(hdr->num_bones);
 
 		entity->invalidate_bone_cache();
 		if (!entity->get_client_renderable()->setup_bones(record.bone_to_world.get(), hdr->num_bones, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))

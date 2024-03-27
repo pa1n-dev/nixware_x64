@@ -72,14 +72,6 @@ struct multi_player_pose_data_t
     }
 };
 
-struct multi_player_movement_data_t
-{
-    float walk_speed;
-    float run_speed;
-    float sprint_speed;
-    float body_yaw_rate;
-};
-
 class c_hl2mp_player_anim_state : public c_multiplayer_anim_state
 {
 public:

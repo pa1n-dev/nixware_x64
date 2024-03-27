@@ -11,4 +11,5 @@ public:
 
 	bool create_hook(LPVOID target, PVOID detour, LPVOID* original);
 	bool enable_hook(PVOID hook = MH_ALL_HOOKS);
+	bool remove_all_hooks();
 } min_hook;

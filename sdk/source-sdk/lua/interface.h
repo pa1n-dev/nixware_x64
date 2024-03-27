@@ -2,8 +2,8 @@ class c_lua_interface;
 
 struct lua_state_t
 {
-    char		        pad0[69];
-    c_lua_interface* lua_lnterface;
+    char                pad_0000[69];
+    c_lua_interface*    lua_lnterface;
 };
 
 typedef int(__cdecl* c_lua_function)(lua_state_t*);

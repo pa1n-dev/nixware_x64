@@ -70,6 +70,10 @@ void interfaces::initialize()
 	if (!global_vars)
 		throw;
 
+	client_state = (c_client_state*)memory::relative_to_absolute(memory::get_virtual((PVOID**)engine, 84), 0x3, 0x7);
+	if (!client_state)
+		throw;
+
 	random_stream = memory::get_vmt_from_instruction<c_uniform_random_stream>((uintptr_t)GetProcAddress(GetModuleHandleA(xorstr("vstdlib.dll")), xorstr("RandomSeed")), 0x2);
 	if (!random_stream)
 		throw;

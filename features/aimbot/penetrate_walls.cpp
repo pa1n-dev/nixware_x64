@@ -5,10 +5,10 @@ bool penetrate_walls::is_visible(c_base_entity* local_player, c_base_entity* ent
     c_vector eye_position = local_player->get_eye_position();
 
     trace_t trace;
-    ray_t ray(eye_position, end);
-
     c_trace_filter filter;
     filter.skip = local_player;
+
+    ray_t ray(eye_position, end);
 
     interfaces::engine_trace->trace_ray(ray, MASK_SHOT, &filter, &trace);
 
