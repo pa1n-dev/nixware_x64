@@ -17,6 +17,7 @@ namespace animfix
 
 	inline int ticks_elapsed = 0;
 
+	bool reset();
 	void update_real_anim_state(c_user_cmd* cmd);
 	void update_fake_anim_state(c_user_cmd* cmd, c_base_entity* local_player);
 	void update_real_bones(c_base_entity* local_player);

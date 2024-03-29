@@ -20,7 +20,7 @@ public:
 
     i_texture* get_render_target()
     {
-        return memory::call_v_function<i_texture* (__thiscall*)(void*)>(this, 5)(this);
+        return memory::call_v_function<i_texture*(__thiscall*)(void*)>(this, 5)(this);
     }
 };
 
@@ -29,6 +29,6 @@ class c_material_system
 public:
 	c_mat_render_context* get_render_context()
 	{
-		return memory::call_v_function<c_mat_render_context* (__thiscall*)(void*)>(this, 102)(this);
+		return memory::call_v_function<c_mat_render_context*(__thiscall*)(void*)>(this, 102)(this);
 	}
 };

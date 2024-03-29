@@ -5175,8 +5175,8 @@ bool ImGui::ColorEdit4(const char* label, float col[4], ImGuiColorEditFlags flag
         flags = (flags & (~ImGuiColorEditFlags_DisplayMask_)) | ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoOptions;
 
     // Context menu: display and modify options (before defaults are applied)
-    if (!(flags & ImGuiColorEditFlags_NoOptions))
-        ColorEditOptionsPopup(col, flags);
+    //if (!(flags & ImGuiColorEditFlags_NoOptions))
+    //    ColorEditOptionsPopup(col, flags);
 
     // Read stored options
     if (!(flags & ImGuiColorEditFlags_DisplayMask_))

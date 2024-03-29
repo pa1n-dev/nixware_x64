@@ -1,5 +1,36 @@
 #include "animfix.h"
 
+bool animfix::reset()
+{
+	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
+	if (!local_player || !local_player->is_alive() || local_player->is_dormant())
+	{
+		if (!local_player)
+		{
+			if (real_anim_state)
+			{
+				real_anim_state->~c_hl2mp_player_anim_state();
+				real_anim_state = nullptr;
+			}
+		}
+		else
+			allow_anim_state_reset = true;
+
+		if (real_move_data)
+		{
+			delete real_move_data;
+			real_move_data = nullptr;
+		}
+
+		created_real_matrix = false;
+		created_fake_matrix = false;
+
+		return false;
+	}
+
+	return true;
+}
+
 void animfix::update_real_anim_state(c_user_cmd* cmd)
 {
 	allow_anim_state_update = true;
@@ -45,10 +76,14 @@ void animfix::run(c_user_cmd* cmd, bool send_packet)
 	if (!local_player || !local_player->is_alive())
 		return;
 
-	if (allow_anim_state_reset)
-	{
+	bool create_real = !real_anim_state;
+	bool init_real = allow_anim_state_reset || create_real;
+
+	if (create_real)
 		real_anim_state = local_player->create_anim_state();
 
+	if (init_real) 
+	{
 		if (!real_move_data)
 			real_move_data = new multi_player_movement_data_t{};
 

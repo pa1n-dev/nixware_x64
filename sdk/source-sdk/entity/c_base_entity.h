@@ -71,7 +71,7 @@ public:
 
 	c_vector get_velocity()
 	{
-		return *(c_vector*)((uintptr_t)this + 328);
+		return *(c_vector*)((uintptr_t)this + 0x148);
 	}
 
 	float get_simulation_time() 
@@ -86,7 +86,7 @@ public:
 
 	int hitbox_set()
 	{
-		return *(int*)((uintptr_t)this + 5848);
+		return *(int*)((uintptr_t)this + 0x16D8);
 	}
 
 	int& get_sequence()
@@ -129,10 +129,10 @@ public:
 	{
 		using create_anim_state_fn = c_hl2mp_player_anim_state*(__cdecl*)(void*);
 
-		static create_anim_state_fn create_anim_state;
+		static create_anim_state_fn create_anim_state = (create_anim_state_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 40 48 8B 05 ? ? ? ? 48 33 C4 48 89 44 24 ? 48 8B 1D ? ? ?"));
 
 		if (!create_anim_state)
-			create_anim_state = (create_anim_state_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 40 48 8B 05 ? ? ? ? 48 33 C4 48 89 44 24 ? 48 8B 1D ? ? ?"));
+			throw;
 
 		return create_anim_state(this);
 	}
@@ -141,37 +141,34 @@ public:
 	{
 		using update_client_side_animations_fn = void(__fastcall*)(void*);
 
-		static update_client_side_animations_fn update_client_side_animations;
+		static update_client_side_animations_fn update_client_side_animations = (update_client_side_animations_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 83 EC 38 48 8B 0D ? ? ? ? 48 89 74 24 ? 48 89 7C 24 ?"));
 
 		if (!update_client_side_animations)
-			update_client_side_animations = (update_client_side_animations_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 83 EC 38 48 8B 0D ? ? ? ? 48 89 74 24 ? 48 89 7C 24 ?"));
+			throw;
 
 		update_client_side_animations(this);
 	}
 
-	c_vector get_eye_position()
+	void get_eye_position(c_vector& eye_position)
 	{
 		using get_eye_position_fn = void(__fastcall*)(void*, c_vector&);
 
-		static get_eye_position_fn get_eye_position;
+		static get_eye_position_fn get_eye_position = (get_eye_position_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 8B 08 89 0F 8B 48 04 89 4F 04 48 8B CB")), 1, 6);
 
 		if (!get_eye_position)
-			get_eye_position = (get_eye_position_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 8B 08 89 0F 8B 48 04 89 4F 04 48 8B CB")), 1, 6);
+			throw;
 
-		c_vector vector;
-		get_eye_position(this, vector);
-
-		return vector;
+		get_eye_position(this, eye_position);
 	}
 
 	c_base_combat_weapon* get_active_weapon()
 	{
 		using get_active_weapon_fn = c_base_combat_weapon* (__fastcall*)(void*);
 
-		static get_active_weapon_fn get_active_weapon;
+		static get_active_weapon_fn get_active_weapon = (get_active_weapon_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("40 53 48 83 EC 20 48 3B 0D ? ? ? ?"));
 
 		if (!get_active_weapon)
-			get_active_weapon = (get_active_weapon_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("40 53 48 83 EC 20 48 3B 0D ? ? ? ?"));
+			throw;
 
 		return get_active_weapon(this);
 	}
@@ -180,10 +177,10 @@ public:
 	{
 		using invalidate_bone_cache_fn = void(__fastcall*)(void*);
 
-		static invalidate_bone_cache_fn invalidate_bone_cache;
+		static invalidate_bone_cache_fn invalidate_bone_cache = (invalidate_bone_cache_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 48 8B 06 8B D3")), 1, 6);
 
 		if (!invalidate_bone_cache)
-			invalidate_bone_cache = (invalidate_bone_cache_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 48 8B 06 8B D3")), 1, 6);
+			throw;
 
 		invalidate_bone_cache(this);
 	}
@@ -193,10 +190,10 @@ public:
 	{
 		using set_abs_origin_fn = void(__fastcall*)(void*, c_vector&);
 
-		static set_abs_origin_fn set_abs_origin;
+		static set_abs_origin_fn set_abs_origin = (set_abs_origin_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? F3 41 0F 11 BF ? ? ? ?")), 1, 6);
 
 		if (!set_abs_origin)
-			set_abs_origin = (set_abs_origin_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? F3 41 0F 11 BF ? ? ? ?")), 1, 6);
+			throw;
 
 		set_abs_origin(this, origin);
 	}
@@ -205,10 +202,10 @@ public:
 	{
 		using set_abs_angles_fn = void(__fastcall*)(void*, q_angle&);
 
-		static set_abs_angles_fn set_abs_angles;
+		static set_abs_angles_fn set_abs_angles = (set_abs_angles_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 48 8D 57 70")), 1, 6);
 
 		if (!set_abs_angles)
-			set_abs_angles = (set_abs_angles_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 48 8D 57 70")), 1, 6);
+			throw;
 
 		set_abs_angles(this, angles);
 	}

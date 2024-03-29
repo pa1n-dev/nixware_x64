@@ -11,13 +11,13 @@ namespace math
 	template <typename T>
 	T rad2deg(T x)
 	{
-		return x * (static_cast<T>(180) / static_cast<T>(PI_F));
+		return static_cast<T>(static_cast<double>(x) * (180.0 / PI_D));
 	}
 
 	template <typename T>
 	T deg2rad(T x)
 	{
-		return x * (static_cast<T>(PI_F) / static_cast<T>(180));
+		return static_cast<T>(static_cast<double>(x) * (PI_D / 180.0));
 	}
 
 	void angle_to_vectors(const q_angle& ang, c_vector& forward, c_vector& right, c_vector& up);

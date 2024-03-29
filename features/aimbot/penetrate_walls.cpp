@@ -2,7 +2,8 @@
 
 bool penetrate_walls::is_visible(c_base_entity* local_player, c_base_entity* entity, c_vector end)
 {
-    c_vector eye_position = local_player->get_eye_position();
+    c_vector eye_position;
+    local_player->get_eye_position(eye_position);
 
     trace_t trace;
     c_trace_filter filter;

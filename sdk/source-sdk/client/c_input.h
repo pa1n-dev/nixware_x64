@@ -19,20 +19,20 @@ struct joy_axis_t
 
 enum
 {
-	GAME_AXIS_NONE = 0,
-	GAME_AXIS_FORWARD,
-	GAME_AXIS_PITCH,
-	GAME_AXIS_SIDE,
-	GAME_AXIS_YAW,
-	MAX_GAME_AXES
+	game_axis_none = 0,
+	game_axis_forward,
+	game_axis_pitch,
+	game_axis_side,
+	game_axis_yaw,
+	max_game_axes
 };
 
 enum
 {
-	MOUSE_ACCEL_THRESHHOLD1 = 0,
-	MOUSE_ACCEL_THRESHHOLD2,
-	MOUSE_SPEED_FACTOR,
-	NUM_MOUSE_PARAMS,
+	mouse_accel_threshhold1 = 0,
+	mouse_accel_threshhold2,
+	mouse_speed_factor,
+	num_mouse_params,
 };
 
 class c_input
@@ -50,9 +50,9 @@ public:
 	float					remaining_joystick_sample_time;
 	float					keyboard_sample_time;
 	bool					restore_spi;
-	int						orig_mouse_parms[NUM_MOUSE_PARAMS];
-	int						new_mouse_parms[NUM_MOUSE_PARAMS];
-	bool					check_mouse_param[NUM_MOUSE_PARAMS];
+	int						orig_mouse_parms[num_mouse_params];
+	int						new_mouse_parms[num_mouse_params];
+	bool					check_mouse_param[num_mouse_params];
 	bool					mouse_parms_valid;
 	joy_axis_t				axes[6];
 	void*					keys;

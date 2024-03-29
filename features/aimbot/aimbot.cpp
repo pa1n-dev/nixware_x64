@@ -31,10 +31,10 @@ void aimbot::run(c_user_cmd* cmd)
 	if (!settings::aimbot::globals::hotkey.check())
 		return;
 
-	if (lag_compensation::get_is_locked())
-		return;
+	//if (lag_compensation::get_is_locked())
+	//	return;
 
-	smooth(cmd->view_angles, target.shoot_angle);
+	smooth(cmd, target.shoot_angle);
 
 	cmd->view_angles = target.shoot_angle;
 
@@ -64,8 +64,10 @@ target_info aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_playe
 	priority_info& priority = target.priority_info;
 
 	const q_angle& view_angles = cmd->view_angles;
-	const c_vector& eye_position = local_player->get_eye_position();
 	const c_vector& origin = local_player->get_abs_origin();
+
+	c_vector eye_position;
+	local_player->get_eye_position(eye_position);
 
 	for (size_t i = 1; i <= interfaces::entity_list->get_highest_entity_index(); i++)
 	{
@@ -194,17 +196,17 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 	return false;
 }
 
-void aimbot::smooth(const q_angle& view_angles, q_angle& angle)
+void aimbot::smooth(c_user_cmd* cmd, q_angle& angle)
 {
-	if (!settings::aimbot::accuracy::smooth)
+	if (!settings::aimbot::accuracy::smooth || settings::aimbot::globals::silent)
 		return;
 
 	angle.normalize();
 	angle.clamp();
 
-	q_angle delta = angle - view_angles;
+	q_angle delta = angle - cmd->view_angles;
 	delta.normalize();
 	delta.clamp();
 
-	angle = view_angles + delta / settings::aimbot::accuracy::smooth;
+	angle = cmd->view_angles + delta / settings::aimbot::accuracy::smooth;
 }

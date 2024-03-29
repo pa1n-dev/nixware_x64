@@ -14,6 +14,8 @@ namespace utilities
 {
 	bool game_is_full_loaded();
 	void attach_console();
+	void detach_console();
+	void run_javascript(void* html_panel, const char* script);
 	bool is_key_pressed(int key);
 	int time_to_ticks(float time);
 	float ticks_to_time(int ticks);

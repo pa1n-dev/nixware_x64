@@ -69,7 +69,7 @@ void hooks::initialize()
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 89 5C 24 ? 57 48 83 EC 50 48 8B B9 ? ? ? ? 48 8B D9 0F 29 74 24 ? 0F 28 F2 0F 29")), &handles::multiplayer_anim_state_update, (LPVOID*)&handles::originals::multiplayer_anim_state_update))
         throw;
-
+	
     //if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("40 55 53 56 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ?")), &handles::send_datagram, (LPVOID*)&handles::originals::send_datagram))
     //    throw; 
 
@@ -81,8 +81,65 @@ void hooks::initialize()
 
 void hooks::unhook()
 {
+    utilities::detach_console();
+    min_hook.remove_all_hooks();
+
     interfaces::panel->set_key_board_input_enabled(globals::overlay_popup_panel, false);
     interfaces::panel->set_mouse_input_enabled(globals::overlay_popup_panel, false);
 
-    min_hook.remove_all_hooks();
+    fakelags::apply(true);
+
+    //https://api.facepunch.com/api/public/manifest?public_key=RWsOQQrO860EaGY3qPsSsBQSev3gNO0KrcF3kv4Rl5frjE9OuUKQgAsRutxMZ4aU
+    const char* script = xorstr(R"(
+    UpdateNewsList(
+        [
+            {
+                "Date": "2024-03-13T04:00:00",
+                "ShortName": "march-2024-update",
+                "Title": "March 2024 Update",
+                "HeaderImage": "https://files.facepunch.com/rubat/1b1311b1/march2024cheap.jpg",
+                "SummaryHtml": "This update brings a new default crosshair for the base game, ability to customize your crosshair, as well as plethora of other changes.",
+                "Url": "https://gmod.facepunch.com/blog/march-2024-update/",
+                "Tags": "update"
+            },
+            {
+                "Date": "2024-02-28T07:11:00",
+                "ShortName": "march-2024-update-soon",
+                "Title": "March 2024 update is coming soon",
+                "HeaderImage": "https://files.facepunch.com/rubat/1b2811b1/vGb0sP210X.png",
+                "SummaryHtml": "Please help us test the upcoming update",
+                "Url": "https://gmod.facepunch.com/blog/march-2024-update-soon/",
+                "Tags": ""
+            },
+            {
+                "Date": "2024-01-04T08:16:00",
+                "ShortName": "holiday-patches",
+                "Title": "Holiday Patches",
+                "HeaderImage": "https://files.facepunch.com/rubat/1b1011b1/IK9lrzNDuT.png",
+                "SummaryHtml": "An aggregate news post about the few recent patches.",
+                "Url": "https://gmod.facepunch.com/blog/holiday-patches/",
+                "Tags": "Update"
+            },
+            {
+                "Date": "2023-06-28T04:00:00",
+                "ShortName": "june-2023-update",
+                "Title": "June 2023 Update",
+                "HeaderImage": "https://files.facepunch.com/rubat/1b2711b1/download.jpg",
+                "SummaryHtml": "New visual effects and features for developers.",
+                "Url": "https://gmod.facepunch.com/blog/june-2023-update/",
+                "Tags": "Update"
+            },
+            {
+                "Date": "2023-01-25T16:00:00",
+                "ShortName": "january-2023-update",
+                "Title": "January 2023 Update",
+                "HeaderImage": "https://files.facepunch.com/s/fb5f57b83f64.jpg",
+                "SummaryHtml": "Improved Eye Poser, new Lua features, and many bug fixes.",
+                "Url": "https://gmod.facepunch.com/blog/january-2023-update/",
+                "Tags": "Update"
+            }
+        ], false); 
+    )");
+
+    utilities::run_javascript(globals::menu_panel, script);
 }

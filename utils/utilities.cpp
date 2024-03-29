@@ -21,6 +21,26 @@ void utilities::attach_console()
 	SetConsoleTitleA(xorstr("Nixware"));
 }
 
+void utilities::detach_console()
+{
+	fclose(stdin);
+	fclose(stdout);
+	fclose(stderr);
+	FreeConsole();
+}
+
+void utilities::run_javascript(void* html_panel, const char* script)
+{
+	using run_javascript_fn = void(*)(void*, const char*);
+	static run_javascript_fn run_javascript = (run_javascript_fn)memory::pattern_scanner(xorstr("menusystem.dll"), xorstr("48 8B 89 ? ? ? ? 48 8B 01 48 FF 60 68"));
+
+	if (!run_javascript)
+		throw;
+
+	if (html_panel)
+		run_javascript(html_panel, script);
+}
+
 bool utilities::is_key_pressed(int key)
 {
 	static bool key_press[256];
@@ -51,16 +71,16 @@ float utilities::ticks_to_time(int ticks)
 
 q_angle utilities::calc_angle(const c_vector& from, const c_vector& to)
 {
-	q_angle ang;
+	q_angle out;
 	c_vector delta = from - to;
 
-	ang.x = atanf(delta.z / delta.length_2d()) * 57.295779513082f;
-	ang.y = atanf(delta.y / delta.x) * 57.295779513082f;
+	out.x = atanf(delta.z / delta.length_2d()) * 57.295779513082f;
+	out.y = atanf(delta.y / delta.x) * 57.295779513082f;
 
 	if (delta.x >= 0.f)
-		ang.y += 180.f;
+		out.y += 180.f;
 
-	return ang;
+	return out;
 }
 
 float utilities::get_fov(const q_angle& from, const q_angle& to)

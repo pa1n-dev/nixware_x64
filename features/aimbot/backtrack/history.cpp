@@ -3,14 +3,14 @@
 //https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/game/server/gameinterface.cpp#L2802
 float history::get_lerp_time()
 {
-	static c_con_var* sv_minupdaterate = interfaces::cvar->find_var("sv_minupdaterate");
-	static c_con_var* sv_maxupdaterate = interfaces::cvar->find_var("sv_maxupdaterate");
-	static c_con_var* cl_updaterate = interfaces::cvar->find_var("cl_updaterate");
-	static c_con_var* cl_interpolate = interfaces::cvar->find_var("cl_interpolate");
-	static c_con_var* cl_interp_ratio = interfaces::cvar->find_var("cl_interp_ratio");
-	static c_con_var* cl_interp = interfaces::cvar->find_var("cl_interp");
-	static c_con_var* sv_client_min_interp_ratio = interfaces::cvar->find_var("sv_client_min_interp_ratio");
-	static c_con_var* sv_client_max_interp_ratio = interfaces::cvar->find_var("sv_client_max_interp_ratio");
+	static c_con_var* sv_minupdaterate				= interfaces::cvar->find_var("sv_minupdaterate");
+	static c_con_var* sv_maxupdaterate				= interfaces::cvar->find_var("sv_maxupdaterate");
+	static c_con_var* cl_updaterate					= interfaces::cvar->find_var("cl_updaterate");
+	static c_con_var* cl_interpolate				= interfaces::cvar->find_var("cl_interpolate");
+	static c_con_var* cl_interp_ratio				= interfaces::cvar->find_var("cl_interp_ratio");
+	static c_con_var* cl_interp						= interfaces::cvar->find_var("cl_interp");
+	static c_con_var* sv_client_min_interp_ratio	= interfaces::cvar->find_var("sv_client_min_interp_ratio");
+	static c_con_var* sv_client_max_interp_ratio	= interfaces::cvar->find_var("sv_client_max_interp_ratio");
 
 	float lerp_time = 0.f;
 
@@ -44,7 +44,7 @@ int history::estimate_server_arrive_tick()
 {
 	int tick = interfaces::global_vars->tick_count + 1;
 
-	c_net_channel* net_channel = interfaces::engine->get_net_channel_info();
+	c_net_channel* net_channel = interfaces::engine->get_net_channel();
 	if (net_channel)
 		tick += utilities::time_to_ticks(net_channel->get_latency(1) + net_channel->get_latency(0));
 
@@ -60,7 +60,7 @@ bool history::can_restore_to_simulation_time(float simulation_time, bool* need_t
 {
 	float correct = get_lerp_time();
 
-	c_net_channel* net_channel = interfaces::engine->get_net_channel_info();
+	c_net_channel* net_channel = interfaces::engine->get_net_channel();
 	if (net_channel)
 		correct += net_channel->get_latency(0);
 

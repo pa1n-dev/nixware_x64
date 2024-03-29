@@ -4,6 +4,7 @@
 
 namespace globals
 {
+    inline void* menu_panel = nullptr;
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
     inline D3DMATRIX world_to_screen;
@@ -45,6 +46,7 @@ namespace settings
         {
             inline bool predict_spread = false;
             inline bool disable_recoil = false;
+            inline bool disable_visual_recoil = false;
             inline float backtrack = 0;
             inline float smooth = 0.f;
         }
@@ -57,8 +59,8 @@ namespace settings
 
             namespace colors
             {
-                inline float fov[4] = { 1.f, 1.f, 1.f, 1.f };
-                inline float snaplines[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float fov[4]         = { 1.f, 1.f, 1.f, 1.f };
+                inline float snaplines[4]   = { 1.f, 1.f, 1.f, 1.f };
             }
         }
     }
@@ -84,7 +86,7 @@ namespace settings
 
         namespace visuals
         {
-
+            inline bool fake_model = false;
         }
     }
 

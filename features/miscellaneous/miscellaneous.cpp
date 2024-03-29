@@ -1,20 +1,23 @@
 #include "miscellaneous.h"
 
-void miscellaneous::run(c_view_setup* view)
+void miscellaneous::disable_visual_recoil()
 {
 	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
-
-	third_person(view, local_player);
-
 	if (!local_player || !local_player->is_alive())
 		return;
 
-	if (settings::aimbot::accuracy::disable_recoil)
-		view->angles -= local_player->get_punch_angle();
+	if (!settings::aimbot::accuracy::disable_visual_recoil)
+		return;
+
+	local_player->get_punch_angle() = c_vector();
 }
 
-void miscellaneous::third_person(c_view_setup* view, c_base_entity* local_player)
+void miscellaneous::third_person(c_view_setup* view)
 {
+	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
+	if (!local_player)
+		return;
+
 	if (!settings::miscellaneous::globals::third_person::enable)
 		return;
 

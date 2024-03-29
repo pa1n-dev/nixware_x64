@@ -56,9 +56,9 @@ public:
 		return memory::call_v_function<float(__thiscall*)(void*)>(this, 95)(this);
 	}
 
-	c_net_channel* get_net_channel_info()
+	c_net_channel* get_net_channel()
 	{
-		return memory::call_v_function<c_net_channel* (__thiscall*)(void*)>(this, 72)(this);
+		return memory::call_v_function<c_net_channel*(__thiscall*)(void*)>(this, 72)(this);
 	}
 
 	void client_cmd_unrestricted(const char* cmd_string)

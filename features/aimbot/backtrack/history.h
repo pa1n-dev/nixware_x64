@@ -3,11 +3,10 @@
 
 struct lag_record
 {
-	std::shared_ptr<matrix3x4[]> bone_to_world;
-
-	float arrive_time;
-	float simulation_time;
-	c_vector origin;
+	std::shared_ptr<matrix3x4[]>	bone_to_world;
+	float							arrive_time;
+	float							simulation_time;
+	c_vector						origin;
 };
 
 namespace history

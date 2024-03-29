@@ -26,14 +26,17 @@ void predict_spread::run(c_user_cmd* cmd)
 
 	if (strstr(weapon_base, xorstr("swb_base")))
 		return cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
+
+	if (strstr(weapon->get_print_name(), xorstr("#HL2_")) && !weapon->is_without_spread())
+		return engine_spread(cmd, weapon->get_bullet_spread().x);
 } 
 
-void predict_spread::engine_spread(c_user_cmd* cmd, float spread_multiplier)
+void predict_spread::engine_spread(c_user_cmd* cmd, float spread)
 {
-	if (spread_multiplier == 0.f)
+	if (spread == 0.f)
 		return;
 
-	c_vector spread, dir, forward, right, up;
+	c_vector dir, forward, right, up;
 	q_angle out;
 
 	int seed = md5_pseudo_random(cmd->command_number) & 0x7FFFFFFF;
@@ -42,13 +45,9 @@ void predict_spread::engine_spread(c_user_cmd* cmd, float spread_multiplier)
 	float x = interfaces::random_stream->random_float(-0.5, 0.5) + interfaces::random_stream->random_float(-0.5, 0.5);
 	float y = interfaces::random_stream->random_float(-0.5, 0.5) + interfaces::random_stream->random_float(-0.5, 0.5);
 
-	spread.x = x * spread_multiplier;
-	spread.y = y * spread_multiplier;
-	spread.z = 0.0f;
-
 	math::angle_to_vectors(cmd->view_angles, forward, right, up);
 
-	dir = forward + (right * spread.x) + (up * spread.y);
+	dir = forward + (right * (x * spread)) + (up * (y * spread));
 
 	math::vector_to_angle(dir, out);
 	out.normalize();

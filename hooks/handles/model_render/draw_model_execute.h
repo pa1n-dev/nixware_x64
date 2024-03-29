@@ -13,7 +13,7 @@ void __fastcall hooks::handles::draw_model_execute(c_model_render* model_render,
 			if (animfix::created_real_matrix)
 				originals::draw_model_execute(model_render, state, info, animfix::real_matrix);
 
-			if (animfix::created_fake_matrix)
+			if (settings::antiaim::visuals::fake_model && animfix::created_fake_matrix)
 				originals::draw_model_execute(model_render, state, info, animfix::fake_matrix);
 
 			return;

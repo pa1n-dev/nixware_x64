@@ -9,7 +9,7 @@ The cheat almost completely repeats the old nixware menu, which is why it has su
 
 #### Features
 - Aimbot (Silent, Automatic fire, Hitbox, Priority, Smooth)
-- Predict spread (m9k, swb)
+- Predict spread (m9k, swb, hl2)
 - Disable recoil
 - Backtrack
 - AntiAim (Fake duck)
@@ -46,8 +46,8 @@ Afterwards you need to inject via process hacker
 - [pa1n](https://github.com/pa1n-dev)
 
 #### Testers
-- [theshezzee](https://github.com/THEshezzee)
-- [Zitc_Hen](https://github.com/ZitcHen) (partial)
+- [theshezzee](https://github.com/THEshezzee) (partial)
+- [Zitc-Hen](https://github.com/Zitc-Hen)
 
 ### Software used
 - [ImGui](https://github.com/ocornut/imgui)
