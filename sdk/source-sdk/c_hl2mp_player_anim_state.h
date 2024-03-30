@@ -75,11 +75,6 @@ struct multi_player_pose_data_t
 class c_hl2mp_player_anim_state : public c_multiplayer_anim_state
 {
 public:
-    ~c_hl2mp_player_anim_state()
-    {
-        memory::call_v_function<void(__thiscall*)(void*)>(this, 1)(this);
-    }
-
     char                            pad[8];
     bool                            force_aim_yaw;
     c_utl_vector<gesture_slot_t>    gesture_slots;

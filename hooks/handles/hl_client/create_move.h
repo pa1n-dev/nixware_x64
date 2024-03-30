@@ -17,7 +17,6 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 
 	bool send_packet = fakelags::run(cmd);
 	antiaim::run(cmd, send_packet);
-
 	animfix::run(cmd, send_packet);
 	fakelags::apply(send_packet);
 

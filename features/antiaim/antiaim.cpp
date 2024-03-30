@@ -46,4 +46,5 @@ void antiaim::run(c_user_cmd* cmd, bool send_packet)
 
     cmd->view_angles.x = pitch;
     cmd->view_angles.y = yaw;
+    cmd->view_angles.clamp();
 }

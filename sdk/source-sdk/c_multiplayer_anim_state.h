@@ -13,6 +13,11 @@ struct multi_player_movement_data_t
 class c_multiplayer_anim_state
 {
 public:
+	void destructor()
+	{
+		memory::call_v_function<void(__thiscall*)(void*)>(this, 0)(this);
+	}
+
 	void update(float yaw, float pitch)
 	{
 		return memory::call_v_function<void(__thiscall*)(void*, float, float)>(this, 4)(this, yaw, pitch);

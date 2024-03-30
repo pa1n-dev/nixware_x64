@@ -63,8 +63,8 @@ target_info aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_playe
 	target_info target;
 	priority_info& priority = target.priority_info;
 
-	const q_angle& view_angles = cmd->view_angles;
-	const c_vector& origin = local_player->get_abs_origin();
+	q_angle view_angles = cmd->view_angles;
+	c_vector origin = local_player->get_abs_origin();
 
 	c_vector eye_position;
 	local_player->get_eye_position(eye_position);
@@ -185,9 +185,9 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 	
 	if (!found_hitbox)
 	{
-		const c_vector& pos = entity->get_abs_origin();
-		const c_vector& mins = pos + entity->get_collidable()->mins();
-		const c_vector& maxs = pos + entity->get_collidable()->maxs();
+		c_vector pos = entity->get_abs_origin();
+		c_vector mins = pos + entity->get_collidable()->mins();
+		c_vector maxs = pos + entity->get_collidable()->maxs();
 		shoot_pos = (mins + maxs) * 0.5;
 
 		return penetrate_walls::is_visible(local_player, entity, shoot_pos);

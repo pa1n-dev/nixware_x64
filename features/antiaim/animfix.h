@@ -13,11 +13,11 @@ namespace animfix
 	inline bool created_fake_matrix = false;
 
 	inline bool allow_anim_state_update = false;
-	inline bool allow_anim_state_reset = true;
+	inline bool need_anim_state_reset = false;
 
 	inline int ticks_elapsed = 0;
 
-	bool reset();
+	bool can_update_animstates(c_base_entity* local_player);
 	void update_real_anim_state(c_user_cmd* cmd);
 	void update_fake_anim_state(c_user_cmd* cmd, c_base_entity* local_player);
 	void update_real_bones(c_base_entity* local_player);

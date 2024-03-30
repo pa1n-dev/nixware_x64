@@ -11,6 +11,6 @@ void movement::fix(c_user_cmd* cmd, c_user_cmd old_cmd)
 
     float delta_yaw = math::deg2rad(cmd->view_angles.y - old_cmd.view_angles.y);
 
-    cmd->forward_move = cos(delta_yaw) * old_cmd.forward_move + sin(delta_yaw) * old_cmd.side_move;
-    cmd->side_move = sin(delta_yaw) * old_cmd.forward_move + cos(delta_yaw) * old_cmd.side_move;
+    cmd->forward_move = (cos(delta_yaw) * old_cmd.forward_move) - (sin(delta_yaw) * old_cmd.side_move);
+    cmd->side_move = (sin(delta_yaw) * old_cmd.forward_move) + (cos(delta_yaw) * old_cmd.side_move);
 }

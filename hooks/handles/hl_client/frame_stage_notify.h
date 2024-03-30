@@ -1,8 +1,5 @@
 void __fastcall hooks::handles::frame_stage_notify(c_hl_client* client, ñlient_frame_stage_t stage)
 {
-	if (stage == frame_render_start)
-		animfix::reset();
-
 	miscellaneous::disable_visual_recoil();
 
 	originals::frame_stage_notify(client, stage);

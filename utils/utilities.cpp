@@ -131,9 +131,9 @@ bool utilities::world_to_screen(const c_vector& in, c_vector* out)
 
 bool utilities::get_entity_box(c_base_entity* entity, box_t& box)
 {
-	const c_vector& pos = entity->get_abs_origin();
-	const c_vector& min = pos + entity->get_collidable()->mins();
-	const c_vector& max = pos + entity->get_collidable()->maxs();
+	c_vector pos = entity->get_abs_origin();
+	c_vector min = pos + entity->get_collidable()->mins();
+	c_vector max = pos + entity->get_collidable()->maxs();
 
 	c_vector points[] = { c_vector(min.x, min.y, min.z),
 						c_vector(min.x, max.y, min.z),

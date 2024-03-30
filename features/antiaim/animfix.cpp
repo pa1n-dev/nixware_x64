@@ -1,20 +1,19 @@
 #include "animfix.h"
 
-bool animfix::reset()
+bool animfix::can_update_animstates(c_base_entity* local_player)
 {
-	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
 	if (!local_player || !local_player->is_alive() || local_player->is_dormant())
 	{
 		if (!local_player)
 		{
 			if (real_anim_state)
 			{
-				real_anim_state->~c_hl2mp_player_anim_state();
+				real_anim_state->destructor();
 				real_anim_state = nullptr;
 			}
 		}
 		else
-			allow_anim_state_reset = true;
+			need_anim_state_reset = true;
 
 		if (real_move_data)
 		{
@@ -26,6 +25,19 @@ bool animfix::reset()
 		created_fake_matrix = false;
 
 		return false;
+	}
+
+	static auto prev_anim_state = local_player->get_anim_state();
+	if (local_player->get_anim_state() != prev_anim_state)
+	{
+		if (real_anim_state)
+		{
+			real_anim_state->destructor();
+			real_anim_state = nullptr;
+		}
+
+		prev_anim_state = local_player->get_anim_state();
+		need_anim_state_reset = true;
 	}
 
 	return true;
@@ -55,14 +67,36 @@ void animfix::update_real_bones(c_base_entity* local_player)
 {
 	local_player->invalidate_bone_cache();
 	if (local_player->get_client_renderable()->setup_bones(real_matrix, MAX_STUDIO_BONES, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))
+	{
+		c_vector origin = local_player->get_abs_origin();
+
+		for (auto& i : real_matrix) 
+		{
+			i[0][3] -= origin.x;
+			i[1][3] -= origin.y;
+			i[2][3] -= origin.z;
+		}
+
 		created_real_matrix = true;
+	}
 }
 
 void animfix::update_fake_bones(c_base_entity* local_player)
 {
 	local_player->invalidate_bone_cache();
 	if (local_player->get_client_renderable()->setup_bones(fake_matrix, MAX_STUDIO_BONES, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))
+	{
+		c_vector origin = local_player->get_abs_origin();
+
+		for (auto& i : fake_matrix)
+		{
+			i[0][3] -= origin.x;
+			i[1][3] -= origin.y;
+			i[2][3] -= origin.z;
+		}
+
 		created_fake_matrix = true;
+	}
 }
 
 void animfix::swap_anim_states(c_base_entity* local_player)
@@ -73,23 +107,23 @@ void animfix::swap_anim_states(c_base_entity* local_player)
 void animfix::run(c_user_cmd* cmd, bool send_packet)
 {
 	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
-	if (!local_player || !local_player->is_alive())
+	if (!can_update_animstates(local_player))
 		return;
 
 	bool create_real = !real_anim_state;
-	bool init_real = allow_anim_state_reset || create_real;
+	bool init_real = need_anim_state_reset || create_real;
 
 	if (create_real)
 		real_anim_state = local_player->create_anim_state();
 
-	if (init_real) 
+	if (init_real)
 	{
 		if (!real_move_data)
 			real_move_data = new multi_player_movement_data_t{};
 
 		real_anim_state->init(local_player, *real_move_data);
 
-		allow_anim_state_reset = false;
+		need_anim_state_reset = false;
 	}
 
 	float ft = interfaces::global_vars->frametime;

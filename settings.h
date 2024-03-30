@@ -4,11 +4,11 @@
 
 namespace globals
 {
-    inline void* menu_panel = nullptr;
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
     inline D3DMATRIX world_to_screen;
     inline float fov = 0;
+    inline void* menu_panel = nullptr;
 }
 
 namespace settings
@@ -55,12 +55,18 @@ namespace settings
         {
             inline bool fov = false;
             inline bool snaplines = false;
-            inline bool backtrack = false;
+            
+            namespace backtrack
+            {
+                inline bool enable = false;
+                inline int material_type = 0;
+            }
 
             namespace colors
             {
                 inline float fov[4]         = { 1.f, 1.f, 1.f, 1.f };
                 inline float snaplines[4]   = { 1.f, 1.f, 1.f, 1.f };
+                inline float backtrack[4]   = { 1.f, 1.f, 1.f, 1.f };
             }
         }
     }
@@ -86,7 +92,16 @@ namespace settings
 
         namespace visuals
         {
-            inline bool fake_model = false;
+            namespace fake_model
+            {
+                inline bool enable = false;
+                inline int material_type = 0;
+            }
+
+            namespace colors 
+            {
+                inline float fake_model[4] = { 1.f, 1.f, 1.f, 1.f };
+            }
         }
     }
 

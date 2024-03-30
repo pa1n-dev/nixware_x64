@@ -45,7 +45,7 @@ namespace hooks
 		void __fastcall render_view(i_view_render* view_render, c_view_setup& view, int flags, int to_draw);
 		void __fastcall draw_model_execute(c_model_render* model_render, void* state, model_render_info_t& info, matrix3x4* bone_to_world);
 		void __fastcall run_command(i_prediction* prediction, c_base_entity* player, c_user_cmd* cmd, void* move_helper);
-		void __fastcall multiplayer_anim_state_update(c_multiplayer_anim_state* anim_state, float yaw, float pitch);
+		void __fastcall multiplayer_anim_state_update(void* anim_state, float yaw, float pitch);
 
 		namespace originals
 		{

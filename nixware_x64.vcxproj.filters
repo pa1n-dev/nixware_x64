@@ -428,5 +428,8 @@
     <ClInclude Include="hooks\handles\multiplayer_anim_state\update.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\source-sdk\materialsystem\i_material.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

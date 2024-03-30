@@ -61,7 +61,8 @@ void menu::render()
         {
             Checkbox(xorstr("Fov"), &settings::aimbot::visuals::fov); ColorEdit4(xorstr("Fov"), settings::aimbot::visuals::colors::fov, color_edit4_flags);
             Checkbox(xorstr("Snaplines"), &settings::aimbot::visuals::snaplines); ColorEdit4(xorstr("Snaplines"), settings::aimbot::visuals::colors::snaplines, color_edit4_flags);
-            Checkbox(xorstr("Backtrack"), &settings::aimbot::visuals::backtrack);
+            Checkbox(xorstr("Backtrack"), &settings::aimbot::visuals::backtrack::enable); ColorEdit4(xorstr("Backtrack"), settings::aimbot::visuals::colors::backtrack, color_edit4_flags);
+            Combo(xorstr("Material"), &settings::aimbot::visuals::backtrack::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
 
             EndChild();
         }
@@ -99,7 +100,8 @@ void menu::render()
 
         if (BeginChild(xorstr("Visuals"), child_size))
         {
-            Checkbox(xorstr("Fake model"), &settings::antiaim::visuals::fake_model);
+            Checkbox(xorstr("Fake model"), &settings::antiaim::visuals::fake_model::enable); ColorEdit4(xorstr("Fake model"), settings::antiaim::visuals::colors::fake_model, color_edit4_flags);
+            Combo(xorstr("Material"), &settings::antiaim::visuals::fake_model::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
 
             EndChild();
         }
@@ -124,7 +126,7 @@ void menu::render()
 
         if (BeginChild(xorstr("Entity"), child_size))
         {
-            Checkbox(xorstr("Enable"), &settings::visuals::entity::enable);
+            //Checkbox(xorstr("Enable"), &settings::visuals::entity::enable);
 
             EndChild();
         }

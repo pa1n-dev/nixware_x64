@@ -240,6 +240,7 @@
     <ClInclude Include="sdk\source-sdk\c_studio_hdr.h" />
     <ClInclude Include="sdk\source-sdk\entity\i_client_networkable.h" />
     <ClInclude Include="sdk\source-sdk\i_prediction.h" />
+    <ClInclude Include="sdk\source-sdk\materialsystem\i_material.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_cvar.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_uniform_random_stream.h" />
     <ClInclude Include="sdk\source-sdk\engine\c_model_render.h" />
