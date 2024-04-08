@@ -4,7 +4,7 @@ void menu::render()
 {
     if (!settings::menu::opened)
         return;
-    
+
     ImGuiIO& io = GetIO();
     ImGuiStyle& style = GetStyle();
 
@@ -79,7 +79,7 @@ void menu::render()
             Checkbox(xorstr("Enable"), &settings::antiaim::globals::enable); custom::hotkey(xorstr("AntiAim Hotkey"), &settings::antiaim::globals::hotkey);
             Checkbox(xorstr("Fake duck"), &settings::antiaim::globals::fake_duck);
             Checkbox(xorstr("Invert yaw"), &settings::antiaim::globals::invert_yaw);
-            Combo(xorstr("Yaw"), &settings::antiaim::globals::yaw, xorstr("LBY\0" "Spin\0"));
+            Combo(xorstr("Yaw"), &settings::antiaim::globals::yaw, xorstr("LBY\0"));
             Combo(xorstr("Pitch"), &settings::antiaim::globals::pitch, xorstr("Down\0" "Up\0"));
 
             EndChild();
@@ -117,7 +117,13 @@ void menu::render()
         {
             Checkbox(xorstr("Enable"), &settings::visuals::players::enable);
             Checkbox(xorstr("Dormant"), &settings::visuals::players::dormant);
-            Checkbox(xorstr("Box"), &settings::visuals::players::box); ColorEdit4(xorstr("Box Color"), settings::visuals::players::colors::box, color_edit4_flags);
+            Checkbox(xorstr("Box"), &settings::visuals::players::box); ColorEdit4(xorstr("Box"), settings::visuals::players::colors::box, color_edit4_flags);
+            Checkbox(xorstr("Name"), &settings::visuals::players::name); ColorEdit4(xorstr("Name"), settings::visuals::players::colors::name, color_edit4_flags);
+            Checkbox(xorstr("Rp team"), &settings::visuals::players::rp_team); ColorEdit4(xorstr("Rp team"), settings::visuals::players::colors::rp_team, color_edit4_flags);
+            Checkbox(xorstr("User group"), &settings::visuals::players::user_group); ColorEdit4(xorstr("User group"), settings::visuals::players::colors::user_group, color_edit4_flags);
+            Checkbox(xorstr("Weapon name"), &settings::visuals::players::weapon_name); ColorEdit4(xorstr("Weapon name"), settings::visuals::players::colors::weapon_name, color_edit4_flags);
+            Checkbox(xorstr("Distance"), &settings::visuals::players::distance); ColorEdit4(xorstr("Distance"), settings::visuals::players::colors::distance, color_edit4_flags);
+            SliderInt(xorstr("Render distance"), &settings::visuals::players::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
 
             EndChild();
         }
@@ -158,6 +164,8 @@ void menu::render()
 
         if (BeginChild(xorstr("Movement"), child_size))
         {
+            Checkbox(xorstr("Bunny hop"), &settings::miscellaneous::movement::bhop);
+            Checkbox(xorstr("Air strafe"), &settings::miscellaneous::movement::air_strafe);
 
             EndChild();
         }

@@ -41,6 +41,18 @@ void utilities::run_javascript(void* html_panel, const char* script)
 		run_javascript(html_panel, script);
 }
 
+//https://media.discordapp.net/attachments/1194221664339234816/1214847464277024768/image.png?ex=65fa99de&is=65e824de&hm=0d881e116dd3a29aaf32d926899891343d2fce9aa895e54b0c865aa28eaaad6d&=&format=webp&quality=lossless
+const char* utilities::host_cleanup_con_var_string_value(const char* str)
+{
+	using host_cleanup_con_var_string_value_fn = const char* (*)(const char*);
+	static host_cleanup_con_var_string_value_fn host_cleanup_con_var_string_value = (host_cleanup_con_var_string_value_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("engine.dll"), xorstr("E8 ? ? ? ? 48 8B 16 48 8B CE 48 8B F8")), 1, 6);
+
+	if (!host_cleanup_con_var_string_value)
+		throw;
+
+	return host_cleanup_con_var_string_value(str);
+}
+
 bool utilities::is_key_pressed(int key)
 {
 	static bool key_press[256];
@@ -67,20 +79,6 @@ int utilities::time_to_ticks(float time)
 float utilities::ticks_to_time(int ticks)
 {
 	return interfaces::global_vars->interval_per_tick * ticks;
-}
-
-q_angle utilities::calc_angle(const c_vector& from, const c_vector& to)
-{
-	q_angle out;
-	c_vector delta = from - to;
-
-	out.x = atanf(delta.z / delta.length_2d()) * 57.295779513082f;
-	out.y = atanf(delta.y / delta.x) * 57.295779513082f;
-
-	if (delta.x >= 0.f)
-		out.y += 180.f;
-
-	return out;
 }
 
 float utilities::get_fov(const q_angle& from, const q_angle& to)

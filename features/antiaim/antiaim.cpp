@@ -22,8 +22,6 @@ void antiaim::run(c_user_cmd* cmd, bool send_packet)
     interfaces::engine->get_view_angles(view);
 
     float pitch = 0.f;
-    float yaw = 0.f;
-
     switch (settings::antiaim::globals::pitch)
     {
     case 0:
@@ -34,13 +32,11 @@ void antiaim::run(c_user_cmd* cmd, bool send_packet)
         break;
     }
 
+    float yaw = 0.f;
     switch (settings::antiaim::globals::yaw)
     {
     case 0:
-        yaw = view.y + (send_packet ^ settings::antiaim::globals::invert_yaw ? -90 : 90);
-        break;
-    case 1:
-        yaw = local_player->get_anim_state()->current_feet_yaw + (send_packet ? 180 : 0);
+        yaw = send_packet ^ settings::antiaim::globals::invert_yaw ? (view.y - 90.f) : (view.y + 90.f);
         break;
     }
 

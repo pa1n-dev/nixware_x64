@@ -24,11 +24,17 @@ void predict_spread::run(c_user_cmd* cmd)
 	if (strstr(weapon_base, xorstr("bobs_")))
 		return engine_spread(cmd, lua_utilities::get_m9k_spread(cmd, weapon));
 
-	if (strstr(weapon_base, xorstr("swb_base")))
-		return cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
+	if (strstr(weapon_base, xorstr("ptp_")))
+		return engine_spread(cmd, lua_utilities::get_ptp_spread(weapon));
 
 	if (strstr(weapon->get_print_name(), xorstr("#HL2_")) && !weapon->is_without_spread())
 		return engine_spread(cmd, weapon->get_bullet_spread().x);
+
+	if (strstr(weapon_base, xorstr("swb_")))
+	{
+		cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
+		cmd->view_angles -= globals::last_punch_angle;
+	}
 } 
 
 void predict_spread::engine_spread(c_user_cmd* cmd, float spread)

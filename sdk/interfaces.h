@@ -18,6 +18,8 @@
 #include "source-sdk/lua/shared.h"
 
 #include "source-sdk/studio.h"
+#include "source-sdk/c_studio_hdr.h"
+#include "source-sdk/i_prediction.h"
 #include "source-sdk/tier0/platform.h"
 #include "source-sdk/tier1/str_tool.h"
 #include "source-sdk/tier1/checksum_crc.h"
@@ -26,9 +28,8 @@
 #include "source-sdk/tier1/c_utl_vector.h"
 #include "source-sdk/engine/c_collideable.h"
 #include "source-sdk/engine/c_render.h"
-#include "source-sdk/c_studio_hdr.h"
-#include "source-sdk/c_multiplayer_anim_state.h"
-#include "source-sdk/c_hl2mp_player_anim_state.h"
+#include "source-sdk/anim_state/c_multiplayer_anim_state.h"
+#include "source-sdk/anim_state/c_hl2mp_player_anim_state.h"
 #include "source-sdk/entity/i_client_renderable.h"
 #include "source-sdk/entity/i_client_networkable.h"
 #include "source-sdk/entity/c_base_combat_weapon.h"
@@ -43,8 +44,8 @@
 #include "source-sdk/materialsystem/i_material.h"
 #include "source-sdk/materialsystem/i_texture.h"
 #include "source-sdk/materialsystem/c_material_system.h"
-#include "source-sdk/engine/c_model_render.h"
 #include "source-sdk/engine/c_model_info.h"
+#include "source-sdk/engine/c_model_render.h"
 #include "source-sdk/engine/c_net_channel.h"
 #include "source-sdk/engine/i_engine_trace.h"
 #include "source-sdk/shared/c_user_cmd.h"
@@ -54,7 +55,6 @@
 #include "source-sdk/vstdlib/c_cvar.h"
 #include "source-sdk/c_global_vars.h"
 #include "source-sdk/c_engine_client.h"
-#include "source-sdk/i_prediction.h"
 #include "source-sdk/c_client_state.h"
 
 namespace interfaces

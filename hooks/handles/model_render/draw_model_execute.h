@@ -1,8 +1,8 @@
 void __fastcall hooks::handles::draw_model_execute(c_model_render* model_render, void* state, model_render_info_t& info, matrix3x4* bone_to_world)
 {
-	auto render_chams = [model_render, &state, &info](int material_type, float color[4], bool ignore_walls, matrix3x4* custom_bone_to_world)
+	auto render_chams = [&](int material_type, float color[4], bool ignore_walls, matrix3x4* custom_bone_to_world)
 	{
-		static i_material* material = interfaces::material_system->find_material("models/debug/debugwhite", "Model textures");
+		static i_material* material = interfaces::material_system->find_material(xorstr("models/debug/debugwhite"), xorstr("Model textures"));
 
 		if (!material)
 			return;
@@ -44,12 +44,13 @@ void __fastcall hooks::handles::draw_model_execute(c_model_render* model_render,
 		interfaces::model_render->forced_material_override(nullptr);
 	};
 
-	c_base_entity* entity = interfaces::entity_list->get_entity(info.entity_index);
 	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
+	if (!local_player)
+		return originals::draw_model_execute(model_render, state, info, bone_to_world);
 
-	if (info.entity_index == interfaces::engine->get_local_player())
+	if (interfaces::engine->get_local_player() == info.entity_index)
 	{
-		if (interfaces::input->cam_is_third_person())
+		if (interfaces::input->camera_in_third_person)
 		{
 			c_vector origin = local_player->get_abs_origin();
 

@@ -4,6 +4,7 @@
 
 namespace globals
 {
+    inline q_angle last_punch_angle;
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
     inline D3DMATRIX world_to_screen;
@@ -119,7 +120,8 @@ namespace settings
 
         namespace movement
         {
-
+            inline bool bhop = false;
+            inline bool air_strafe = false;
         }
     }
 
@@ -130,10 +132,21 @@ namespace settings
             inline bool enable = false;
             inline bool dormant = false;
             inline bool box = false;
+            inline bool name = false;
+            inline bool rp_team = false;
+            inline bool user_group = false;
+            inline bool weapon_name = false;
+            inline bool distance = false;
+            inline int render_distance = 15000;
 
             namespace colors
             {
                 inline float box[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float name[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float rp_team[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float user_group[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float weapon_name[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float distance[4] = { 1.f, 1.f, 1.f, 1.f };
             }
         }
 

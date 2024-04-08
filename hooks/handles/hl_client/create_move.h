@@ -10,6 +10,8 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 	if (!verified_cmd)
 		return;
 
+	movement::run(cmd);
+
 	c_user_cmd old_cmd = *cmd;
 
 	aimbot::run(cmd);

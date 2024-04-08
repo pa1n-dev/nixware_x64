@@ -77,3 +77,45 @@ void math::vector_transform(const c_vector& vector, const matrix3x4& matrix, c_v
 	out[1] = vector.dot(matrix[1]) + matrix[1][3];
 	out[2] = vector.dot(matrix[2]) + matrix[2][3];
 }
+
+float math::normalize_yaw(float yaw)
+{
+	if (isnan(yaw) || isinf(yaw))
+		yaw = 0.0f;
+
+	while (yaw < -180.0f)
+		yaw += 360.0f;
+
+	while (yaw > 180.0f)
+		yaw -= 360.0f;
+
+	return yaw;
+}
+
+float math::normalize_pitch(float pitch)
+{
+	if (isnan(pitch) || isinf(pitch))
+		pitch = 0.0f;
+
+	while (pitch < -89.0f)
+		pitch += 180.0f;
+
+	while (pitch > 89.0f)
+		pitch -= 180.0f;
+
+	return pitch;
+}
+
+q_angle math::calc_angle(const c_vector& from, const c_vector& to)
+{
+	q_angle out;
+	c_vector delta = from - to;
+
+	out.x = atanf(delta.z / delta.length_2d()) * 57.295779513082f;
+	out.y = atanf(delta.y / delta.x) * 57.295779513082f;
+
+	if (delta.x >= 0.f)
+		out.y += 180.f;
+
+	return out;
+}

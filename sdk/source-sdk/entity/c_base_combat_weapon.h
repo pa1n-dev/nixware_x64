@@ -3,6 +3,11 @@
 class c_base_combat_weapon
 {
 public:
+	bool uses_lua()
+	{
+		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 170)(this);
+	}
+
 	bool push_entity()
 	{
 		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 172)(this);

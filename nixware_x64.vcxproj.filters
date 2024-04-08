@@ -123,6 +123,9 @@
     <ClCompile Include="features\antiaim\animfix.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="utils\render_manager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\imgui\imconfig.h">
@@ -389,10 +392,10 @@
     <ClInclude Include="sdk\source-sdk\entity\i_client_networkable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_hl2mp_player_anim_state.h">
+    <ClInclude Include="sdk\source-sdk\anim_state\c_hl2mp_player_anim_state.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\c_multiplayer_anim_state.h">
+    <ClInclude Include="sdk\source-sdk\anim_state\c_multiplayer_anim_state.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\client\i_client_mode_shared.h">

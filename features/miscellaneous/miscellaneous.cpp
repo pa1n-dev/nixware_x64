@@ -1,15 +1,15 @@
 #include "miscellaneous.h"
 
-void miscellaneous::disable_visual_recoil()
+void miscellaneous::run()
 {
 	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
 	if (!local_player || !local_player->is_alive())
 		return;
 
-	if (!settings::aimbot::accuracy::disable_visual_recoil)
-		return;
+	globals::last_punch_angle = local_player->get_punch_angle();
 
-	local_player->get_punch_angle() = c_vector();
+	if (settings::aimbot::accuracy::disable_visual_recoil)
+		local_player->get_punch_angle() = c_vector();
 }
 
 void miscellaneous::third_person(c_view_setup& view)
@@ -24,7 +24,8 @@ void miscellaneous::third_person(c_view_setup& view)
 	if (!settings::miscellaneous::globals::third_person::hotkey.check())
 		return;
 
-	interfaces::input->cam_to_third_person();
+	//https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/game/client/in_camera.cpp#L59
+	interfaces::input->camera_in_third_person = true;
 
 	trace_t trace;
 	c_trace_filter filter;

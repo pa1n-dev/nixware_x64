@@ -1,5 +1,10 @@
 #pragma once
 
+#include <d3d9.h>
+#include <d3dx9.h>
+
+#include "../sdk/interfaces.h"
+
 #include "../dependencies/fonts/ubuntu_compressed.h"
 #include "../dependencies/imgui/imgui.h"
 #include "../dependencies/imgui/imgui_internal.h"
@@ -10,6 +15,9 @@
 namespace render_manager
 {
 	using namespace ImGui;
+
+	static IDirect3DStateBlock9* pixel_state = nullptr;
+	static i_texture* rt = nullptr;
 
 	inline void line(ImVec2 a, ImVec2 b, float color[4], float thickness)
 	{
@@ -43,9 +51,27 @@ namespace render_manager
 
 	inline void box(box_t box, float color[4], float thickness)
 	{
-		line(ImVec2(box.left, box.bottom), ImVec2(box.left, box.top), color, thickness);
-		line(ImVec2(box.left, box.top), ImVec2(box.right, box.top), color, thickness);
-		line(ImVec2(box.right, box.top), ImVec2(box.right, box.bottom), color, thickness);
-		line(ImVec2(box.right, box.bottom), ImVec2(box.left, box.bottom), color, thickness);
+		GetWindowDrawList()->AddLine(ImVec2(box.left, box.bottom), ImVec2(box.left, box.top), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
+		GetWindowDrawList()->AddLine(ImVec2(box.left, box.top), ImVec2(box.right, box.top), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
+		GetWindowDrawList()->AddLine(ImVec2(box.right, box.top), ImVec2(box.right, box.bottom), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
+		GetWindowDrawList()->AddLine(ImVec2(box.right, box.bottom), ImVec2(box.left, box.bottom), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
 	}
+
+	inline void render_text(box_t box, const char* text, float color[4], float& text_offset)
+	{
+		if (text == "")
+			return; 
+
+		ImVec2 size = CalcTextSize(text);
+		GetWindowDrawList()->AddText(ImVec2((box.left + (box.right - box.left) / 2.f) - (size.x / 2.f), box.bottom - size.y - text_offset), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), text);
+		text_offset += size.y + 1;
+	}
+
+	void setup_imgui(IDirect3DDevice9* device);
+
+	void start_render();
+	void end_render();
+
+	void setup_states(IDirect3DDevice9* device);
+	void backup_states(IDirect3DDevice9* device);
 }

@@ -154,11 +154,11 @@ void history::update()
 			continue;
 		}
 
-		track.erase(std::remove_if(track.begin(), track.end(), 
-		[](const lag_record& r) 
-		{ 
-			return utilities::ticks_to_time(interfaces::global_vars->tick_count) - r.simulation_time > 1.f; 
-		}), track.end());
+		float dead_time = utilities::ticks_to_time(interfaces::global_vars->tick_count) - 1.f;
+		while (!track.empty() && track.back().simulation_time < dead_time)
+		{
+			track.pop_back();
+		}
 
 		lag_record record;
 		record.arrive_time = utilities::ticks_to_time(estimate_server_arrive_tick());

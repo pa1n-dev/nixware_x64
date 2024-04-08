@@ -3,128 +3,19 @@
 #include "backtrack/history.h"
 #include "backtrack/lag_compensation.h"
 
-void aimbot::run(c_user_cmd* cmd)
+void aimbot::smooth(c_user_cmd* cmd, q_angle& angle)
 {
-	target = {};
-
-	if (!settings::aimbot::globals::enable)
+	if (!settings::aimbot::accuracy::smooth || settings::aimbot::globals::silent)
 		return;
 
-	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
-	if (!local_player || !local_player->is_alive())
-		return;
+	angle.normalize();
+	angle.clamp();
 
-	c_base_combat_weapon* weapon = local_player->get_active_weapon();
-	if (!weapon || !weapon->can_shoot() || weapon->is_holding_tool())
-		return;
+	q_angle delta = angle - cmd->view_angles;
+	delta.normalize();
+	delta.clamp();
 
-	target = find_best_target(cmd, local_player);
-	if (!target.entity)
-		return;
-
-	if (settings::menu::opened)
-		return;
-
-	if (cmd->is_typing || cmd->is_world_clicking)
-		return;
-
-	if (!settings::aimbot::globals::hotkey.check())
-		return;
-
-	//if (lag_compensation::get_is_locked())
-	//	return;
-
-	smooth(cmd, target.shoot_angle);
-
-	cmd->view_angles = target.shoot_angle;
-
-	if (!settings::aimbot::globals::silent)
-		interfaces::engine->set_view_angles(target.shoot_angle);
-
-	if (settings::aimbot::globals::automatic_fire)
-	{
-		if (cmd->command_number & 1)
-			cmd->buttons |= IN_ATTACK;
-	}
-
-	bool adjust_interp;
-	history::can_restore_to_simulation_time(target.simulation_time, &adjust_interp);
-
-	if (adjust_interp)
-	{
-		float interp = utilities::ticks_to_time(interfaces::global_vars->tick_count) - target.simulation_time;
-		if (interp > 0.f)
-			lag_compensation::update_desired_values(true, interp, 1.f);
-	}
-}
-
-target_info aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_player)
-{
-	target_info target;
-	priority_info& priority = target.priority_info;
-
-	q_angle view_angles = cmd->view_angles;
-	c_vector origin = local_player->get_abs_origin();
-
-	c_vector eye_position;
-	local_player->get_eye_position(eye_position);
-
-	for (size_t i = 1; i <= interfaces::entity_list->get_highest_entity_index(); i++)
-	{
-		c_base_entity* entity = interfaces::entity_list->get_entity(i);
-
-		if (!entity || !entity->is_player() || !entity->is_alive() || entity->is_dormant() || entity == local_player)
-			continue;
-
-		float simulation_time = entity->get_simulation_time();
-		int distance = origin.distance_to(entity->get_abs_origin());
-		int health = entity->get_health();
-		c_vector shoot_pos;
-
-		if (!get_hit_position(local_player, entity, shoot_pos))
-		{
-			if (!settings::aimbot::accuracy::backtrack)
-				continue;
-
-			lag_record record;
-			if (!history::get_latest_record(i, record))
-				continue;
-
-			if (!get_hit_position(local_player, entity, shoot_pos, record.bone_to_world))
-				continue;
-
-			simulation_time = record.simulation_time;
-			distance = record.origin.distance_to(entity->get_abs_origin());
-		}
-
-		q_angle shoot_angle = utilities::calc_angle(eye_position, shoot_pos);
-
-		float fov = utilities::get_fov(view_angles, shoot_angle);
-		if (fov > settings::aimbot::globals::fov)
-			continue;
-		
-        bool should_skip = false;
-        switch (settings::aimbot::globals::priority) 
-		{
-            case 0: should_skip = fov > priority.fov; break;
-            case 1: should_skip = distance > priority.distance; break;
-            case 2: should_skip = health > priority.health; break;
-        }
-
-        if (should_skip)
-            continue;
-
-		priority.fov = fov;
-		priority.distance = distance;
-		priority.health = health;
-
-		target.entity = entity;
-		target.shoot_pos = shoot_pos;
-		target.shoot_angle = shoot_angle;
-		target.simulation_time = simulation_time;
-	}
-
-	return target;
+	angle = cmd->view_angles + delta / settings::aimbot::accuracy::smooth;
 }
 
 bool aimbot::check_hitbox_group(int group) 
@@ -196,17 +87,126 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 	return false;
 }
 
-void aimbot::smooth(c_user_cmd* cmd, q_angle& angle)
+target_info aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_player)
 {
-	if (!settings::aimbot::accuracy::smooth || settings::aimbot::globals::silent)
+	target_info target;
+	priority_info& priority = target.priority_info;
+
+	q_angle view_angles = cmd->view_angles;
+	c_vector origin = local_player->get_abs_origin();
+
+	c_vector eye_position;
+	local_player->get_eye_position(eye_position);
+
+	for (size_t i = 1; i <= interfaces::entity_list->get_highest_entity_index(); i++)
+	{
+		c_base_entity* entity = interfaces::entity_list->get_entity(i);
+
+		if (!entity || !entity->is_player() || !entity->is_alive() || entity == local_player)
+			continue;
+
+		float simulation_time = entity->get_simulation_time();
+		int distance = origin.distance_to(entity->get_abs_origin());
+		int health = entity->get_health();
+		c_vector shoot_pos;
+
+		if (!get_hit_position(local_player, entity, shoot_pos))
+		{
+			if (!settings::aimbot::accuracy::backtrack)
+				continue;
+
+			lag_record record;
+			if (!history::get_latest_record(i, record))
+				continue;
+
+			if (!get_hit_position(local_player, entity, shoot_pos, record.bone_to_world))
+				continue;
+
+			simulation_time = record.simulation_time;
+			distance = record.origin.distance_to(entity->get_abs_origin());
+		}
+
+		q_angle shoot_angle = math::calc_angle(eye_position, shoot_pos);
+
+		float fov = utilities::get_fov(view_angles, shoot_angle);
+		if (fov > settings::aimbot::globals::fov)
+			continue;
+
+		bool should_skip = false;
+		switch (settings::aimbot::globals::priority)
+		{
+		case 0: should_skip = fov > priority.fov; break;
+		case 1: should_skip = distance > priority.distance; break;
+		case 2: should_skip = health > priority.health; break;
+		}
+
+		if (should_skip)
+			continue;
+
+		priority.fov = fov;
+		priority.distance = distance;
+		priority.health = health;
+
+		target.entity = entity;
+		target.shoot_pos = shoot_pos;
+		target.shoot_angle = shoot_angle;
+		target.simulation_time = simulation_time;
+	}
+
+	return target;
+}
+
+void aimbot::run(c_user_cmd* cmd)
+{
+	target = {};
+
+	if (!settings::aimbot::globals::enable)
 		return;
 
-	angle.normalize();
-	angle.clamp();
+	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
+	if (!local_player || !local_player->is_alive())
+		return;
 
-	q_angle delta = angle - cmd->view_angles;
-	delta.normalize();
-	delta.clamp();
+	c_base_combat_weapon* weapon = local_player->get_active_weapon();
+	if (!weapon || !weapon->can_shoot() || weapon->is_holding_tool())
+		return;
 
-	angle = cmd->view_angles + delta / settings::aimbot::accuracy::smooth;
+	target = find_best_target(cmd, local_player);
+	if (!target.entity)
+		return;
+
+	if (settings::menu::opened)
+		return;
+
+	if (cmd->is_typing || cmd->is_world_clicking)
+		return;
+
+	if (!settings::aimbot::globals::hotkey.check())
+		return;
+
+	if (lag_compensation::get_is_locked())
+		return;
+
+	smooth(cmd, target.shoot_angle);
+
+	cmd->view_angles = target.shoot_angle;
+
+	if (!settings::aimbot::globals::silent)
+		interfaces::engine->set_view_angles(target.shoot_angle);
+
+	if (settings::aimbot::globals::automatic_fire)
+	{
+		if (cmd->command_number & 1)
+			cmd->buttons |= IN_ATTACK;
+	}
+
+	bool adjust_interp;
+	history::can_restore_to_simulation_time(target.simulation_time, &adjust_interp);
+
+	if (adjust_interp)
+	{
+		float interp = utilities::ticks_to_time(interfaces::global_vars->tick_count) - target.simulation_time;
+		if (interp > 0.f)
+			lag_compensation::update_desired_values(true, interp, 1.f);
+	}
 }

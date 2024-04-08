@@ -6,14 +6,18 @@ void visuals::render()
 	if (!interfaces::engine->is_in_game())
 		return;
 
+	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
+	if (!local_player)
+		return;
+
+	c_vector origin = local_player->get_abs_origin();
+
 	ImGuiIO& io = GetIO();
 	SetNextWindowPos(ImVec2(0, 0));
 	SetNextWindowSize(io.DisplaySize);
 
 	if (!Begin(xorstr("Visuals"), NULL, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground))
 		return;
-
-	c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
 
 	for (size_t i = 0; i < interfaces::entity_list->get_highest_entity_index(); i++)
 	{
@@ -39,8 +43,41 @@ void visuals::render()
 			if (!utilities::get_entity_box(entity, box))
 				continue;
 
+			float offset = 0;
+			float distance = origin.distance_to(entity->get_abs_origin());
+
+			float alpha = std::clamp((settings::visuals::players::render_distance - distance) / 100.f, 0.f, 1.f);
+			if (alpha <= 0.0f)
+				continue;
+
+			PushStyleVar(ImGuiStyleVar_Alpha, alpha);
+
 			if (settings::visuals::players::box)
 				render_manager::box(box, settings::visuals::players::colors::box, 1.f);
+
+			if (settings::visuals::players::distance)
+			{
+				std::string distance_text = std::to_string((int)distance) + "m";
+				render_manager::render_text(box, distance_text.c_str(), settings::visuals::players::colors::distance, offset);
+			}
+
+			c_base_combat_weapon* weapon = entity->get_active_weapon();
+			if (weapon)
+			{
+				if (settings::visuals::players::weapon_name)
+					render_manager::render_text(box, lua_utilities::language_get_phrase(lua_utilities::get_weapon_print_name(weapon)), settings::visuals::players::colors::weapon_name, offset);
+			}
+
+			if (settings::visuals::players::user_group)
+				render_manager::render_text(box, lua_utilities::get_user_group(entity), settings::visuals::players::colors::user_group, offset);
+
+			if (settings::visuals::players::rp_team)
+				render_manager::render_text(box, lua_utilities::get_team_name(entity), settings::visuals::players::colors::rp_team, offset);
+
+			if (settings::visuals::players::name)
+				render_manager::render_text(box, lua_utilities::get_name(entity), settings::visuals::players::colors::name, offset);
+
+			PopStyleVar();
 		}
 		else if (settings::visuals::entity::enable)
 		{

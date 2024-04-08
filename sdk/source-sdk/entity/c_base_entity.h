@@ -29,6 +29,11 @@ public:
 		return memory::call_v_function<c_vector&(__thiscall*)(void*)>(this, 10)(this);
 	}
 
+	int get_team_number()
+	{
+		return memory::call_v_function<int(__thiscall*)(void*)>(this, 77)(this);
+	}
+
 	int get_health()
 	{
 		return memory::call_v_function<int(__thiscall*)(void*)>(this, 108)(this);
@@ -119,7 +124,6 @@ public:
 		return *(unsigned int*)((uintptr_t)this + 0x1A98);
 	}
 
-	//https://media.discordapp.net/attachments/1194221664339234816/1214483423280889876/image.png?ex=65f946d4&is=65e6d1d4&hm=b41c877344e4b2bdb1f0d983962391b5eb7ab7f9d9776dbdbd1741725a1c18e8&=&format=webp&quality=lossless
 	c_hl2mp_player_anim_state* get_anim_state()
 	{
 		return *(c_hl2mp_player_anim_state**)((uintptr_t)this + 0x3618);
@@ -185,7 +189,7 @@ public:
 		invalidate_bone_cache(this);
 	}
 
-	//https://cdn.discordapp.com/attachments/1194221664339234816/1209856472373137500/image.png?ex=65e871a5&is=65d5fca5&hm=0f8f3abe0ef4d35b2e97098c482c87b6d1c1a0ec7406dab4eb77fdd75205a9d2&
+	//https://s12.gifyu.com/images/SVJ0B.png
 	void set_abs_origin(c_vector& origin)
 	{
 		using set_abs_origin_fn = void(__fastcall*)(void*, c_vector&);

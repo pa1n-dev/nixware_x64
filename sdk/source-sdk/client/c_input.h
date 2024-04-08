@@ -38,16 +38,6 @@ enum
 class c_input
 {
 public:
-	bool cam_is_third_person()
-	{
-		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 31)(this);
-	}
-
-	void cam_to_third_person()
-	{
-		return memory::call_v_function<void(__thiscall*)(void*)>(this, 32)(this);
-	}
-
 	char                    pad[8];
 	bool					mouse_initialized;
 	bool					mouse_active;

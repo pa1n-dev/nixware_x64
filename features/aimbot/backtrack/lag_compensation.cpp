@@ -1,18 +1,5 @@
 #include "lag_compensation.h"
 
-//https://media.discordapp.net/attachments/1194221664339234816/1214847464277024768/image.png?ex=65fa99de&is=65e824de&hm=0d881e116dd3a29aaf32d926899891343d2fce9aa895e54b0c865aa28eaaad6d&=&format=webp&quality=lossless
-const char* host_cleanup_con_var_string_value(const char* str)
-{
-	using host_cleanup_con_var_string_value_fn = const char*(*)(const char*);
-
-	static host_cleanup_con_var_string_value_fn host_cleanup_con_var_string_value = (host_cleanup_con_var_string_value_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("engine.dll"), xorstr("E8 ? ? ? ? 48 8B 16 48 8B CE 48 8B F8")), 1, 6);
-	
-	if (!host_cleanup_con_var_string_value)
-		throw;
-
-	return host_cleanup_con_var_string_value(str);
-}
-
 void lag_compensation::write_user_cmd_delta_to_buffer_callback()
 {
 	if (has_to_reset)
@@ -34,7 +21,7 @@ void lag_compensation::write_user_cmd_delta_to_buffer_callback()
 		char buf[64];
 		sprintf_s(buf, "%f", interp);
 
-		NET_SetConVar net_interp(xorstr("cl_interp"), host_cleanup_con_var_string_value(buf));
+		NET_SetConVar net_interp(xorstr("cl_interp"), utilities::host_cleanup_con_var_string_value(buf));
 		net_channel->send_net_msg(net_interp, true);
 	}
 
@@ -42,7 +29,7 @@ void lag_compensation::write_user_cmd_delta_to_buffer_callback()
 		char buf[64];
 		sprintf_s(buf, "%f", ratio);
 
-		NET_SetConVar cl_interp_ratio(xorstr("cl_interp_ratio"), host_cleanup_con_var_string_value(buf));
+		NET_SetConVar cl_interp_ratio(xorstr("cl_interp_ratio"), utilities::host_cleanup_con_var_string_value(buf));
 		net_channel->send_net_msg(cl_interp_ratio, true);
 	}
 
@@ -69,7 +56,7 @@ void lag_compensation::reset_values()
 		char buf[64];
 		sprintf_s(buf, "%f", cl_interp->get_float());
 
-		NET_SetConVar net_interp(xorstr("cl_interp"), host_cleanup_con_var_string_value(buf));
+		NET_SetConVar net_interp(xorstr("cl_interp"), utilities::host_cleanup_con_var_string_value(buf));
 		net_channel->send_net_msg(net_interp, true);
 	}
 
@@ -77,7 +64,7 @@ void lag_compensation::reset_values()
 		char buf[64];
 		sprintf_s(buf, "%f", cl_interp_ratio->get_float());
 
-		NET_SetConVar cl_interp_ratio(xorstr("cl_interp_ratio"), host_cleanup_con_var_string_value(buf));
+		NET_SetConVar cl_interp_ratio(xorstr("cl_interp_ratio"), utilities::host_cleanup_con_var_string_value(buf));
 		net_channel->send_net_msg(cl_interp_ratio, true);
 	}
 

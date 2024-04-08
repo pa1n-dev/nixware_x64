@@ -8,10 +8,10 @@ public:
 	{
 		using NET_SetConVar_t = NET_SetConVar* (__fastcall*)(void*, const char*, const char*);
 
-		static NET_SetConVar_t NET_SetConVar;
+		static NET_SetConVar_t NET_SetConVar = (NET_SetConVar_t)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("engine.dll"), xorstr("E8 ? ? ? ? 45 33 C9 48 8D 54 24 ? 45 33 C0 48 8D 0D ? ? ? ?")), 1, 6);
 
 		if (!NET_SetConVar)
-			NET_SetConVar = (NET_SetConVar_t)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("engine.dll"), xorstr("E8 ? ? ? ? 45 33 C9 48 8D 54 24 ? 45 33 C0 48 8D 0D ? ? ? ?")), 1, 6);
+			throw;
 
 		NET_SetConVar(this, name, value);
 	}

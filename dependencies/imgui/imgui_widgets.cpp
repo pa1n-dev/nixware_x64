@@ -714,24 +714,24 @@ bool ImGui::ButtonEx(const char* label, const ImVec2& size_arg, ImGuiButtonFlags
     bool pressed = ButtonBehavior(bb, id, &hovered, &held, flags);
 
     // Render
-    struct ButtonAnimation
+    struct button_animation
     {
-        ImColor Frame;
+        ImColor frame;
     };
 
-    static std::map< ImGuiID, ButtonAnimation > TabMap;
-    auto TabItem = TabMap.find(id);
-    if (TabItem == TabMap.end())
+    static std::map<ImGuiID, button_animation> tab_map;
+    auto tab_map_item = tab_map.find(id);
+    if (tab_map_item == tab_map.end())
     {
-        TabMap.insert({ id, ButtonAnimation() });
-        TabItem = TabMap.find(id);
+        tab_map.insert({ id, button_animation() });
+        tab_map_item = tab_map.find(id);
 
-        TabItem->second.Frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
     }
 
-    TabItem->second.Frame = ImLerp(TabItem->second.Frame.Value, pressed || held ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), g.IO.DeltaTime * 8.f);
+    tab_map_item->second.frame = ImLerp(tab_map_item->second.frame.Value, pressed || held ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
-    window->DrawList->AddRect(bb.Min, bb.Max, TabItem->second.Frame, 0.f, 0, 1.f);
+    window->DrawList->AddRect(bb.Min, bb.Max, tab_map_item->second.frame, 0.f, 0, 1.f);
     window->DrawList->AddText(ImVec2(bb.GetCenter().x - (label_size.x / 2), bb.GetCenter().y - (label_size.y / 2)), GetColorU32(ImGuiCol_Text), label);
 
     IMGUI_TEST_ENGINE_ITEM_INFO(id, label, g.LastItemData.StatusFlags);
@@ -1013,22 +1013,22 @@ bool ImGui::ScrollbarEx(const ImRect& bb_frame, ImGuiID id, ImGuiAxis axis, ImS6
     }
 
     // Render
-    struct ScrollbarAnimation
+    struct scrollbar_animation
     {
-        ImColor GrabFrame;
+        ImColor grab_frame;
     };
 
-    static std::map< ImGuiID, ScrollbarAnimation > TabMap;
-    auto TabItem = TabMap.find(id);
-    if (TabItem == TabMap.end())
+    static std::map<ImGuiID, scrollbar_animation> tab_map;
+    auto tab_map_item = tab_map.find(id);
+    if (tab_map_item == tab_map.end())
     {
-        TabMap.insert({ id, ScrollbarAnimation() });
-        TabItem = TabMap.find(id);
+        tab_map.insert({ id, scrollbar_animation() });
+        tab_map_item = tab_map.find(id);
 
-        TabItem->second.GrabFrame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.grab_frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
     }
 
-    TabItem->second.GrabFrame = ImLerp(TabItem->second.GrabFrame.Value, held ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), g.IO.DeltaTime * 8.f);
+    tab_map_item->second.grab_frame = ImLerp(tab_map_item->second.grab_frame.Value, held ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
     //window->DrawList->AddRectFilled(bb_frame.Min, bb_frame.Max, GetColorU32(ImGuiCol_FrameBg), window->WindowRounding, flags);
 
@@ -1038,7 +1038,7 @@ bool ImGui::ScrollbarEx(const ImRect& bb_frame, ImGuiID id, ImGuiAxis axis, ImS6
     else
         grab_rect = ImRect(bb.Min.x, ImLerp(bb.Min.y, bb.Max.y, grab_v_norm), bb.Max.x, ImLerp(bb.Min.y, bb.Max.y, grab_v_norm) + grab_h_pixels);
 
-    window->DrawList->AddRectFilled(grab_rect.Min, grab_rect.Max, TabItem->second.GrabFrame, style.ScrollbarRounding);
+    window->DrawList->AddRectFilled(grab_rect.Min, grab_rect.Max, tab_map_item->second.grab_frame, style.ScrollbarRounding);
 
     return held;
 }
@@ -1163,25 +1163,25 @@ bool ImGui::Checkbox(const char* label, bool* v)
         MarkItemEdited(id);
     }
 
-    struct CheckboxAnimation
+    struct checkbox_animation
     {
-        ImColor Frame;
+        ImColor frame;
     };
 
-    static std::map< ImGuiID, CheckboxAnimation > TabMap;
+    static std::map<ImGuiID, checkbox_animation> tab_map;
 
-    auto TabMapItem = TabMap.find(id);
-    if (TabMapItem == TabMap.end())
+    auto tab_map_item = tab_map.find(id);
+    if (tab_map_item == tab_map.end())
     {
-        TabMap.insert({ id, CheckboxAnimation() });
-        TabMapItem = TabMap.find(id);
+        tab_map.insert({ id, checkbox_animation() });
+        tab_map_item = tab_map.find(id);
 
-        TabMapItem->second.Frame = GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.frame = GetColorU32(ImGuiCol_FrameBg);
     }
 
-    TabMapItem->second.Frame = ImLerp(TabMapItem->second.Frame, *v ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), g.IO.DeltaTime * 8.f);
+    tab_map_item->second.frame = ImLerp(tab_map_item->second.frame, *v ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
-    RenderFrame(check_bb.Min, check_bb.Max, GetColorU32(TabMapItem->second.Frame.Value), false, 0.f);
+    RenderFrame(check_bb.Min, check_bb.Max, GetColorU32(tab_map_item->second.frame.Value), false, 0.f);
 
     if (label_size.x > 0.0f)
         RenderText(ImVec2(check_bb.Max.x + style.ItemInnerSpacing.x, check_bb.Min.y + (square_sz / 2) - (label_size.y / 2)), label);
@@ -1739,22 +1739,22 @@ bool ImGui::BeginCombo(const char* label, const char* preview_value, ImGuiComboF
     }
 
     // Render shape
-    struct ComboAnimation
+    struct combo_animation
     {
-        ImColor Frame;
+        ImColor frame;
     };
 
-    static std::map< ImGuiID, ComboAnimation > TabMap;
-    auto TabItem = TabMap.find(id);
-    if (TabItem == TabMap.end())
+    static std::map< ImGuiID, combo_animation > tab_map;
+    auto tab_map_item = tab_map.find(id);
+    if (tab_map_item == tab_map.end())
     {
-        TabMap.insert({ id, ComboAnimation() });
-        TabItem = TabMap.find(id);
+        tab_map.insert({ id, combo_animation() });
+        tab_map_item = tab_map.find(id);
 
-        TabItem->second.Frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
     }
 
-    TabItem->second.Frame = ImLerp(TabItem->second.Frame.Value, hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), g.IO.DeltaTime * 8.f);
+    tab_map_item->second.frame = ImLerp(tab_map_item->second.frame.Value, hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
     //RenderNavHighlight(bb, id);
 
@@ -1764,7 +1764,7 @@ bool ImGui::BeginCombo(const char* label, const char* preview_value, ImGuiComboF
     ImRect frame = ImRect(ImVec2(total_bb.Min.x, total_bb.Min.y + style.ItemInnerSpacing.y + label_size.y), total_bb.Max);
 
     if (!(flags & ImGuiComboFlags_NoPreview))
-        window->DrawList->AddRectFilled(frame.Min, frame.Max, TabItem->second.Frame, style.FrameRounding);
+        window->DrawList->AddRectFilled(frame.Min, frame.Max, tab_map_item->second.frame, style.FrameRounding);
 
     //RenderFrameBorder(bb.Min, bb.Max, style.FrameRounding);
 
@@ -3079,24 +3079,24 @@ bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* p_dat
     }
 
     // Draw frame
-    struct SliderAnimation
+    struct slider_animation
     {
-        float ThumbPosition;
-        ImColor SliderFrame;
+        float thumb_position;
+        ImColor slider_frame;
     };
 
-    static std::map< ImGuiID, SliderAnimation > TabMap;
+    static std::map<ImGuiID, slider_animation> tab_map;
 
-    auto TabMapItem = TabMap.find(id);
-    if (TabMapItem == TabMap.end())
+    auto tab_map_item = tab_map.find(id);
+    if (tab_map_item == tab_map.end())
     {
-        TabMap.insert({ id, SliderAnimation() });
-        TabMapItem = TabMap.find(id);
+        tab_map.insert({ id, slider_animation() });
+        tab_map_item = tab_map.find(id);
 
-        TabMapItem->second.SliderFrame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.slider_frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
     }
 
-    TabMapItem->second.SliderFrame = ImLerp(TabMapItem->second.SliderFrame, hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), g.IO.DeltaTime * 8.f);
+    tab_map_item->second.slider_frame = ImLerp(tab_map_item->second.slider_frame, hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
     if (label_size.x > 0.0f)
     {
@@ -3114,12 +3114,12 @@ bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* p_dat
         MarkItemEdited(id);
 
     if (hovered || IsItemActive())
-        TabMapItem->second.ThumbPosition = ImLerp(TabMapItem->second.ThumbPosition, grab_bb.Max.x, g.IO.DeltaTime * 15.f);
+        tab_map_item->second.thumb_position = ImLerp(tab_map_item->second.thumb_position, grab_bb.Max.x, std::min(1.0f, g.IO.DeltaTime * 15.f));
     else
-        TabMapItem->second.ThumbPosition = grab_bb.Max.x;
+        tab_map_item->second.thumb_position = grab_bb.Max.x;
 
-    RenderFrame(ImVec2(total_bb.Min.x, total_bb.Min.y + label_size.y + 7.f), ImVec2(total_bb.Max.x, total_bb.Min.y + label_size.y + 12.f), GetColorU32(TabMapItem->second.SliderFrame.Value), true, 0.f);
-    RenderFrame(ImVec2(total_bb.Min.x, total_bb.Min.y + label_size.y + 7.f), ImVec2(TabMapItem->second.ThumbPosition, total_bb.Min.y + label_size.y + 12.f), GetColorU32(ImGuiCol_FrameBgActive), true, 0.f);
+    RenderFrame(ImVec2(total_bb.Min.x, total_bb.Min.y + label_size.y + 7.f), ImVec2(total_bb.Max.x, total_bb.Min.y + label_size.y + 12.f), GetColorU32(tab_map_item->second.slider_frame.Value), true, 0.f);
+    RenderFrame(ImVec2(total_bb.Min.x, total_bb.Min.y + label_size.y + 7.f), ImVec2(tab_map_item->second.thumb_position, total_bb.Min.y + label_size.y + 12.f), GetColorU32(ImGuiCol_FrameBgActive), true, 0.f);
 
     IMGUI_TEST_ENGINE_ITEM_INFO(id, label, g.LastItemData.StatusFlags | (temp_input_allowed ? ImGuiItemStatusFlags_Inputable : 0));
     return value_changed;
@@ -6614,24 +6614,24 @@ bool ImGui::Selectable(const char* label, bool selected, ImGuiSelectableFlags fl
     //    RenderFrame(bb.Min, bb.Max, col, false, 0.0f);
     //}
 
-    struct SelectableAnimation
+    struct selectable_animation
     {
         ImColor Frame;
     };
 
-    static std::map< ImGuiID, SelectableAnimation > TabMap;
-    auto TabItem = TabMap.find(id);
-    if (TabItem == TabMap.end())
+    static std::map<ImGuiID, selectable_animation> tab_map;
+    auto tab_map_item = tab_map.find(id);
+    if (tab_map_item == tab_map.end())
     {
-        TabMap.insert({ id, SelectableAnimation() });
-        TabItem = TabMap.find(id);
+        tab_map.insert({ id, selectable_animation() });
+        tab_map_item = tab_map.find(id);
 
-        TabItem->second.Frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.Frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
     }
 
-    TabItem->second.Frame = ImLerp(TabItem->second.Frame, selected || hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), g.IO.DeltaTime * 8.f);
+    tab_map_item->second.Frame = ImLerp(tab_map_item->second.Frame, selected || hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
-    RenderFrame(bb.Min, bb.Max, TabItem->second.Frame, false, 0.0f);
+    RenderFrame(bb.Min, bb.Max, tab_map_item->second.Frame, false, 0.0f);
 
     //RenderNavHighlight(bb, id, ImGuiNavHighlightFlags_TypeThin | ImGuiNavHighlightFlags_NoRounding);
 
@@ -7692,7 +7692,7 @@ void    ImGui::EndTabBar()
         return;
     }
 
-    // Fallback in case no TabItem have been submitted
+    // Fallback in case no tab_map_item have been submitted
     if (tab_bar->WantLayout)
         TabBarLayout(tab_bar);
 
@@ -8024,7 +8024,7 @@ const char* ImGui::TabBarGetTabName(ImGuiTabBar* tab_bar, ImGuiTabItem* tab)
     return tab_bar->TabsNames.Buf.Data + tab->NameOffset;
 }
 
-// The *TabId fields are already set by the docking system _before_ the actual TabItem was created, so we clear them regardless.
+// The *TabId fields are already set by the docking system _before_ the actual tab_map_item was created, so we clear them regardless.
 void ImGui::TabBarRemoveTab(ImGuiTabBar* tab_bar, ImGuiID tab_id)
 {
     if (ImGuiTabItem* tab = TabBarFindTabByID(tab_bar, tab_id))
@@ -8316,28 +8316,28 @@ bool    ImGui::BeginTabItem(const char* label, bool* p_open, ImGuiTabItemFlags f
     {
         ImGuiTabItem* tab = &tab_bar->Tabs[tab_bar->LastTabItemIdx];
 
-        struct TabAnimation
+        struct tab_animation
         {
-            float Frame;
+            float frame;
         };
 
-        static std::map< ImGuiID, TabAnimation > TabMap;
-        for (auto& TabItem : TabMap)
+        static std::map<ImGuiID, tab_animation> tab_map;
+        for (auto& tab_map_item : tab_map)
         {
-            if (TabItem.first != tab_bar->SelectedTabId)
-                TabItem.second.Frame = 0.f;
+            if (tab_map_item.first != tab_bar->SelectedTabId)
+                tab_map_item.second.frame = 0.f;
         }
 
-        auto TabItem = TabMap.find(tab->ID);
-        if (TabItem == TabMap.end())
+        auto tab_map_item = tab_map.find(tab->ID);
+        if (tab_map_item == tab_map.end())
         {
-            TabMap.insert({ tab->ID, TabAnimation() });
-            TabItem = TabMap.find(tab->ID);
+            tab_map.insert({ tab->ID, tab_animation() });
+            tab_map_item = tab_map.find(tab->ID);
         }
 
-        TabItem->second.Frame = ImLerp(TabItem->second.Frame, tab_bar->SelectedTabId == tab->ID ? 1.f : 0.f, g.IO.DeltaTime * 8.f);
+        tab_map_item->second.frame = ImLerp(tab_map_item->second.frame, tab_bar->SelectedTabId == tab->ID ? 1.f : 0.f, std::min(1.0f, g.IO.DeltaTime * 8.f));
 
-        ImGui::PushStyleVar(ImGuiStyleVar_Alpha, TabItem->second.Frame);
+        ImGui::PushStyleVar(ImGuiStyleVar_Alpha, tab_map_item->second.frame);
 
         if (!(flags & ImGuiTabItemFlags_NoPushId))
             PushOverrideID(tab->ID);
@@ -8564,25 +8564,25 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
 #endif
 
     // Render tab shape
-    struct TabAnimation
+    struct tab_animation
     {
-        ImColor Frame;
+        ImColor frame;
     };
 
-    static std::map< ImGuiID, TabAnimation > TabMap;
-    auto TabItem = TabMap.find(id);
-    if (TabItem == TabMap.end())
+    static std::map<ImGuiID, tab_animation> tab_map;
+    auto tab_map_item = tab_map.find(id);
+    if (tab_map_item == tab_map.end())
     {
-        TabMap.insert({ id, TabAnimation() });
-        TabItem = TabMap.find(id);
+        tab_map.insert({ id, tab_animation() });
+        tab_map_item = tab_map.find(id);
 
-        TabItem->second.Frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
     }
 
-    TabItem->second.Frame = ImLerp(TabItem->second.Frame.Value, tab_bar->SelectedTabId == id ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : held || hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), g.IO.DeltaTime * 8.f);
+    tab_map_item->second.frame = ImLerp(tab_map_item->second.frame.Value, tab_bar->SelectedTabId == id ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : held || hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
     window->DrawList->AddText(ImVec2(bb.GetCenter().x - (label_size.x / 2), bb.GetCenter().y - (label_size.y / 2) - 2.f), GetColorU32(ImGuiCol_Text), label);
-    window->DrawList->AddRectFilled(ImVec2(bb.Min.x, bb.Max.y - 2.f), bb.Max, TabItem->second.Frame, 0.f);
+    window->DrawList->AddRectFilled(ImVec2(bb.Min.x, bb.Max.y - 2.f), bb.Max, tab_map_item->second.frame, 0.f);
 
     // Select with right mouse button. This is so the common idiom for context menu automatically highlight the current widget.
     const bool hovered_unblocked = IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup);

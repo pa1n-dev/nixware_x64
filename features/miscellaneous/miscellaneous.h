@@ -3,6 +3,6 @@
 
 namespace miscellaneous
 {
-	void disable_visual_recoil();
+	void run();
 	void third_person(c_view_setup& view);
 }

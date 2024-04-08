@@ -4,6 +4,11 @@
 using matrix3x4 = float[3][4];
 using matrix4x4 = float[16];
 
+struct box_t
+{
+	float left, top, right, bottom;
+};
+
 class c_vector
 {
 public:
