@@ -5049,7 +5049,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
     }
 
     if (label_size.x > 0)
-        RenderText(ImVec2(total_bb.Min.x, total_bb.Min.y + style.FramePadding.y), label);
+        RenderText(total_bb.Min, label);
 
     if (value_changed && !(flags & ImGuiInputTextFlags_NoMarkEdited))
         MarkItemEdited(id);

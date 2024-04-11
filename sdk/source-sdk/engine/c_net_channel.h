@@ -30,6 +30,11 @@ public:
 	int choked_packets;
 
 public:
+	const char* get_address()
+	{
+		return memory::call_v_function<const char* (__thiscall*)(void*)>(this, 1)(this);
+	}
+
 	float get_latency(int flow)
 	{
 		return memory::call_v_function<float(__thiscall*)(void*, int)>(this, 9)(this, flow);

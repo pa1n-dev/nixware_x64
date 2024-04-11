@@ -6,8 +6,6 @@ void miscellaneous::run()
 	if (!local_player || !local_player->is_alive())
 		return;
 
-	globals::last_punch_angle = local_player->get_punch_angle();
-
 	if (settings::aimbot::accuracy::disable_visual_recoil)
 		local_player->get_punch_angle() = c_vector();
 }
@@ -40,4 +38,31 @@ void miscellaneous::third_person(c_view_setup& view)
 	interfaces::engine_trace->trace_ray(ray, MASK_SOLID, &filter, &trace);
 
 	view.origin = trace.end;
+}
+
+void miscellaneous::lua_dumper(std::string filename, std::string string_to_run)
+{
+	if (!settings::lua::miscellaneous::dumper)
+		return;
+
+	c_net_channel* net_channel = interfaces::engine->get_net_channel();
+	if (!net_channel)
+		return;
+
+	std::string address = net_channel->get_address();
+	std::replace(address.begin(), address.end(), ':', '_');
+	std::replace(address.begin(), address.end(), '.', '-');
+
+	std::filesystem::path path = xorstr("C:/nixware/dumps/") + address + xorstr("/");
+	path /= filename;
+
+	std::filesystem::create_directories(path.parent_path());
+
+	std::ofstream file(path);
+
+	if (!file.is_open())
+		return;
+
+	file << string_to_run << std::endl;
+	file.close();
 }

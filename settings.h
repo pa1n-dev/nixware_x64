@@ -4,7 +4,6 @@
 
 namespace globals
 {
-    inline q_angle last_punch_angle;
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
     inline D3DMATRIX world_to_screen;
@@ -106,25 +105,6 @@ namespace settings
         }
     }
 
-    namespace miscellaneous
-    {
-        namespace globals
-        {
-            namespace third_person
-            {
-                inline bool enable = false;
-                inline hotkey_t hotkey;
-                inline int distance = 100;
-            }
-        }
-
-        namespace movement
-        {
-            inline bool bhop = false;
-            inline bool air_strafe = false;
-        }
-    }
-
     namespace visuals
     {
         namespace players
@@ -154,5 +134,33 @@ namespace settings
         {
             inline bool enable = false;
         }
+    }
+
+    namespace miscellaneous
+    {
+        namespace globals
+        {
+            namespace third_person
+            {
+                inline bool enable = false;
+                inline hotkey_t hotkey;
+                inline int distance = 100;
+            }
+        }
+
+        namespace movement
+        {
+            inline bool bhop = false;
+            inline bool air_strafe = false;
+        }
+    }
+
+    namespace lua
+    {
+        namespace miscellaneous
+        {
+            inline bool dumper = false;
+        }
+
     }
 }

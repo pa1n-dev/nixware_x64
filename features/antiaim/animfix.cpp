@@ -2,31 +2,6 @@
 
 bool animfix::can_update_animstates(c_base_entity* local_player)
 {
-	if (!local_player || !local_player->is_alive() || local_player->is_dormant())
-	{
-		if (!local_player)
-		{
-			if (real_anim_state)
-			{
-				real_anim_state->destructor();
-				real_anim_state = nullptr;
-			}
-		}
-		else
-			need_anim_state_reset = true;
-
-		if (real_move_data)
-		{
-			delete real_move_data;
-			real_move_data = nullptr;
-		}
-
-		created_real_matrix = false;
-		created_fake_matrix = false;
-
-		return false;
-	}
-
 	static auto prev_anim_state = local_player->get_anim_state();
 	if (local_player->get_anim_state() != prev_anim_state)
 	{
@@ -36,8 +11,23 @@ bool animfix::can_update_animstates(c_base_entity* local_player)
 			real_anim_state = nullptr;
 		}
 
+		if (real_move_data)
+		{
+			delete real_move_data;
+			real_move_data = nullptr;
+		}
+
 		prev_anim_state = local_player->get_anim_state();
+
 		need_anim_state_reset = true;
+	}
+
+	if (!local_player || !local_player->is_alive() || local_player->is_dormant())
+	{
+		created_real_matrix = false;
+		created_fake_matrix = false;
+
+		return false;
 	}
 
 	return true;

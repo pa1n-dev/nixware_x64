@@ -434,5 +434,8 @@
     <ClInclude Include="sdk\source-sdk\materialsystem\i_material.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="hooks\handles\lua_interface\run_string_ex.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

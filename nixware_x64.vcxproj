@@ -72,10 +72,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)x64\</OutDir>
-    <IntDir>$(SolutionDir)x64\</IntDir>
+    <IntDir>$(SolutionDir)x64\obj\</IntDir>
     <TargetName>nixware</TargetName>
     <IncludePath>D:\Source\DirectX SDK\Include;D:\Source\Freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Source\DirectX SDK\Lib\x64;D:\Source\Freetype\win64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)debug_x64\</OutDir>
+    <IntDir>$(SolutionDir)debug_x64\obj\</IntDir>
+    <TargetName>nixware</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -119,6 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -241,6 +247,7 @@
     <ClInclude Include="sdk\source-sdk\c_studio_hdr.h" />
     <ClInclude Include="sdk\source-sdk\entity\i_client_networkable.h" />
     <ClInclude Include="sdk\source-sdk\i_prediction.h" />
+    <ClInclude Include="hooks\handles\lua_interface\run_string_ex.h" />
     <ClInclude Include="sdk\source-sdk\materialsystem\i_material.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_cvar.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_uniform_random_stream.h" />

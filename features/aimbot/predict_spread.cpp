@@ -33,7 +33,7 @@ void predict_spread::run(c_user_cmd* cmd)
 	if (strstr(weapon_base, xorstr("swb_")))
 	{
 		cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
-		cmd->view_angles -= globals::last_punch_angle;
+		cmd->view_angles -= local_player->get_punch_angle();
 	}
 } 
 

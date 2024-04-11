@@ -1,4 +1,5 @@
 #include "menu.h"
+#include <filesystem>
 
 void menu::render()
 {
@@ -175,6 +176,31 @@ void menu::render()
 
     if (BeginTabItem(xorstr("Lua")))
     {
+        ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
+
+        if (BeginChild(xorstr("Scripts"), child_size))
+        {
+
+
+            EndChild();
+        }
+
+        SameLine();
+
+        if (BeginChild(xorstr("Action"), child_size))
+        {
+
+            EndChild();
+        }
+
+        SameLine();
+
+        if (BeginChild(xorstr("Misc"), child_size))
+        {
+            Checkbox(xorstr("Dumber"), &settings::lua::miscellaneous::dumper);
+
+            EndChild();
+        }
 
         EndTabItem();
     }

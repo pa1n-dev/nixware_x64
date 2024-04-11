@@ -3219,7 +3219,7 @@ const char* ImGui::FindRenderedTextEnd(const char* text, const char* text_end)
 // Internal ImGui functions to render text
 // RenderText***() functions calls ImDrawList::AddText() calls ImBitmapFont::RenderText()
 void ImGui::RenderText(ImVec2 pos, const char* text, const char* text_end, bool hide_text_after_hash)
-{
+{   
     ImGuiContext& g = *GImGui;
     ImGuiWindow* window = g.CurrentWindow;
 
@@ -5341,10 +5341,12 @@ bool ImGui::BeginChildEx(const char* name, ImGuiID id, const ImVec2& size_arg, b
     ImVec2 label_size = CalcTextSize(name);
 
     RenderFrame(parent_window->DC.CursorPos + ImVec2(0.f, space_sz), parent_window->DC.CursorPos + size, GetColorU32(ImGuiCol_ChildBg), false, 0.f);
-    RenderText(parent_window->DC.CursorPos + ImVec2(20.f, space_sz - (label_size.y / 2)), name);
 
-    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + space_sz + (label_size.y / 2) + g.Style.ItemSpacing.y + g.Style.FramePadding.y * 2);
-    ImGui::Indent(10.f);
+    if (name)
+        RenderText(parent_window->DC.CursorPos + ImVec2(20.f, space_sz - (label_size.y / 2)), name);
+
+    SetCursorPosY(GetCursorPosY() + space_sz + (label_size.y / 2) + g.Style.ItemSpacing.y + g.Style.FramePadding.y * 2);
+    Indent(10.f);
 
     return ret;
 }
