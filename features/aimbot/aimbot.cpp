@@ -168,7 +168,7 @@ void aimbot::run(c_user_cmd* cmd)
 		return;
 
 	c_base_combat_weapon* weapon = local_player->get_active_weapon();
-	if (!weapon || !weapon->can_shoot() || weapon->is_holding_tool())
+	if (!weapon || !weapon->can_fire() || weapon->is_holding_tool())
 		return;
 
 	target = find_best_target(cmd, local_player);
@@ -184,6 +184,9 @@ void aimbot::run(c_user_cmd* cmd)
 	if (!settings::aimbot::globals::hotkey.check())
 		return;
 
+	if (weapon->next_primary_attack() > interfaces::global_vars->curtime)
+		return;
+
 	if (lag_compensation::get_is_locked())
 		return;
 
@@ -195,10 +198,7 @@ void aimbot::run(c_user_cmd* cmd)
 		interfaces::engine->set_view_angles(target.shoot_angle);
 
 	if (settings::aimbot::globals::automatic_fire)
-	{
-		if (cmd->command_number & 1)
-			cmd->buttons |= IN_ATTACK;
-	}
+		cmd->buttons |= IN_ATTACK;
 
 	bool adjust_interp;
 	history::can_restore_to_simulation_time(target.simulation_time, &adjust_interp);

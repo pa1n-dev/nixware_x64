@@ -92,7 +92,7 @@ const char* lua_utilities::get_rp_jobs_list(int team)
 	}
 
 	lua->get_field(-1, xorstr("List"));
-	if (!lua->is_type(-1, (int)object_type_t::table)) 
+	if (!lua->is_type(-1, (int)object_type_t::table))
 	{
 		lua->pop(4);
 		return "";
@@ -100,14 +100,14 @@ const char* lua_utilities::get_rp_jobs_list(int team)
 
 	lua->push_number(team);
 	lua->get_table(-2);
-	if (!lua->is_type(-1, (int)object_type_t::table)) 
+	if (!lua->is_type(-1, (int)object_type_t::table))
 	{
 		lua->pop(5);
 		return "";
 	}
 
 	lua->get_field(-1, xorstr("Name"));
-	if (!lua->is_type(-1, (int)object_type_t::string)) 
+	if (!lua->is_type(-1, (int)object_type_t::string))
 	{
 		lua->pop(6);
 		return "";

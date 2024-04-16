@@ -16,10 +16,14 @@ void render_manager::setup_imgui(IDirect3DDevice9* device)
 
 		ImGuiIO& io = GetIO();
 
-		ImFontConfig config = ImFontConfig();
-		config.FontBuilderFlags = ImGuiFreeTypeBuilderFlags_MonoHinting;
+		//special thanks to nixer
+		ImFontConfig cfg = {};
 
-		io.Fonts->AddFontFromMemoryCompressedTTF(ubuntu_compressed_data, ubuntu_compressed_size, 13, &config, io.Fonts->GetGlyphRangesCyrillic());
+		cfg.PixelSnapH = true;
+		cfg.OversampleH = cfg.OversampleV = 1;
+		cfg.FontBuilderFlags = ImGuiFreeTypeBuilderFlags_ForceAutoHint;
+
+		io.Fonts->AddFontFromFileTTF("C:/windows/fonts/verdana.ttf", 13.f, &cfg, io.Fonts->GetGlyphRangesCyrillic());
 	});
 }
 

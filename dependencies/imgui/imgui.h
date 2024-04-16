@@ -1521,6 +1521,8 @@ enum ImGuiBackendFlags_
 enum ImGuiCol_
 {
     ImGuiCol_Text,
+    ImGuiCol_TextHovered,
+    ImGuiCol_TextActive,
     ImGuiCol_TextDisabled,
     ImGuiCol_WindowBg,              // Background of normal windows
     ImGuiCol_ChildBg,               // Background of child windows

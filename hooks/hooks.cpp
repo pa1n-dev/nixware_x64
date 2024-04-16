@@ -5,6 +5,7 @@
 #include "../features/aimbot/aimbot.h"
 #include "../features/aimbot/penetrate_walls.h"
 #include "../features/aimbot/predict_spread.h"
+#include "../features/aimbot/engine_prediction.h"
 #include "../features/aimbot/backtrack/history.h"
 #include "../features/aimbot/backtrack/lag_compensation.h"
 #include "../features/antiaim/antiaim.h"
@@ -12,6 +13,7 @@
 #include "../features/antiaim/animfix.h"
 #include "../features/miscellaneous/miscellaneous.h"
 #include "../features/miscellaneous/movement.h"
+#include "../features/lua/lua.h"
 
 #include "handles/wndproc.h"
 #include "handles/d3d9/present.h"

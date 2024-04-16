@@ -15,6 +15,7 @@ namespace lua_utilities
 	const char* get_weapon_base(c_base_combat_weapon* weapon);
 	float get_m9k_spread(c_user_cmd* cmd, c_base_combat_weapon* weapon);
 	float get_ptp_spread(c_base_combat_weapon* weapon);
+	float get_weapon_max_spread_inc(c_base_combat_weapon* weapon);
 	float get_weapon_cur_cone(c_base_combat_weapon* weapon);
 	const char* language_get_phrase(const char* phrase);
 	void random_seed(float seed);

@@ -5340,13 +5340,23 @@ bool ImGui::BeginChildEx(const char* name, ImGuiID id, const ImVec2& size_arg, b
     float space_sz = 5.f;
     ImVec2 label_size = CalcTextSize(name);
 
-    RenderFrame(parent_window->DC.CursorPos + ImVec2(0.f, space_sz), parent_window->DC.CursorPos + size, GetColorU32(ImGuiCol_ChildBg), false, 0.f);
-
     if (name)
-        RenderText(parent_window->DC.CursorPos + ImVec2(20.f, space_sz - (label_size.y / 2)), name);
+    {
+        PushStyleVar(ImGuiStyleVar_Alpha, 1.f);
+        RenderFrame(parent_window->DC.CursorPos + ImVec2(0.f, space_sz), parent_window->DC.CursorPos + size, GetColorU32(ImGuiCol_ChildBg), false, 0.f);
+        PopStyleVar();
 
-    SetCursorPosY(GetCursorPosY() + space_sz + (label_size.y / 2) + g.Style.ItemSpacing.y + g.Style.FramePadding.y * 2);
-    Indent(10.f);
+        RenderText(parent_window->DC.CursorPos + ImVec2(20.f, space_sz - (label_size.y / 2)), name);
+        SetCursorPosY(GetCursorPosY() + space_sz + (label_size.y / 2) + g.Style.ItemSpacing.y + g.Style.FramePadding.y * 2);
+        Indent(10.f);
+    }
+    else
+    {
+        PushStyleVar(ImGuiStyleVar_Alpha, 1.f);
+        RenderFrame(parent_window->DC.CursorPos, parent_window->DC.CursorPos + size, GetColorU32(ImGuiCol_ChildBg), false, 0.f);
+        PopStyleVar();
+    }
+
 
     return ret;
 }

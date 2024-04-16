@@ -10,7 +10,7 @@ void predict_spread::run(c_user_cmd* cmd)
 		return;
 
 	c_base_combat_weapon* weapon = local_player->get_active_weapon();
-	if (!weapon || !weapon->can_shoot())
+	if (!weapon || !weapon->can_fire())
 		return;
 
 	if (cmd->is_typing || cmd->is_world_clicking)
@@ -35,7 +35,7 @@ void predict_spread::run(c_user_cmd* cmd)
 		cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
 		cmd->view_angles -= local_player->get_punch_angle();
 	}
-} 
+}
 
 void predict_spread::engine_spread(c_user_cmd* cmd, float spread)
 {
@@ -74,9 +74,6 @@ void predict_spread::cone_spread(c_user_cmd* cmd, float cone, float seed)
 	out.y = lua_utilities::rand(-cone, cone);
 	out.z = 0;
 	out *= 25;
-
-	out.normalize();
-	out.clamp();
 
 	cmd->view_angles -= out;
 }

@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <filesystem>
 #include <fstream>
-#include <algorithm>
+#include <sstream>
 
 #include <d3d9.h>
 #include <d3dx9.h>

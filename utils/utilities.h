@@ -12,6 +12,8 @@ namespace utilities
 	void detach_console();
 	void run_javascript(void* html_panel, const char* script);
 	const char* host_cleanup_con_var_string_value(const char* str);
+	std::vector<std::string> get_files_from_folder(const std::string& path, const std::string& search, const std::string& search_extension);
+	std::string get_last_modified_time(const std::string& file_path);
 	bool is_key_pressed(int key);
 	int time_to_ticks(float time);
 	float ticks_to_time(int ticks);

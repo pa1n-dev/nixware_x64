@@ -169,11 +169,13 @@
     <ClCompile Include="features\aimbot\aimbot.cpp" />
     <ClCompile Include="features\aimbot\backtrack\history.cpp" />
     <ClCompile Include="features\aimbot\backtrack\lag_compensation.cpp" />
+    <ClCompile Include="features\aimbot\engine_prediction.cpp" />
     <ClCompile Include="features\antiaim\animfix.cpp" />
     <ClCompile Include="features\antiaim\antiaim.cpp" />
     <ClCompile Include="features\antiaim\fakelags.cpp" />
     <ClCompile Include="features\aimbot\penetrate_walls.cpp" />
     <ClCompile Include="features\aimbot\predict_spread.cpp" />
+    <ClCompile Include="features\lua\lua.cpp" />
     <ClCompile Include="features\menu\menu.cpp" />
     <ClCompile Include="features\miscellaneous\miscellaneous.cpp" />
     <ClCompile Include="features\miscellaneous\movement.cpp" />
@@ -191,7 +193,6 @@
     <ClCompile Include="utils\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dependencies\fonts\ubuntu_compressed.h" />
     <ClInclude Include="dependencies\imgui\freetype\imgui_freetype.h" />
     <ClInclude Include="dependencies\imgui\imconfig.h" />
     <ClInclude Include="dependencies\imgui\imgui.h" />
@@ -214,11 +215,13 @@
     <ClInclude Include="features\aimbot\aimbot.h" />
     <ClInclude Include="features\aimbot\backtrack\history.h" />
     <ClInclude Include="features\aimbot\backtrack\lag_compensation.h" />
+    <ClInclude Include="features\aimbot\engine_prediction.h" />
     <ClInclude Include="features\antiaim\animfix.h" />
     <ClInclude Include="features\antiaim\antiaim.h" />
     <ClInclude Include="features\antiaim\fakelags.h" />
     <ClInclude Include="features\aimbot\penetrate_walls.h" />
     <ClInclude Include="features\aimbot\predict_spread.h" />
+    <ClInclude Include="features\lua\lua.h" />
     <ClInclude Include="features\menu\menu.h" />
     <ClInclude Include="features\miscellaneous\miscellaneous.h" />
     <ClInclude Include="features\miscellaneous\movement.h" />
@@ -240,6 +243,7 @@
     <ClInclude Include="hooks\handles\d3d9\present.h" />
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />
+    <ClInclude Include="sdk\source-sdk\client\i_game_movement.h" />
     <ClInclude Include="sdk\source-sdk\client\i_client_mode_shared.h" />
     <ClInclude Include="sdk\source-sdk\c_client_state.h" />
     <ClInclude Include="sdk\source-sdk\anim_state\c_hl2mp_player_anim_state.h" />
@@ -249,6 +253,7 @@
     <ClInclude Include="sdk\source-sdk\i_prediction.h" />
     <ClInclude Include="hooks\handles\lua_interface\run_string_ex.h" />
     <ClInclude Include="sdk\source-sdk\materialsystem\i_material.h" />
+    <ClInclude Include="sdk\source-sdk\shared\i_move_helper.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_cvar.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_uniform_random_stream.h" />
     <ClInclude Include="sdk\source-sdk\engine\c_model_render.h" />
@@ -287,7 +292,6 @@
     <ClInclude Include="sdk\source-sdk\vgui\c_engine_vgui.h" />
     <ClInclude Include="sdk\source-sdk\vgui\i_panel.h" />
     <ClInclude Include="sdk\source-sdk\client\i_view_render.h" />
-    <ClInclude Include="sdk\source-sdk\tier1\checksum_crc.h" />
     <ClInclude Include="sdk\source-sdk\tier0\platform.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="utils\hotkey.h" />

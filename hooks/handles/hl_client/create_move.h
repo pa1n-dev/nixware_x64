@@ -2,11 +2,11 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 {
 	originals::create_move(client, sequence_number, input_sample_frametime, active);
 
-	c_user_cmd* cmd = interfaces::input->cmds + (sequence_number % MULTIPLAYER_BACKUP);
+	c_user_cmd* cmd = interfaces::input->get_user_cmd(sequence_number);
 	if (!cmd)
 		return;
 
-	c_verified_user_cmd* verified_cmd = interfaces::input->verified_cmds + (sequence_number % MULTIPLAYER_BACKUP);
+	c_verified_user_cmd* verified_cmd = interfaces::input->get_verified_user_cmd(sequence_number);
 	if (!verified_cmd)
 		return;
 
@@ -14,7 +14,9 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 
 	c_user_cmd old_cmd = *cmd;
 
+	engine_prediction::start(cmd);
 	aimbot::run(cmd);
+	engine_prediction::end(cmd);
 	predict_spread::run(cmd);
 
 	bool send_packet = fakelags::run(cmd);
@@ -24,8 +26,7 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 
 	movement::fix(cmd, old_cmd);
 
-	verified_cmd->m_cmd = *cmd;
-	verified_cmd->m_crc = cmd->get_checksum();
+	verified_cmd->set_user_cmd(cmd);
 
 	lag_compensation::write_user_cmd_delta_to_buffer_callback();
 }

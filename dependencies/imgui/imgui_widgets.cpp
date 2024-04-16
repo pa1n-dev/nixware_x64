@@ -1182,6 +1182,7 @@ bool ImGui::Checkbox(const char* label, bool* v)
     tab_map_item->second.frame = ImLerp(tab_map_item->second.frame, *v ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
     RenderFrame(check_bb.Min, check_bb.Max, GetColorU32(tab_map_item->second.frame.Value), false, 0.f);
+    //window->DrawList->AddRect(check_bb.Min, check_bb.Max, tab_map_item->second.frame, 0.f, 0, 1.f);
 
     if (label_size.x > 0.0f)
         RenderText(ImVec2(check_bb.Max.x + style.ItemInnerSpacing.x, check_bb.Min.y + (square_sz / 2) - (label_size.y / 2)), label);
@@ -8306,11 +8307,11 @@ bool    ImGui::BeginTabItem(const char* label, bool* p_open, ImGuiTabItemFlags f
     }
     IM_ASSERT(!(flags & ImGuiTabItemFlags_Button)); // BeginTabItem() Can't be used with button flags, use TabItemButton() instead!
 
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+    PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
 
     bool ret = TabItemEx(tab_bar, label, p_open, flags, NULL);
 
-    ImGui::PopStyleVar();
+    PopStyleVar();
 
     if (ret)
     {
@@ -8325,7 +8326,7 @@ bool    ImGui::BeginTabItem(const char* label, bool* p_open, ImGuiTabItemFlags f
         for (auto& tab_map_item : tab_map)
         {
             if (tab_map_item.first != tab_bar->SelectedTabId)
-                tab_map_item.second.frame = 0.f;
+                tab_map_item.second.frame = 0.5f;
         }
 
         auto tab_map_item = tab_map.find(tab->ID);
@@ -8335,9 +8336,10 @@ bool    ImGui::BeginTabItem(const char* label, bool* p_open, ImGuiTabItemFlags f
             tab_map_item = tab_map.find(tab->ID);
         }
 
-        tab_map_item->second.frame = ImLerp(tab_map_item->second.frame, tab_bar->SelectedTabId == tab->ID ? 1.f : 0.f, std::min(1.0f, g.IO.DeltaTime * 8.f));
+        tab_map_item->second.frame = ImLerp(tab_map_item->second.frame, tab_bar->SelectedTabId == tab->ID ? 1.f : 0.f, std::min(1.0f, g.IO.DeltaTime * 3.5f));
 
-        ImGui::PushStyleVar(ImGuiStyleVar_Alpha, tab_map_item->second.frame);
+        PushStyleVar(ImGuiStyleVar_Alpha, tab_map_item->second.frame);
+        PushStyleColor(ImGuiCol_Text, GetColorU32(ImGuiCol_TextActive));
 
         if (!(flags & ImGuiTabItemFlags_NoPushId))
             PushOverrideID(tab->ID);
@@ -8364,7 +8366,8 @@ void    ImGui::EndTabItem()
     if (!(tab->Flags & ImGuiTabItemFlags_NoPushId))
         PopID();
 
-    ImGui::PopStyleVar();
+    PopStyleVar();
+    PopStyleColor();
 }
 
 bool    ImGui::TabItemButton(const char* label, ImGuiTabItemFlags flags)
@@ -8567,6 +8570,7 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
     struct tab_animation
     {
         ImColor frame;
+        ImColor text;
     };
 
     static std::map<ImGuiID, tab_animation> tab_map;
@@ -8577,11 +8581,13 @@ bool    ImGui::TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, 
         tab_map_item = tab_map.find(id);
 
         tab_map_item->second.frame = (ImColor)GetColorU32(ImGuiCol_FrameBg);
+        tab_map_item->second.text = (ImColor)GetColorU32(ImGuiCol_Text);
     }
 
     tab_map_item->second.frame = ImLerp(tab_map_item->second.frame.Value, tab_bar->SelectedTabId == id ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgActive) : held || hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBgHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_FrameBg), std::min(1.0f, g.IO.DeltaTime * 8.f));
+    tab_map_item->second.text = ImLerp(tab_map_item->second.text.Value, tab_bar->SelectedTabId == id ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_TextActive) : held || hovered ? (ImVec4)(ImColor)GetColorU32(ImGuiCol_TextHovered) : (ImVec4)(ImColor)GetColorU32(ImGuiCol_Text), std::min(1.0f, g.IO.DeltaTime * 8.f));
 
-    window->DrawList->AddText(ImVec2(bb.GetCenter().x - (label_size.x / 2), bb.GetCenter().y - (label_size.y / 2) - 2.f), GetColorU32(ImGuiCol_Text), label);
+    window->DrawList->AddText(ImVec2(bb.GetCenter().x - (label_size.x / 2), bb.GetCenter().y - (label_size.y / 2) - 2.f), tab_map_item->second.text, label);
     window->DrawList->AddRectFilled(ImVec2(bb.Min.x, bb.Max.y - 2.f), bb.Max, tab_map_item->second.frame, 0.f);
 
     // Select with right mouse button. This is so the common idiom for context menu automatically highlight the current widget.

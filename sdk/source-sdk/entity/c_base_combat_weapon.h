@@ -28,6 +28,11 @@ public:
 		return *(int*)((uintptr_t)this + 0x1C48);
 	}
 
+	float next_primary_attack()
+	{
+		return *(float*)((uintptr_t)this + 0x1BFC);
+	}
+
 	const char* get_name()
 	{
 		using  get_name_fn = const char* (__fastcall*)(void*);
@@ -42,9 +47,9 @@ public:
 
 	const char* get_print_name()
 	{
-		using  get_print_name_t = const char* (__fastcall*)(void*);
+		using  get_print_name_fn = const char* (__fastcall*)(void*);
 
-		static get_print_name_t get_print_name = (get_print_name_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 83 EC 28 0F B7 89 F4 1B 00 00 E8 ? ? ? ? 48 83 C0 5A"));
+		static get_print_name_fn get_print_name = (get_print_name_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 83 EC 28 0F B7 89 F4 1B 00 00 E8 ? ? ? ? 48 83 C0 5A"));
 
 		if (!get_print_name)
 			throw;
@@ -72,11 +77,11 @@ public:
 		return false;
 	}
 
-	bool can_shoot()
+	bool can_fire()
 	{
-		if (primary_ammo() > 0)
-			return true;
+		if (primary_ammo() <= 0)
+			return false;
 
-		return false;
+		return true;
 	}
 };

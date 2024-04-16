@@ -1,5 +1,5 @@
 #include "menu.h"
-#include <filesystem>
+#include "../lua/lua.h"
 
 void menu::render()
 {
@@ -13,6 +13,8 @@ void menu::render()
     PushStyleColor(ImGuiCol_PopupBg, ImVec4(settings::menu::colors::window_bg[0], settings::menu::colors::window_bg[1], settings::menu::colors::window_bg[2], settings::menu::colors::window_bg[3]));
     PushStyleColor(ImGuiCol_ChildBg, ImVec4(settings::menu::colors::child_bg[0], settings::menu::colors::child_bg[1], settings::menu::colors::child_bg[2], settings::menu::colors::child_bg[3]));
     PushStyleColor(ImGuiCol_Text, ImVec4(settings::menu::colors::text[0], settings::menu::colors::text[1], settings::menu::colors::text[2], settings::menu::colors::text[3]));
+    PushStyleColor(ImGuiCol_TextHovered, ImVec4(settings::menu::colors::text_hovered[0], settings::menu::colors::text_hovered[1], settings::menu::colors::text_hovered[2], settings::menu::colors::text_hovered[3]));
+    PushStyleColor(ImGuiCol_TextActive, ImVec4(settings::menu::colors::text_active[0], settings::menu::colors::text_active[1], settings::menu::colors::text_active[2], settings::menu::colors::text_active[3]));
     PushStyleColor(ImGuiCol_FrameBg, ImVec4(settings::menu::colors::frame_bg[0], settings::menu::colors::frame_bg[1], settings::menu::colors::frame_bg[2], settings::menu::colors::frame_bg[3]));
     PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(settings::menu::colors::frame_hovered_bg[0], settings::menu::colors::frame_hovered_bg[1], settings::menu::colors::frame_hovered_bg[2], settings::menu::colors::frame_hovered_bg[3]));
     PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(settings::menu::colors::frame_active_bg[0], settings::menu::colors::frame_active_bg[1], settings::menu::colors::frame_active_bg[2], settings::menu::colors::frame_active_bg[3]));
@@ -177,11 +179,31 @@ void menu::render()
     if (BeginTabItem(xorstr("Lua")))
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
+        
+        static int selected_item = -1;
+        static char search_buffer[256] = "";
+
+        std::vector<std::string> file_list = utilities::get_files_from_folder(xorstr("C:/nixware/lua/"), search_buffer, xorstr(".lua"));
 
         if (BeginChild(xorstr("Scripts"), child_size))
         {
+            float column_width = GetColumnWidth();
 
+            PushItemWidth(column_width - 10.f);
+            InputText(xorstr("Search"), search_buffer, sizeof(search_buffer));
 
+            if (BeginListBox(xorstr("##Files"), ImVec2(0, GetWindowHeight() - (GetCursorPosY() + 10.f))))
+            {
+                for (int i = 0; i < file_list.size(); i++)
+                {
+                    if (Selectable(file_list[i].c_str(), selected_item == i, 0, ImVec2(column_width, 0)))
+                        selected_item = i;
+                }
+
+                EndListBox();
+            }
+
+            PopItemWidth();
             EndChild();
         }
 
@@ -189,6 +211,18 @@ void menu::render()
 
         if (BeginChild(xorstr("Action"), child_size))
         {
+            float column_width = GetColumnWidth();
+
+            if (selected_item != -1 && selected_item < file_list.size())
+            {
+                std::string path = xorstr("C:/nixware/lua/") + file_list[selected_item] + xorstr(".lua");
+
+                LabelText(file_list[selected_item].c_str());
+                LabelText("Last update:", utilities::get_last_modified_time(path).c_str());
+
+                if (Button(xorstr("Load script"), ImVec2(column_width - 10.f, 35.f)))
+                    lua::run_string(path);
+            }
 
             EndChild();
         }
@@ -197,7 +231,7 @@ void menu::render()
 
         if (BeginChild(xorstr("Misc"), child_size))
         {
-            Checkbox(xorstr("Dumber"), &settings::lua::miscellaneous::dumper);
+            Checkbox(xorstr("Dumper"), &settings::lua::miscellaneous::dumper);
 
             EndChild();
         }
@@ -211,7 +245,7 @@ void menu::render()
 
         if (BeginChild(xorstr("Info"), child_size))
         {
-            LabelText("Last update:", __DATE__);
+            LabelText(xorstr("Last update:"), __DATE__);
 
             EndChild();
         }
@@ -223,6 +257,8 @@ void menu::render()
             LabelText(xorstr("WindowBg"));       ColorEdit4(xorstr("WindowBg"), settings::menu::colors::window_bg, color_edit4_flags);
             LabelText(xorstr("ChildBg"));        ColorEdit4(xorstr("ChildBg"), settings::menu::colors::child_bg, color_edit4_flags);
             LabelText(xorstr("Text"));           ColorEdit4(xorstr("Text"), settings::menu::colors::text, color_edit4_flags);
+            LabelText(xorstr("TextHovered"));    ColorEdit4(xorstr("TextHovered"), settings::menu::colors::text_hovered, color_edit4_flags);
+            LabelText(xorstr("TextActive"));     ColorEdit4(xorstr("TextActive"), settings::menu::colors::text_active, color_edit4_flags);
             LabelText(xorstr("FrameBg"));        ColorEdit4(xorstr("FrameBg"), settings::menu::colors::frame_bg, color_edit4_flags);
             LabelText(xorstr("FrameHoveredBg")); ColorEdit4(xorstr("FrameHoveredBg"), settings::menu::colors::frame_hovered_bg, color_edit4_flags);
             LabelText(xorstr("FrameActiveBg"));  ColorEdit4(xorstr("FrameActiveBg"), settings::menu::colors::frame_active_bg, color_edit4_flags);
@@ -235,9 +271,9 @@ void menu::render()
 
         if (BeginChild(xorstr("Configs"), child_size))
         {
-            float column_width = GetColumnWidth() - 10.f;
+            float column_width = GetColumnWidth();
 
-            if (Button(xorstr("Unload cheat"), ImVec2(column_width, 35.f)))
+            if (Button(xorstr("Unload cheat"), ImVec2(column_width - 10.f, 35.f)))
                 hooks::unhook();
 
             EndChild();
@@ -249,7 +285,7 @@ void menu::render()
     EndTabBar();
     End();
 
-    PopStyleColor(7);
+    PopStyleColor(9);
     PopStyleVar();
 }
 

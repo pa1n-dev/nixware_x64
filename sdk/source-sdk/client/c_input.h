@@ -38,6 +38,16 @@ enum
 class c_input
 {
 public:
+	c_user_cmd* get_user_cmd(int sequence_number)
+	{
+		return cmds + (sequence_number % MULTIPLAYER_BACKUP);
+	}
+
+	c_verified_user_cmd* get_verified_user_cmd(int sequence_number)
+	{
+		return verified_cmds + (sequence_number % MULTIPLAYER_BACKUP);
+	}
+
 	char                    pad[8];
 	bool					mouse_initialized;
 	bool					mouse_active;

@@ -54,6 +54,14 @@ void interfaces::initialize()
 	if (!prediction)
 		throw;
 
+	game_movement = memory::capture_interface<i_game_movement>(xorstr("client.dll"), xorstr("GameMovement001"));
+	if (!game_movement)
+		throw;
+
+	move_helper = memory::get_vmt_from_instruction<i_move_helper>((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 89 05 ? ? ? ? E9 ? ? ? ? CC CC CC CC CC CC 48 83 EC 28")));
+	if (!move_helper)
+		throw;
+
 	view_render = memory::get_vmt_from_instruction<i_view_render>((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 8B 0D ? ? ? ? 48 8B 01 FF 50 18 48 8B 0D ? ? ? ? E8 ? ? ? ?")));
 	if (!view_render)
 		throw;

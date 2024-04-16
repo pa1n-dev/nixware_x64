@@ -126,6 +126,12 @@
     <ClCompile Include="utils\render_manager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="features\lua\lua.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="features\aimbot\engine_prediction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\imgui\imconfig.h">
@@ -153,9 +159,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\imgui\impl\imgui_impl_win32.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\fonts\ubuntu_compressed.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="hooks\hooks.h">
@@ -255,9 +258,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\definitions.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\source-sdk\tier1\checksum_crc.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\tier0\platform.h">
@@ -435,6 +435,18 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="hooks\handles\lua_interface\run_string_ex.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="features\lua\lua.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="features\aimbot\engine_prediction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\client\i_game_movement.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\source-sdk\shared\i_move_helper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -53,6 +53,40 @@ const char* utilities::host_cleanup_con_var_string_value(const char* str)
 	return host_cleanup_con_var_string_value(str);
 }
 
+std::vector<std::string> utilities::get_files_from_folder(const std::string& path, const std::string& search, const std::string& search_extension)
+{
+	std::vector<std::string> list;
+
+	std::filesystem::create_directories(path);
+
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+	{
+		std::string name = entry.path().stem().string();
+		std::string extension = entry.path().extension().string();
+
+		if (extension != search_extension)
+			continue;
+
+		if (search.empty() || name.find(search) != std::string::npos)
+			list.push_back(name);
+	}
+
+	return list;
+}
+
+std::string utilities::get_last_modified_time(const std::string& file_path)
+{
+	auto ftime = std::filesystem::last_write_time(file_path);
+	auto sctp = std::chrono::time_point_cast<std::chrono::system_clock::duration>(ftime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now());
+	std::time_t cftime = std::chrono::system_clock::to_time_t(sctp);
+	std::tm* ptm = std::localtime(&cftime);
+
+	char buffer[32];
+	std::strftime(buffer, sizeof(buffer), xorstr("%d %b %Y %H:%M"), ptm);
+
+	return buffer;
+}
+
 bool utilities::is_key_pressed(int key)
 {
 	static bool key_press[256];

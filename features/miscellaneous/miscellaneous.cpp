@@ -39,30 +39,3 @@ void miscellaneous::third_person(c_view_setup& view)
 
 	view.origin = trace.end;
 }
-
-void miscellaneous::lua_dumper(std::string filename, std::string string_to_run)
-{
-	if (!settings::lua::miscellaneous::dumper)
-		return;
-
-	c_net_channel* net_channel = interfaces::engine->get_net_channel();
-	if (!net_channel)
-		return;
-
-	std::string address = net_channel->get_address();
-	std::replace(address.begin(), address.end(), ':', '_');
-	std::replace(address.begin(), address.end(), '.', '-');
-
-	std::filesystem::path path = xorstr("C:/nixware/dumps/") + address + xorstr("/");
-	path /= filename;
-
-	std::filesystem::create_directories(path.parent_path());
-
-	std::ofstream file(path);
-
-	if (!file.is_open())
-		return;
-
-	file << string_to_run << std::endl;
-	file.close();
-}
