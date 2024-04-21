@@ -1,4 +1,4 @@
-bool __fastcall hooks::handles::override_view(i_client_mode_shared* client_mode_shared, c_view_setup* view)
+bool __fastcall hooks::handles::override_view(c_client_mode_shared* client_mode_shared, c_view_setup* view)
 {
     globals::fov = view->fov;
 	

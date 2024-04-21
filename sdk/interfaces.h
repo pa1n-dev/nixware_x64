@@ -1,12 +1,30 @@
 #pragma once
 
-#include <iostream>
-#include <filesystem>
-#include <cstdint>
+#include <d3d9.h>
 #include <d3dx9.h>
+#pragma comment(lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
 
-#include "../dependencies/memory/memory.h"
+#include <algorithm>
+#include <cstdint>
+#include <deque>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <sstream>
+#include <string>
+#include <thread>
+#include <unordered_map>
+
 #include "../dependencies/xorstr/xorstr.h"
+#include "../dependencies/memory/memory.h"
+#include "../dependencies/minhook/min_hook.h"
+#include "../dependencies/imgui/imgui.h"
+#include "../dependencies/imgui/imgui_internal.h"
+#include "../dependencies/imgui/impl/imgui_impl_dx9.h"
+#include "../dependencies/imgui/impl/imgui_impl_win32.h"
+#include "../dependencies/imgui/freetype/imgui_freetype.h"
 
 #include "source-sdk/math/vector.h"
 #include "source-sdk/math/quaternion.h"
@@ -38,7 +56,7 @@
 #include "source-sdk/client/c_view_setup.h"
 #include "source-sdk/client/i_view_render.h"
 #include "source-sdk/client/i_render_view.h"
-#include "source-sdk/client/i_client_mode_shared.h"
+#include "source-sdk/client/c_client_mode_shared.h"
 #include "source-sdk/client/i_game_movement.h"
 #include "source-sdk/server/c_entity_list.h"
 #include "source-sdk/materialsystem/i_material.h"
@@ -84,5 +102,6 @@ namespace interfaces
 	inline c_global_vars*			global_vars;
 	inline c_client_state*			client_state;
 	inline c_uniform_random_stream* random_stream;
-	inline i_client_mode_shared*	client_mode_shared;
+	inline c_client_mode_shared*	client_mode_shared;
+	inline HWND						window;
 }

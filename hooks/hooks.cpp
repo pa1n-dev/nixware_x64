@@ -22,6 +22,7 @@
 #include "handles/html_panel/paint.h"
 #include "handles/client_mode_shared/override_view.h"
 #include "handles/net_channel/send_datagram.h"
+#include "handles/net_channel/send_net_msg.h"
 #include "handles/panel/paint_traverse.h"
 #include "handles/hl_client/create_move.h"
 #include "handles/hl_client/write_user_cmd_delta_to_buffer.h"
@@ -55,6 +56,9 @@ void hooks::initialize()
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::prediction, 17), &handles::run_command, (LPVOID*)&handles::originals::run_command))
         throw;
 
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::client_mode_shared, 16), &handles::override_view, (LPVOID*)&handles::originals::override_view))
+        throw;
+
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("gameoverlayrenderer64.dll"), xorstr("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 81 EC ? ? ? ? 4C 8B A4 24 ? ? ? ?")), &handles::present, (LPVOID*)&handles::originals::present))
         throw;
 
@@ -62,12 +66,9 @@ void hooks::initialize()
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("menusystem.dll"), xorstr("E8 ? ? ? ? EB 17 48 8B 0D ? ? ? ?")), 1, 5), &handles::html_panel_load_url, (LPVOID*)&handles::originals::html_panel_load_url))
-        throw;
+       throw;
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("menusystem.dll"), xorstr("40 57 48 83 EC 40 48 8B F9")), &handles::html_panel_paint, (LPVOID*)&handles::originals::html_panel_paint))
-        throw;
-
-    if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("client.dll"), xorstr("40 55 53 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B DA")), &handles::override_view, (LPVOID*)&handles::originals::override_view))
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 89 5C 24 ? 57 48 83 EC 50 48 8B B9 ? ? ? ? 48 8B D9 0F 29 74 24 ? 0F 28 F2 0F 29")), &handles::multiplayer_anim_state_update, (LPVOID*)&handles::originals::multiplayer_anim_state_update))
@@ -76,22 +77,29 @@ void hooks::initialize()
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("lua_shared.dll"), xorstr("40 55 53 56 57 41 54 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 49 8B F1")), &handles::run_string_ex, (LPVOID*)&handles::originals::run_string_ex))
         throw; 
 
-    //if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("40 55 53 56 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ?")), &handles::send_datagram, (LPVOID*)&handles::originals::send_datagram))
-    //    throw; 
+    if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 56 48 83 EC 20 48 8B D9 45 0F B6 F1")), &handles::send_net_msg, (LPVOID*)&handles::originals::send_net_msg))
+        throw;
+
+    if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("40 55 53 56 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ?")), &handles::send_datagram, (LPVOID*)&handles::originals::send_datagram))
+        throw; 
 
     if (!min_hook.enable_hook())
         throw;
 
-    handles::originals::wndproc = (WNDPROC)SetWindowLongPtrW(FindWindowW(L"Valve001", 0), GWLP_WNDPROC, (LONG_PTR)handles::wndproc);
+    handles::originals::wndproc = (WNDPROC)SetWindowLongPtrW(interfaces::window, GWLP_WNDPROC, (LONG_PTR)handles::wndproc);
 }
 
-void hooks::unhook()
+void hooks::shutdown()
 {
-    utilities::detach_console();
     min_hook.remove_all_hooks();
 
-    interfaces::panel->set_key_board_input_enabled(globals::overlay_popup_panel, false);
-    interfaces::panel->set_mouse_input_enabled(globals::overlay_popup_panel, false);
+    SetWindowLongPtrW(interfaces::window, GWLP_WNDPROC, (LONG_PTR)handles::originals::wndproc);
+
+    if (globals::overlay_popup_panel)
+    {
+        interfaces::panel->set_key_board_input_enabled(globals::overlay_popup_panel, false);
+        interfaces::panel->set_mouse_input_enabled(globals::overlay_popup_panel, false);
+    }
 
     fakelags::apply(true);
 

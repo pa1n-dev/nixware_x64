@@ -5,9 +5,9 @@
 
 namespace math
 {
-	constexpr float RAD_PI_F = 57.295779513082f;
 	constexpr float PI_F = 3.14159265358979323846f;
 	constexpr double PI_D = 3.14159265358979323846;
+	constexpr float RAD_PI_F = 57.295779513082f;
 
 	template <typename T>
 	T rad2deg(T x)

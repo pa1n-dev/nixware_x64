@@ -1,15 +1,6 @@
 #pragma once
 
-#include <d3d9.h>
-#include <d3dx9.h>
-
 #include "../sdk/interfaces.h"
-
-#include "../dependencies/imgui/imgui.h"
-#include "../dependencies/imgui/imgui_internal.h"
-#include "../dependencies/imgui/impl/imgui_impl_dx9.h"
-#include "../dependencies/imgui/impl/imgui_impl_win32.h"
-#include "../dependencies/imgui/freetype/imgui_freetype.h"
 
 namespace render_manager
 {
@@ -67,6 +58,7 @@ namespace render_manager
 	}
 
 	void setup_imgui(IDirect3DDevice9* device);
+	void shutdown();
 
 	void start_render();
 	void end_render();

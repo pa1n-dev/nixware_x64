@@ -7,11 +7,11 @@
 namespace memory
 {
 	template<typename T>
-	T* capture_interface(const std::string& module_name, const std::string& interface_name)
+	T* capture_interface(const char* module_name, const char* interface_name)
 	{
-		typedef void* (*interface_type)(const char* name, int ret);
-		const auto temp = reinterpret_cast<interface_type>(GetProcAddress(GetModuleHandleA(module_name.c_str()), "CreateInterface"));
-		return static_cast<T*>(temp(interface_name.c_str(), 0));
+		typedef void* (*interface_type)(const char* name, int* return_code);
+		const auto temp = reinterpret_cast<interface_type>(GetProcAddress(GetModuleHandleA(module_name), "CreateInterface"));
+		return static_cast<T*>(temp(interface_name, 0));
 	}
 
 	constexpr auto relative_to_absolute(uintptr_t address, int offset, int instruction_size = 6)

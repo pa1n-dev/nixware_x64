@@ -3,11 +3,9 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 	originals::create_move(client, sequence_number, input_sample_frametime, active);
 
 	c_user_cmd* cmd = interfaces::input->get_user_cmd(sequence_number);
-	if (!cmd)
-		return;
-
 	c_verified_user_cmd* verified_cmd = interfaces::input->get_verified_user_cmd(sequence_number);
-	if (!verified_cmd)
+
+	if (!cmd || !cmd->command_number)
 		return;
 
 	movement::run(cmd);

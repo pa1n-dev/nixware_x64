@@ -81,6 +81,8 @@
     <OutDir>$(SolutionDir)debug_x64\</OutDir>
     <IntDir>$(SolutionDir)debug_x64\obj\</IntDir>
     <TargetName>nixware</TargetName>
+    <IncludePath>D:\Source\DirectX SDK\Include;D:\Source\Freetype\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Source\DirectX SDK\Lib\x64;D:\Source\Freetype\win64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -120,9 +122,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;NIXWAREX64_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;NIXWAREX64_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -235,6 +237,7 @@
     <ClInclude Include="hooks\handles\model_render\draw_model_execute.h" />
     <ClInclude Include="hooks\handles\multiplayer_anim_state\update.h" />
     <ClInclude Include="hooks\handles\net_channel\send_datagram.h" />
+    <ClInclude Include="hooks\handles\net_channel\send_net_msg.h" />
     <ClInclude Include="hooks\handles\panel\paint_traverse.h" />
     <ClInclude Include="hooks\handles\d3d9\reset.h" />
     <ClInclude Include="hooks\handles\prediction\run_command.h" />
@@ -244,7 +247,7 @@
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="dependencies\memory\memory.h" />
     <ClInclude Include="sdk\source-sdk\client\i_game_movement.h" />
-    <ClInclude Include="sdk\source-sdk\client\i_client_mode_shared.h" />
+    <ClInclude Include="sdk\source-sdk\client\c_client_mode_shared.h" />
     <ClInclude Include="sdk\source-sdk\c_client_state.h" />
     <ClInclude Include="sdk\source-sdk\anim_state\c_hl2mp_player_anim_state.h" />
     <ClInclude Include="sdk\source-sdk\anim_state\c_multiplayer_anim_state.h" />

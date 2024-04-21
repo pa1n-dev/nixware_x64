@@ -74,6 +74,10 @@ void interfaces::initialize()
 	if (!render)
 		throw;
 
+	client_mode_shared = memory::get_vmt_from_instruction<c_client_mode_shared>((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 8B 0D ? ? ? ? 48 8B 01 48 FF 60 50 CC CC 48 83 EC 28")));
+	if (!client_mode_shared)
+		throw;
+
 	global_vars = *(c_global_vars**)memory::relative_to_absolute((uintptr_t)(memory::pattern_scanner(xorstr("client.dll"), xorstr("48 8B 05 ? ? ? ? 83 78 14 01 75 09"))), 0x3, 7);
 	if (!global_vars)
 		throw;
@@ -84,5 +88,9 @@ void interfaces::initialize()
 
 	random_stream = memory::get_vmt_from_instruction<c_uniform_random_stream>((uintptr_t)GetProcAddress(GetModuleHandleA(xorstr("vstdlib.dll")), xorstr("RandomSeed")), 0x2);
 	if (!random_stream)
+		throw;
+
+	window = FindWindowW(xorstr(L"Valve001"), NULL);
+	if (!window)
 		throw;
 }

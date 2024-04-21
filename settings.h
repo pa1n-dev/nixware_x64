@@ -4,6 +4,8 @@
 
 namespace globals
 {
+    inline bool unload = false;
+
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
     inline D3DMATRIX world_to_screen;
@@ -81,6 +83,7 @@ namespace settings
             inline hotkey_t hotkey;
             inline int yaw = 0;
             inline int pitch = 0;
+            inline bool at_target = false;
             inline bool invert_yaw = false;
             inline bool fake_duck = false;
         }

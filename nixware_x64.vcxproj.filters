@@ -398,7 +398,7 @@
     <ClInclude Include="sdk\source-sdk\anim_state\c_multiplayer_anim_state.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\source-sdk\client\i_client_mode_shared.h">
+    <ClInclude Include="sdk\source-sdk\client\c_client_mode_shared.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="hooks\handles\client_mode_shared\override_view.h">
@@ -447,6 +447,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="sdk\source-sdk\shared\i_move_helper.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks\handles\net_channel\send_net_msg.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

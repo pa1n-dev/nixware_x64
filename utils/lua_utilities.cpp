@@ -27,7 +27,7 @@ const char* lua_utilities::get_rank_table_name(c_base_entity* entity)
 	entity->push_entity();
 	lua->get_field(-1, xorstr("GetRankTable"));
 
-	if (!lua->is_type(-1, (int)object_type_t::function))
+	if (!lua->is_type(-1, object_type_t::function))
 	{
 		lua->pop(2);
 		return "";
@@ -53,7 +53,7 @@ const char* lua_utilities::get_user_group(c_base_entity* entity)
 	entity->push_entity();
 	lua->get_field(-1, xorstr("GetUserGroup"));
 
-	if (!lua->is_type(-1, (int)object_type_t::function))
+	if (!lua->is_type(-1, object_type_t::function))
 	{
 		lua->pop(2);
 		return get_rank_table_name(entity);
@@ -78,21 +78,21 @@ const char* lua_utilities::get_rp_jobs_list(int team)
 	lua->push_special(lua_special_glob);
 
 	lua->get_field(-1, xorstr("rp"));
-	if (!lua->is_type(-1, (int)object_type_t::table))
+	if (!lua->is_type(-1, object_type_t::table))
 	{
 		lua->pop(2);
 		return "";
 	}
 
 	lua->get_field(-1, xorstr("jobs"));
-	if (!lua->is_type(-1, (int)object_type_t::table))
+	if (!lua->is_type(-1, object_type_t::table))
 	{
 		lua->pop(3);
 		return "";
 	}
 
 	lua->get_field(-1, xorstr("List"));
-	if (!lua->is_type(-1, (int)object_type_t::table))
+	if (!lua->is_type(-1, object_type_t::table))
 	{
 		lua->pop(4);
 		return "";
@@ -100,14 +100,14 @@ const char* lua_utilities::get_rp_jobs_list(int team)
 
 	lua->push_number(team);
 	lua->get_table(-2);
-	if (!lua->is_type(-1, (int)object_type_t::table))
+	if (!lua->is_type(-1, object_type_t::table))
 	{
 		lua->pop(5);
 		return "";
 	}
 
 	lua->get_field(-1, xorstr("Name"));
-	if (!lua->is_type(-1, (int)object_type_t::string))
+	if (!lua->is_type(-1, object_type_t::string))
 	{
 		lua->pop(6);
 		return "";
@@ -128,14 +128,14 @@ int lua_utilities::get_job_without_disguise(c_base_entity* entity)
 
 	lua->push_special(lua_special_glob);
 	lua->get_field(-1, xorstr("rp"));
-	if (!lua->is_type(-1, (int)object_type_t::table))
+	if (!lua->is_type(-1, object_type_t::table))
 	{
 		lua->pop(2);
 		return -1;
 	}
 
 	lua->get_field(-1, xorstr("GetJobWithoutDisguise"));
-	if (!lua->is_type(-1, (int)object_type_t::function))
+	if (!lua->is_type(-1, object_type_t::function))
 	{
 		lua->pop(3);
 		return -1;
@@ -144,7 +144,7 @@ int lua_utilities::get_job_without_disguise(c_base_entity* entity)
 	lua->push_number(entity->get_client_networkable()->get_index());
 	lua->call(1, 1);
 
-	if (!lua->is_type(-1, (int)object_type_t::number))
+	if (!lua->is_type(-1, object_type_t::number))
 	{
 		lua->pop(3);
 		return -1;
@@ -190,7 +190,7 @@ const char* lua_utilities::get_weapon_print_name(c_base_combat_weapon* weapon)
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("PrintName"));
-	if (!lua->is_type(-1, (int)object_type_t::string))
+	if (!lua->is_type(-1, object_type_t::string))
 	{
 		lua->pop(2);
 		return "";
@@ -211,7 +211,7 @@ const char* lua_utilities::get_weapon_base(c_base_combat_weapon* weapon)
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("Base"));
-	if (!lua->is_type(-1, (int)object_type_t::string))
+	if (!lua->is_type(-1, object_type_t::string))
 	{
 		lua->pop(2);
 		return "";
@@ -232,7 +232,7 @@ float lua_utilities::get_m9k_spread(c_user_cmd* cmd, c_base_combat_weapon* weapo
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("Primary"));
-	if (!lua->is_type(-1, (int)object_type_t::table))
+	if (!lua->is_type(-1, object_type_t::table))
 	{
 		lua->pop(2);
 		return 0.f;
@@ -241,7 +241,7 @@ float lua_utilities::get_m9k_spread(c_user_cmd* cmd, c_base_combat_weapon* weapo
 	if (cmd->buttons & IN_ATTACK2)
 	{
 		lua->get_field(-1, xorstr("IronAccuracy"));
-		if (!lua->is_type(-1, (int)object_type_t::number))
+		if (!lua->is_type(-1, object_type_t::number))
 		{
 			lua->pop(3);
 			return 0.f;
@@ -250,7 +250,7 @@ float lua_utilities::get_m9k_spread(c_user_cmd* cmd, c_base_combat_weapon* weapo
 	else
 	{
 		lua->get_field(-1, xorstr("Spread"));
-		if (!lua->is_type(-1, (int)object_type_t::number))
+		if (!lua->is_type(-1, object_type_t::number))
 		{
 			lua->pop(3);
 			return 0.f;
@@ -272,14 +272,14 @@ float lua_utilities::get_ptp_spread(c_base_combat_weapon* weapon)
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("Primary"));
-	if (!lua->is_type(-1, (int)object_type_t::table))
+	if (!lua->is_type(-1, object_type_t::table))
 	{
 		lua->pop(2);
 		return 0.f;
 	}
 
 	lua->get_field(-1, xorstr("Cone"));
-	if (!lua->is_type(-1, (int)object_type_t::number))
+	if (!lua->is_type(-1, object_type_t::number))
 	{
 		lua->pop(3);
 		return 0.f;
@@ -287,6 +287,28 @@ float lua_utilities::get_ptp_spread(c_base_combat_weapon* weapon)
 
 	double value = lua->get_number(-1);
 	lua->pop(3);
+
+	return value;
+}
+
+float lua_utilities::get_weapon_max_spread_inc(c_base_combat_weapon* weapon)
+{
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	if (!lua)
+		return 0.f;
+
+	weapon->push_entity();
+
+	lua->get_field(-1, xorstr("MaxSpreadInc"));
+	if (!lua->is_type(-1, object_type_t::number))
+	{
+		lua->pop(2);
+		return 0.f;
+	}
+
+	float value = lua->get_number(-1);
+
+	lua->pop(2);
 
 	return value;
 }
@@ -300,7 +322,7 @@ float lua_utilities::get_weapon_cur_cone(c_base_combat_weapon* weapon)
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("CurCone"));
-	if (!lua->is_type(-1, (int)object_type_t::number))
+	if (!lua->is_type(-1, object_type_t::number))
 	{
 		lua->pop(2);
 		return 0.f;

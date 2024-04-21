@@ -1,7 +1,5 @@
 #pragma once
-#include <windows.h>
 
-#include "../dependencies/xorstr/xorstr.h"
 #include "../sdk/interfaces.h"
 #include "../settings.h"
 

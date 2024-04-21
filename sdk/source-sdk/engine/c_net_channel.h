@@ -1,7 +1,21 @@
 #pragma once
 
+class i_net_message
+{
+public:
+	int get_group()
+	{
+		return memory::call_v_function<int(__thiscall*)(void*)>(this, 8)(this);
+	}
+
+	const char* get_name()
+	{
+		return memory::call_v_function<const char* (__thiscall*)(void*)>(this, 9)(this);
+	}
+};
+
 //https://media.discordapp.net/attachments/1194221664339234816/1211674968878747728/image.png?ex=65ef0f40&is=65dc9a40&hm=1fbef90240540692e40b12e5eb45d662fb482cfbadc59dea1c18da9685a8ba3a&=&format=webp&quality=lossless
-class NET_SetConVar
+class NET_SetConVar : public i_net_message
 {
 public:
 	NET_SetConVar(const char* name, const char* value)
@@ -40,8 +54,8 @@ public:
 		return memory::call_v_function<float(__thiscall*)(void*, int)>(this, 9)(this, flow);
 	}
 
-	bool send_net_msg(NET_SetConVar& msg, bool force_reliable = false, bool voice = false)
+	bool send_net_msg(i_net_message& msg, bool force_reliable = false, bool voice = false)
 	{
-		return memory::call_v_function<bool(__thiscall*)(void*, NET_SetConVar&, bool, bool)>(this, 40)(this, msg, force_reliable, voice);
+		return memory::call_v_function<bool(__thiscall*)(void*, i_net_message&, bool, bool)>(this, 40)(this, msg, force_reliable, voice);
 	}
 };

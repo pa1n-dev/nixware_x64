@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../dependencies/xorstr/xorstr.h"
 #include "../sdk/interfaces.h"
 
 namespace lua_utilities

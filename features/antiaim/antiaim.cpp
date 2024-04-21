@@ -1,4 +1,5 @@
 #include "antiaim.h"
+#include "../aimbot/aimbot.h"
 
 void antiaim::run(c_user_cmd* cmd, bool send_packet)
 {
@@ -20,6 +21,9 @@ void antiaim::run(c_user_cmd* cmd, bool send_packet)
 
     q_angle view;
     interfaces::engine->get_view_angles(view);
+
+    if (settings::antiaim::globals::at_target && aimbot::target.entity)
+        view = aimbot::target.shoot_angle;
 
     float pitch = 0.f;
     switch (settings::antiaim::globals::pitch)

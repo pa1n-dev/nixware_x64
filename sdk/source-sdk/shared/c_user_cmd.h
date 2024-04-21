@@ -28,7 +28,6 @@ public:
 	bool		forced;
 
 public:
-	//https://media.discordapp.net/attachments/1194221664339234816/1211398926536540251/image.png?ex=65ee0e2a&is=65db992a&hm=8e22e874ad2032183f553e690226f9417e2bda58afff099a0407f7b8b16c54be&=&format=webp&quality=lossless
 	crc32_t get_check_sum()
 	{
 		using get_check_sum_fn = crc32_t(__fastcall*)(void*);

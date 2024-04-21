@@ -81,6 +81,7 @@ void menu::render()
         {
             Checkbox(xorstr("Enable"), &settings::antiaim::globals::enable); custom::hotkey(xorstr("AntiAim Hotkey"), &settings::antiaim::globals::hotkey);
             Checkbox(xorstr("Fake duck"), &settings::antiaim::globals::fake_duck);
+            Checkbox(xorstr("At target"), &settings::antiaim::globals::at_target);
             Checkbox(xorstr("Invert yaw"), &settings::antiaim::globals::invert_yaw);
             Combo(xorstr("Yaw"), &settings::antiaim::globals::yaw, xorstr("LBY\0"));
             Combo(xorstr("Pitch"), &settings::antiaim::globals::pitch, xorstr("Down\0" "Up\0"));
@@ -274,7 +275,7 @@ void menu::render()
             float column_width = GetColumnWidth();
 
             if (Button(xorstr("Unload cheat"), ImVec2(column_width - 10.f, 35.f)))
-                hooks::unhook();
+                globals::unload = true;
 
             EndChild();
         }

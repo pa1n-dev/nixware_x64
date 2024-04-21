@@ -1,36 +1,16 @@
 #pragma once
-#include <string>
-#include <iostream>
-#include <list>
-#include <deque>
-#include <thread>
-#include <algorithm>
-#include <unordered_map>
-#include <filesystem>
-#include <fstream>
-#include <sstream>
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#pragma comment(lib, "d3d9.lib")
-#pragma comment (lib, "d3dx9.lib")
-
-#include "../dependencies/xorstr/xorstr.h"
-#include "../dependencies/minhook/min_hook.h"
-#include "../dependencies/memory/memory.h"
+#include "../sdk/interfaces.h"
 
 #include "../utils/utilities.h"
 #include "../utils/lua_utilities.h"
 #include "../utils/render_manager.h"
-
-#include "../sdk/interfaces.h"
-
 #include "../settings.h"
 
 namespace hooks
 {
 	void initialize();
-	void unhook();
+	void shutdown();
 
 	namespace handles
 	{
@@ -39,8 +19,9 @@ namespace hooks
 		HRESULT APIENTRY	reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* presentation_parameters);
 		void __fastcall		html_panel_load_url(void* html_panel, const char* url);
 		int __fastcall		html_panel_paint(void* html_panel);
-		bool __fastcall		override_view(i_client_mode_shared* client_mode_shared, c_view_setup* view);
+		bool __fastcall		override_view(c_client_mode_shared* client_mode_shared, c_view_setup* view);
 		int __fastcall		send_datagram(c_net_channel* net_channel, void* datagram);
+		bool __fastcall     send_net_msg(c_net_channel* net_channel, i_net_message& msg, bool force_reliable, bool voice);
 		void				paint_traverse(i_panel* panel, v_panel v_panel, bool force_repaint, bool allow_force);
 		void __fastcall		create_move(c_hl_client* client, int sequence_number, float input_sample_frametime, bool active);
 		bool				write_user_cmd_delta_to_buffer(c_hl_client* client, void* buf, int from, int to, bool is_new_command);
@@ -58,8 +39,9 @@ namespace hooks
 			inline HRESULT(APIENTRY* present) (IDirect3DDevice9*, CONST RECT*, CONST RECT*, HWND, CONST RGNDATA*);
 			inline void(__thiscall* html_panel_load_url)(void*, const char*);
 			inline int(__thiscall* html_panel_paint)(void*);
-			inline bool(__thiscall* override_view)(i_client_mode_shared*, c_view_setup*);
+			inline bool(__thiscall* override_view)(c_client_mode_shared*, c_view_setup*);
 			inline int(__thiscall* send_datagram)(c_net_channel*, void*);
+			inline bool(__thiscall* send_net_msg)(c_net_channel*, i_net_message&, bool, bool);
 			inline void(__fastcall* paint_traverse)(i_panel*, v_panel, bool, bool);
 			inline void(__thiscall* create_move)(c_hl_client*, int, float, bool);
 			inline bool(*write_user_cmd_delta_to_buffer)(c_hl_client*, void*, int, int, bool);

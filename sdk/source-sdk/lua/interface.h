@@ -101,9 +101,9 @@ public:
         return memory::call_v_function<void(__thiscall*)(void*, lua_special_t)>(this, 38)(this, type);
     }
 
-    bool is_type(int stack_pos, int type)
+    bool is_type(int stack_pos, object_type_t type)
     {
-        return memory::call_v_function<bool(__thiscall*)(void*, int, int)>(this, 39)(this, stack_pos, type);
+        return memory::call_v_function<bool(__thiscall*)(void*, int, object_type_t)>(this, 39)(this, stack_pos, type);
     }
 
     int get_type(int stack_pos = -1)

@@ -5,11 +5,9 @@ void render_manager::setup_imgui(IDirect3DDevice9* device)
 	static std::once_flag once;
 	std::call_once(once, [&]
 	{
-		HWND hwnd = FindWindowA(xorstr("Valve001"), 0);
-
 		CreateContext();
-		ImGui_ImplWin32_Init(hwnd);
-		ImGui_ImplWin32_GetDpiScaleForHwnd(hwnd);
+		ImGui_ImplWin32_Init(interfaces::window);
+		ImGui_ImplWin32_GetDpiScaleForHwnd(interfaces::window);
 		ImGui_ImplDX9_Init(device);
 
 		StyleColorsDark();
@@ -25,6 +23,14 @@ void render_manager::setup_imgui(IDirect3DDevice9* device)
 
 		io.Fonts->AddFontFromFileTTF("C:/windows/fonts/verdana.ttf", 13.f, &cfg, io.Fonts->GetGlyphRangesCyrillic());
 	});
+}
+
+
+void render_manager::shutdown()
+{
+	ImGui_ImplDX9_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	DestroyContext();
 }
 
 void render_manager::start_render()
