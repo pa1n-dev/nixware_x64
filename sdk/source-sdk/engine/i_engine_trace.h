@@ -20,7 +20,7 @@ struct cplane_t
 struct csurface_t
 {
 	const char*		name;
-	short			surface_props;
+	short			props;
 	unsigned short	flags;
 };
 
@@ -38,7 +38,7 @@ struct trace_t
 	csurface_t		surface;
 	int				hit_group;
 	short			physics_bone;
-	void*			entity;
+	c_base_entity*	entity;
 	int				hitbox;
 };
 

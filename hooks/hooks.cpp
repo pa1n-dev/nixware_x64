@@ -32,6 +32,7 @@
 #include "handles/prediction/run_command.h"
 #include "handles/multiplayer_anim_state/update.h"
 #include "handles/lua_interface/run_string_ex.h"
+#include "handles/engine_client/set_view_angles.h"
 
 void hooks::initialize()
 {
@@ -46,6 +47,9 @@ void hooks::initialize()
 
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 35), &handles::frame_stage_notify, (LPVOID*)&handles::originals::frame_stage_notify))
         throw;
+
+    //if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::engine, 20), &handles::set_view_angles, (LPVOID*)&handles::originals::set_view_angles))
+    //    throw;
 
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::view_render, 6), &handles::render_view, (LPVOID*)&handles::originals::render_view))
         throw;
@@ -152,7 +156,7 @@ void hooks::shutdown()
                 "Url": "https://gmod.facepunch.com/blog/january-2023-update/",
                 "Tags": "Update"
             }
-        ], false); 
+        ], false);
     )");
 
     utilities::run_javascript(globals::menu_panel, script);

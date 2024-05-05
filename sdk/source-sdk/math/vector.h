@@ -21,6 +21,7 @@ public:
 	void make_zero();
 
 	void normalize();
+	c_vector normalized();
 	void clamp();
 
 	float dot(const c_vector& other) const;

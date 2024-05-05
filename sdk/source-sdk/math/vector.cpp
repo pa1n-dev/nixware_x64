@@ -26,39 +26,30 @@ void c_vector::make_zero()
 
 void c_vector::normalize()
 {
-	while (x > 89.0f)
-		x -= 180.0f;
-	while (x < -89.0f)
-		x += 180.0f;
-	while (y < -180.0f)
-		y += 360.0f;
-	while (y > 180.0f)
-		y -= 360.0f;
+	float magnitude = length();
 
-	z = 0.f;
+	x /= magnitude;
+	y /= magnitude;
+	z /= magnitude;
+}
+
+c_vector c_vector::normalized()
+{
+	float magnitude = length();
+
+	c_vector vector = *this;
+	vector.x /= magnitude;
+	vector.y /= magnitude;
+	vector.z /= magnitude;
+
+	return vector;
 }
 
 void c_vector::clamp()
 {
-	while (this->x < -180.0f)
-		this->x += 360.0f;
-
-	while (this->x > 180.0f)
-		this->x -= 360.0f;
-
-	if (this->x > 89.0f)
-		this->x = 89.0f;
-
-	if (this->x < -89.0f)
-		this->x = -89.0f;
-
-	while (this->y < -180.0f)
-		this->y += 360.0f;
-
-	while (this->y > 180.0f)
-		this->y -= 360.0f;
-
-	this->z = 0.0f;
+	x = std::clamp(x, -89.0f, 89.0f);
+	y = std::clamp(y, -180.0f, 180.0f);
+	z = 0;
 }
 
 float c_vector::dot(const c_vector& other) const

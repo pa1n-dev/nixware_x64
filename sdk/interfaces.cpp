@@ -58,6 +58,10 @@ void interfaces::initialize()
 	if (!game_movement)
 		throw;
 
+	physics_surface_props = memory::capture_interface<i_physics_surface_props>(xorstr("vphysics.dll"), xorstr("VPhysicsSurfaceProps001"));
+	if (!physics_surface_props)
+		throw;
+
 	move_helper = memory::get_vmt_from_instruction<i_move_helper>((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 89 05 ? ? ? ? E9 ? ? ? ? CC CC CC CC CC CC 48 83 EC 28")));
 	if (!move_helper)
 		throw;

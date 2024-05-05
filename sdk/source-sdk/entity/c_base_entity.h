@@ -53,6 +53,11 @@ public:
 	{
 		return memory::call_v_function<q_angle&(__thiscall*)(void*)>(this, 140)(this);
 	}
+	
+	bool uses_lua()
+	{
+		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 170)(this);
+	}
 
 	bool push_entity()
 	{
@@ -212,5 +217,17 @@ public:
 			throw;
 
 		set_abs_angles(this, angles);
+	}
+
+	const char* get_class_name()
+	{
+		using get_class_name_fn = const char*(__fastcall*)(void*);
+
+		static get_class_name_fn get_class_name = (get_class_name_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 4D 8B 47 10")), 1, 6);
+
+		if (!get_class_name)
+			throw;
+
+		return get_class_name(this);
 	}
 };

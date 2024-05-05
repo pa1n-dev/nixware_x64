@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../sdk/interfaces.h"
 
 #include "../utils/utilities.h"
@@ -31,6 +30,7 @@ namespace hooks
 		void __fastcall		run_command(i_prediction* prediction, c_base_entity* player, c_user_cmd* cmd, void* move_helper);
 		void __fastcall		multiplayer_anim_state_update(void* anim_state, float yaw, float pitch);
 		int __fastcall		run_string_ex(c_lua_interface* lua, const char* filename, const char* path, const char* string_to_run, bool run, bool show_errors, bool dont_push_errors, bool no_returns);
+		void __fastcall		set_view_angles(c_engine_client* engine, q_angle& angle);
 
 		namespace originals
 		{
@@ -51,6 +51,7 @@ namespace hooks
 			inline void(__fastcall* run_command) (i_prediction*, c_base_entity*, c_user_cmd*, void*);
 			inline void(__thiscall* multiplayer_anim_state_update)(void*, float, float);
 			inline int(__thiscall* run_string_ex)(c_lua_interface*, const char*, const char*, const char*, bool, bool, bool, bool);
+			inline void(__thiscall* set_view_angles)(c_engine_client*, q_angle&);
 		}
 	}
 }

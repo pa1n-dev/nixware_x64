@@ -8,6 +8,10 @@ namespace globals
 
     inline v_panel mat_system_top_panel = false;
     inline v_panel overlay_popup_panel = false;
+    inline v_panel focus_overlay_panel = false;
+
+    inline c_vector view_origin;
+
     inline D3DMATRIX world_to_screen;
     inline float fov = 0;
     inline void* menu_panel = nullptr;
@@ -41,6 +45,7 @@ namespace settings
             inline hotkey_t hotkey;
             inline bool silent = false;
             inline bool automatic_fire = false;
+            inline bool penetrate_walls = false;
             inline float fov = 0;
             inline int hitbox = 0;
             inline int priority = 0;
@@ -137,7 +142,22 @@ namespace settings
 
         namespace entity
         {
+            inline nlohmann::json list;
+
             inline bool enable = false;
+            inline bool dormant = false;
+            inline bool box = false;
+            inline bool name = false;
+            inline bool distance = false;
+
+            inline int render_distance = 15000;
+
+            namespace colors
+            {
+                inline float box[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float name[4] = { 1.f, 1.f, 1.f, 1.f };
+                inline float distance[4] = { 1.f, 1.f, 1.f, 1.f };
+            }
         }
     }
 

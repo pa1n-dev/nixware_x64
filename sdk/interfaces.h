@@ -16,7 +16,10 @@
 #include <string>
 #include <thread>
 #include <unordered_map>
+#include <intrin.h>
+#include <mutex>
 
+#include "../dependencies/json/json.hpp"
 #include "../dependencies/xorstr/xorstr.h"
 #include "../dependencies/memory/memory.h"
 #include "../dependencies/minhook/min_hook.h"
@@ -72,6 +75,7 @@
 #include "source-sdk/client/c_hl_client.h"
 #include "source-sdk/vstdlib/c_uniform_random_stream.h"
 #include "source-sdk/vstdlib/c_cvar.h"
+#include "source-sdk/vphysics/i_physics_surface_props.h"
 #include "source-sdk/c_global_vars.h"
 #include "source-sdk/c_engine_client.h"
 #include "source-sdk/c_client_state.h"
@@ -96,6 +100,7 @@ namespace interfaces
 	inline i_prediction*			prediction;
 	inline i_game_movement*			game_movement;
 	inline i_move_helper*			move_helper;
+	inline i_physics_surface_props* physics_surface_props;
 	inline i_view_render*			view_render;
 	inline c_input*					input;
 	inline c_render*				render;

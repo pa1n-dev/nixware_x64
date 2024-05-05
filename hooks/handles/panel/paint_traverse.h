@@ -6,7 +6,7 @@ void hooks::handles::paint_traverse(i_panel* panel, v_panel v_panel, bool force_
 
 	if (!globals::overlay_popup_panel)
 	{
-		if (!strcmp(xorstr("OverlayPopupPanel"), name))
+		if (strstr(name, xorstr("OverlayPopupPanel")))
 			globals::overlay_popup_panel = v_panel;
 	}
 	else if (globals::overlay_popup_panel == v_panel)
@@ -17,7 +17,7 @@ void hooks::handles::paint_traverse(i_panel* panel, v_panel v_panel, bool force_
 
 	if (!globals::mat_system_top_panel)
 	{
-		if (!strcmp(xorstr("MatSystemTopPanel"), name))
+		if (strstr(name, xorstr("MatSystemTopPanel")))
 			globals::mat_system_top_panel = v_panel;
 	}
 	else if (globals::mat_system_top_panel == v_panel)
@@ -27,5 +27,15 @@ void hooks::handles::paint_traverse(i_panel* panel, v_panel v_panel, bool force_
 			D3DMATRIX world_to_view, view_to_projection, world_to_pixels;
 			interfaces::render_view->get_matrices_for_view(*interfaces::view_render->get_view_setup(), &world_to_view, &view_to_projection, &globals::world_to_screen, &world_to_pixels);
 		}
+	}
+
+	if (!globals::focus_overlay_panel)
+	{
+		if (strstr(name, xorstr("FocusOverlayPanel")))
+			globals::focus_overlay_panel = v_panel;
+	}
+	else if (globals::focus_overlay_panel == v_panel)
+	{
+		visuals::render();
 	}
 }

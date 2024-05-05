@@ -4,7 +4,6 @@ HRESULT APIENTRY hooks::handles::present(IDirect3DDevice9* device, CONST RECT* s
 	render_manager::setup_states(device);
 	render_manager::start_render();
 	menu::render();
-	visuals::render();
 	render_manager::end_render();
 	render_manager::backup_states(device);
 

@@ -13,7 +13,7 @@ namespace animfix
 	inline bool created_fake_matrix = false;
 
 	inline bool allow_anim_state_update = false;
-	inline bool need_anim_state_reset = false;
+	inline bool need_anim_state_reset = true;
 
 	inline int ticks_elapsed = 0;
 

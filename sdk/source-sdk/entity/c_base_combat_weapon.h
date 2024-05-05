@@ -18,11 +18,6 @@ public:
 		return memory::call_v_function<c_vector&(__thiscall*)(void*)>(this, 325)(this);
 	}
 
-	const char* get_class_name()
-	{
-		return memory::call_v_function<const char*(__thiscall*)(void*)>(this, 367)(this);
-	}
-
 	int primary_ammo()
 	{
 		return *(int*)((uintptr_t)this + 0x1C48);

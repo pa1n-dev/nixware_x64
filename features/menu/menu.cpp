@@ -33,42 +33,40 @@ void menu::render()
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-        if (BeginChild(xorstr("Globals"), child_size))
+        BeginChild(xorstr("Globals"), child_size); 
         {
             Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable); custom::hotkey(xorstr("Aimbot Hotkey"), &settings::aimbot::globals::hotkey);
             Checkbox(xorstr("Silent"), &settings::aimbot::globals::silent);
             Checkbox(xorstr("Automatic fire"), &settings::aimbot::globals::automatic_fire);
+            Checkbox(xorstr("Penetrate walls"), &settings::aimbot::globals::penetrate_walls);
             SliderFloat(xorstr("Fov"), &settings::aimbot::globals::fov, 0.f, 180.f, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
             Combo(xorstr("Hitbox"), &settings::aimbot::globals::hitbox, xorstr("Head\0" "Chest\0" "Stomach\0" "Hitscan\0"));
             Combo(xorstr("Priority"), &settings::aimbot::globals::priority, xorstr("Fov\0" "Distance\0" "Health\0"));
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Accuracy"), child_size))
+        BeginChild(xorstr("Accuracy"), child_size);
         {
             Checkbox(xorstr("Predict spread"), &settings::aimbot::accuracy::predict_spread);
             Checkbox(xorstr("Disable recoil"), &settings::aimbot::accuracy::disable_recoil);
             Checkbox(xorstr("Disable visual recoil"), &settings::aimbot::accuracy::disable_visual_recoil);
             SliderFloat(xorstr("Backtrack"), &settings::aimbot::accuracy::backtrack, 0.f, 1.f, xorstr("%.3f ms"), ImGuiSliderFlags_NoInput);
             SliderFloat(xorstr("Smooth"), &settings::aimbot::accuracy::smooth, 0.f, 20.f, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Visuals"), child_size))
+        BeginChild(xorstr("Visuals"), child_size);
         {
             Checkbox(xorstr("Fov"), &settings::aimbot::visuals::fov); ColorEdit4(xorstr("Fov"), settings::aimbot::visuals::colors::fov, color_edit4_flags);
             Checkbox(xorstr("Snaplines"), &settings::aimbot::visuals::snaplines); ColorEdit4(xorstr("Snaplines"), settings::aimbot::visuals::colors::snaplines, color_edit4_flags);
             Checkbox(xorstr("Backtrack"), &settings::aimbot::visuals::backtrack::enable); ColorEdit4(xorstr("Backtrack"), settings::aimbot::visuals::colors::backtrack, color_edit4_flags);
             Combo(xorstr("Material"), &settings::aimbot::visuals::backtrack::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
-
-            EndChild();
         }
+        EndChild();
 
         EndTabItem();
     }
@@ -77,7 +75,7 @@ void menu::render()
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-        if (BeginChild(xorstr("Globals"), child_size))
+        BeginChild(xorstr("Globals"), child_size);
         {
             Checkbox(xorstr("Enable"), &settings::antiaim::globals::enable); custom::hotkey(xorstr("AntiAim Hotkey"), &settings::antiaim::globals::hotkey);
             Checkbox(xorstr("Fake duck"), &settings::antiaim::globals::fake_duck);
@@ -85,30 +83,27 @@ void menu::render()
             Checkbox(xorstr("Invert yaw"), &settings::antiaim::globals::invert_yaw);
             Combo(xorstr("Yaw"), &settings::antiaim::globals::yaw, xorstr("LBY\0"));
             Combo(xorstr("Pitch"), &settings::antiaim::globals::pitch, xorstr("Down\0" "Up\0"));
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("FakeLag's"), child_size))
+        BeginChild(xorstr("FakeLag's"), child_size);
         {
             Checkbox(xorstr("Enable"), &settings::antiaim::fakelags::enable);
             SliderInt(xorstr("Count"), &settings::antiaim::fakelags::count, 1, 24, xorstr("%d"), ImGuiSliderFlags_NoInput); /*sv_maxusrcmdprocessticks = 24*/
             Combo(xorstr("Method"), &settings::antiaim::fakelags::method, xorstr("On Ground\0" "In Air\0" "On Move\0" "On Stand\0" "Always\0"));
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Visuals"), child_size))
+        BeginChild(xorstr("Visuals"), child_size);
         {
             Checkbox(xorstr("Fake model"), &settings::antiaim::visuals::fake_model::enable); ColorEdit4(xorstr("Fake model"), settings::antiaim::visuals::colors::fake_model, color_edit4_flags);
             Combo(xorstr("Material"), &settings::antiaim::visuals::fake_model::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
-
-            EndChild();
         }
+        EndChild();
 
         EndTabItem();
     }
@@ -117,37 +112,70 @@ void menu::render()
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-        if (BeginChild(xorstr("Players"), child_size))
-        {
-            Checkbox(xorstr("Enable"), &settings::visuals::players::enable);
-            Checkbox(xorstr("Dormant"), &settings::visuals::players::dormant);
-            Checkbox(xorstr("Box"), &settings::visuals::players::box); ColorEdit4(xorstr("Box"), settings::visuals::players::colors::box, color_edit4_flags);
-            Checkbox(xorstr("Name"), &settings::visuals::players::name); ColorEdit4(xorstr("Name"), settings::visuals::players::colors::name, color_edit4_flags);
-            Checkbox(xorstr("Rp team"), &settings::visuals::players::rp_team); ColorEdit4(xorstr("Rp team"), settings::visuals::players::colors::rp_team, color_edit4_flags);
-            Checkbox(xorstr("User group"), &settings::visuals::players::user_group); ColorEdit4(xorstr("User group"), settings::visuals::players::colors::user_group, color_edit4_flags);
-            Checkbox(xorstr("Weapon name"), &settings::visuals::players::weapon_name); ColorEdit4(xorstr("Weapon name"), settings::visuals::players::colors::weapon_name, color_edit4_flags);
-            Checkbox(xorstr("Distance"), &settings::visuals::players::distance); ColorEdit4(xorstr("Distance"), settings::visuals::players::colors::distance, color_edit4_flags);
-            SliderInt(xorstr("Render distance"), &settings::visuals::players::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
+        BeginChild(xorstr("ESP"), child_size);
+        {   
+            static int type = 0;
+            Combo(xorstr("##ESP"), &type, xorstr("Player\0" "Entity\0"));
 
-            EndChild();
+            switch (type)
+            {
+            case 0:
+            {
+                Checkbox(xorstr("Enable"), &settings::visuals::players::enable);
+                Checkbox(xorstr("Dormant"), &settings::visuals::players::dormant);
+                Checkbox(xorstr("Box"), &settings::visuals::players::box); ColorEdit4(xorstr("Box"), settings::visuals::players::colors::box, color_edit4_flags);
+                Checkbox(xorstr("Name"), &settings::visuals::players::name); ColorEdit4(xorstr("Name"), settings::visuals::players::colors::name, color_edit4_flags);
+                Checkbox(xorstr("Rp team"), &settings::visuals::players::rp_team); ColorEdit4(xorstr("Rp team"), settings::visuals::players::colors::rp_team, color_edit4_flags);
+                Checkbox(xorstr("User group"), &settings::visuals::players::user_group); ColorEdit4(xorstr("User group"), settings::visuals::players::colors::user_group, color_edit4_flags);
+                Checkbox(xorstr("Weapon name"), &settings::visuals::players::weapon_name); ColorEdit4(xorstr("Weapon name"), settings::visuals::players::colors::weapon_name, color_edit4_flags);
+                Checkbox(xorstr("Distance"), &settings::visuals::players::distance); ColorEdit4(xorstr("Distance"), settings::visuals::players::colors::distance, color_edit4_flags);
+                SliderInt(xorstr("Render distance"), &settings::visuals::players::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
+            }
+            break;
+            case 1:
+            {
+                Checkbox(xorstr("Enable"), &settings::visuals::entity::enable);
+                Checkbox(xorstr("Dormant"), &settings::visuals::entity::dormant);
+                Checkbox(xorstr("Box"), &settings::visuals::entity::box); ColorEdit4(xorstr("Box"), settings::visuals::entity::colors::box, color_edit4_flags);
+                Checkbox(xorstr("Name"), &settings::visuals::entity::name); ColorEdit4(xorstr("Name"), settings::visuals::entity::colors::name, color_edit4_flags);
+                Checkbox(xorstr("Distance"), &settings::visuals::entity::distance); ColorEdit4(xorstr("Distance"), settings::visuals::entity::colors::distance, color_edit4_flags);
+
+                if (BeginCombo(xorstr("List"), xorstr("...")))
+                {
+                    utilities::update_entity_list();
+
+                    for (auto item : settings::visuals::entity::list.items())
+                    {
+                        bool temp = item.value(); 
+                        Selectable(item.key().c_str(), &temp, ImGuiSelectableFlags_DontClosePopups); 
+                        item.value() = temp;
+                    }
+
+                    EndCombo();
+                }
+            
+                SliderInt(xorstr("Render distance"), &settings::visuals::entity::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
+            }
+            break;
+            }
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Entity"), child_size))
+        BeginChild(xorstr("Chams"), child_size);
         {
-            //Checkbox(xorstr("Enable"), &settings::visuals::entity::enable);
 
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Misc"), child_size))
+        BeginChild(xorstr("World"), child_size);
         {
 
-            EndChild();
         }
+        EndChild();
 
         EndTabItem();
     }
@@ -156,23 +184,21 @@ void menu::render()
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x)) / 2, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-        if (BeginChild(xorstr("Globals"), child_size))
+        BeginChild(xorstr("Globals"), child_size);
         {
             Checkbox(xorstr("ThirdPerson"), &settings::miscellaneous::globals::third_person::enable); custom::hotkey(xorstr("Third person Hotkey"), &settings::miscellaneous::globals::third_person::hotkey);
             SliderInt(xorstr("ThirdPerson Distance"), &settings::miscellaneous::globals::third_person::distance, 10, 200);
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Movement"), child_size))
+        BeginChild(xorstr("Movement"), child_size);
         {
             Checkbox(xorstr("Bunny hop"), &settings::miscellaneous::movement::bhop);
             Checkbox(xorstr("Air strafe"), &settings::miscellaneous::movement::air_strafe);
-
-            EndChild();
         }
+        EndChild();
 
         EndTabItem();
     }
@@ -186,7 +212,7 @@ void menu::render()
 
         std::vector<std::string> file_list = utilities::get_files_from_folder(xorstr("C:/nixware/lua/"), search_buffer, xorstr(".lua"));
 
-        if (BeginChild(xorstr("Scripts"), child_size))
+        BeginChild(xorstr("Scripts"), child_size);
         {
             float column_width = GetColumnWidth();
 
@@ -205,12 +231,12 @@ void menu::render()
             }
 
             PopItemWidth();
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Action"), child_size))
+        BeginChild(xorstr("Action"), child_size);
         {
             float column_width = GetColumnWidth();
 
@@ -224,18 +250,16 @@ void menu::render()
                 if (Button(xorstr("Load script"), ImVec2(column_width - 10.f, 35.f)))
                     lua::run_string(path);
             }
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Misc"), child_size))
+        BeginChild(xorstr("Misc"), child_size);
         {
             Checkbox(xorstr("Dumper"), &settings::lua::miscellaneous::dumper);
-
-            EndChild();
         }
+        EndChild();
 
         EndTabItem();
     }
@@ -244,16 +268,15 @@ void menu::render()
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-        if (BeginChild(xorstr("Info"), child_size))
+        BeginChild(xorstr("Info"), child_size);
         {
             LabelText(xorstr("Last update:"), __DATE__);
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Menu"), child_size))
+        BeginChild(xorstr("Menu"), child_size);
         {
             LabelText(xorstr("WindowBg"));       ColorEdit4(xorstr("WindowBg"), settings::menu::colors::window_bg, color_edit4_flags);
             LabelText(xorstr("ChildBg"));        ColorEdit4(xorstr("ChildBg"), settings::menu::colors::child_bg, color_edit4_flags);
@@ -264,21 +287,19 @@ void menu::render()
             LabelText(xorstr("FrameHoveredBg")); ColorEdit4(xorstr("FrameHoveredBg"), settings::menu::colors::frame_hovered_bg, color_edit4_flags);
             LabelText(xorstr("FrameActiveBg"));  ColorEdit4(xorstr("FrameActiveBg"), settings::menu::colors::frame_active_bg, color_edit4_flags);
             Checkbox(xorstr("Custom loading screen"), &settings::menu::custom_loading_screen);
-
-            EndChild();
         }
+        EndChild();
 
         SameLine();
 
-        if (BeginChild(xorstr("Configs"), child_size))
+        BeginChild(xorstr("Configs"), child_size);
         {
             float column_width = GetColumnWidth();
 
             if (Button(xorstr("Unload cheat"), ImVec2(column_width - 10.f, 35.f)))
                 globals::unload = true;
-
-            EndChild();
         }
+        EndChild();
 
         EndTabItem();
     }

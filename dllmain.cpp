@@ -12,12 +12,12 @@ DWORD WINAPI initialize(HMODULE base)
     interfaces::initialize();
     hooks::initialize();
 
-    interfaces::engine->client_cmd_unrestricted(xorstr("gmod_mcore_test 0; alias gmod_mcore_test ''"));
+    //interfaces::engine->client_cmd_unrestricted(xorstr("gmod_mcore_test 0; alias gmod_mcore_test"));
 
     while (!globals::unload)
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-    FreeLibraryAndExitThread(base, 0);
+    FreeLibraryAndExitThread(base, EXIT_SUCCESS);
 
     return TRUE;
 }
@@ -42,10 +42,12 @@ BOOL WINAPI DllMain(HMODULE base, DWORD ul_reason_for_call, LPVOID reserved)
         DisableThreadLibraryCalls(base);
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)initialize, base, 0, nullptr);
         return TRUE;
+
     case DLL_PROCESS_DETACH:
         if (reserved == nullptr)
             return shutdown();
         return TRUE;
+
     default:
         return TRUE;
     }

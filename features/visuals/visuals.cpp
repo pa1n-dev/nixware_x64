@@ -3,6 +3,9 @@
 
 void visuals::render()
 {
+	if (!render_manager::draw_list)
+		return;
+
 	if (!interfaces::engine->is_in_game())
 		return;
 
@@ -10,16 +13,15 @@ void visuals::render()
 	if (!local_player)
 		return;
 
+	ImGuiIO& io = GetIO();
+
+	render_manager::draw_list->_ResetForNewFrame();
+	render_manager::draw_list->PushTextureID(io.Fonts->TexID);
+	render_manager::draw_list->PushClipRectFullScreen();
+
 	c_vector origin = local_player->get_abs_origin();
 
-	ImGuiIO& io = GetIO();
-	SetNextWindowPos(ImVec2(0, 0));
-	SetNextWindowSize(io.DisplaySize);
-
-	if (!Begin(xorstr("Visuals"), NULL, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground))
-		return;
-
-	for (size_t i = 0; i < interfaces::entity_list->get_highest_entity_index(); i++)
+	for (size_t i = 0; i <= interfaces::entity_list->get_highest_entity_index(); i++)
 	{
 		c_base_entity* entity = interfaces::entity_list->get_entity(i);
 		if (!entity)
@@ -39,7 +41,7 @@ void visuals::render()
 			if (entity == local_player)
 				continue;
 
-			box_t box{};
+			box_t box;
 			if (!utilities::get_entity_box(entity, box))
 				continue;
 
@@ -81,7 +83,42 @@ void visuals::render()
 		}
 		else if (settings::visuals::entity::enable)
 		{
+			if (!settings::visuals::entity::dormant && entity->is_dormant())
+				continue;
 
+			std::string name = entity->get_class_name();
+			if (name.empty())
+				continue;
+
+			if (!settings::visuals::entity::list.contains(name) || !settings::visuals::entity::list[name].get<bool>())
+				continue;
+
+			box_t box;
+			if (!utilities::get_entity_box(entity, box))
+				continue;
+
+			float offset = 0;
+			float distance = origin.distance_to(entity->get_abs_origin());
+
+			float alpha = std::clamp((settings::visuals::entity::render_distance - distance) / 100.f, 0.f, 1.f);
+			if (alpha <= 0.0f)
+				continue;
+
+			PushStyleVar(ImGuiStyleVar_Alpha, alpha);
+
+			if (settings::visuals::entity::box)
+				render_manager::box(box, settings::visuals::entity::colors::box, 1.f);
+
+			if (settings::visuals::entity::distance)
+			{
+				std::string distance_text = std::to_string((int)distance) + "m";
+				render_manager::render_text(box, distance_text.c_str(), settings::visuals::entity::colors::distance, offset);
+			}
+
+			if (settings::visuals::entity::name)
+				render_manager::render_text(box, name.c_str(), settings::visuals::entity::colors::name, offset);
+
+			PopStyleVar();
 		}
 	}
 
@@ -102,5 +139,10 @@ void visuals::render()
 		render_manager::circle(center, radius, settings::aimbot::visuals::colors::fov, 100, 1.f);
 	}
 
-	End();
+	render_manager::draw_list->PopClipRect();
+
+	//add render to queue
+	render_manager::render_mutex.lock();
+	*render_manager::draw_list_act = *render_manager::draw_list;
+	render_manager::render_mutex.unlock();
 }

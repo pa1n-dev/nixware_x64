@@ -27,14 +27,14 @@ void predict_spread::run(c_user_cmd* cmd)
 	if (strstr(weapon_base, xorstr("ptp_")))
 		return engine_spread(cmd, lua_utilities::get_ptp_spread(weapon));
 
-	if (strstr(weapon->get_print_name(), xorstr("#HL2_")) && !weapon->is_without_spread())
-		return engine_spread(cmd, weapon->get_bullet_spread().x);
-
-	if (strstr(weapon_base, xorstr("swb_")))
+	if (strstr(weapon_base, xorstr("swb_")) || strstr(weapon_base, xorstr("cw_")))
 	{
 		cone_spread(cmd, lua_utilities::get_weapon_cur_cone(weapon), cmd->command_number);
 		cmd->view_angles -= local_player->get_punch_angle();
 	}
+
+	if (strstr(weapon->get_print_name(), xorstr("#HL2_")) && !weapon->is_without_spread())
+		return engine_spread(cmd, weapon->get_bullet_spread().x);
 }
 
 void predict_spread::engine_spread(c_user_cmd* cmd, float spread)
@@ -56,8 +56,6 @@ void predict_spread::engine_spread(c_user_cmd* cmd, float spread)
 	dir = forward + (right * (x * spread)) + (up * (y * spread));
 
 	math::vector_to_angle(dir, out);
-	out.normalize();
-	out.clamp();
 
 	cmd->view_angles += cmd->view_angles - out;
 }

@@ -3,6 +3,14 @@ This is a cheat for [Garry's Mod](https://store.steampowered.com/app/4000/Garrys
 
 The cheat almost completely repeats the old nixware menu, which is why it has such a name
 
+The cheat is updated every week on Monday (almost)
+
+Please write about problems and errors in [issues](https://github.com/pa1n-dev/nixware_x64/issues)
+
+I will also now attach the virus total to each update
+
+Also, this cheat that you download from other sites besides this github may be viruses
+
 #### Showcase
 [Menu showcase](https://pa1n-dev.github.io/nixware/showcase/)
 
@@ -10,25 +18,28 @@ The cheat almost completely repeats the old nixware menu, which is why it has su
 ![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/5873042b-de4d-4312-9434-7c46c36efbdf)
 
 #### Features
-- Aimbot (Silent, Automatic fire, Hitbox, Priority, Smooth)
-- Predict spread ([m9k](https://steamcommunity.com/sharedfiles/filedetails/?id=128089118), [swb](https://steamcommunity.com/sharedfiles/filedetails/?id=2279720120), [ptp](https://steamcommunity.com/sharedfiles/filedetails/?id=187933083), hl2)
+- Aimbot (Silent, Automatic fire, Penetrate walls (SWB, CW2), Hitbox, Priority, Smooth)
+- Predict spread ([m9k](https://steamcommunity.com/sharedfiles/filedetails/?id=128089118), [swb](https://steamcommunity.com/sharedfiles/filedetails/?id=2279720120), [ptp](https://steamcommunity.com/sharedfiles/filedetails/?id=187933083), cw2, hl2)
 - Disable recoil
 - Backtrack
-- AntiAim (Fake duck)
-- Fakelag's
+- AntiAim (AA, Fakelag's, Fake duck)
 - ThirdPerson
-- OBS Bypass
+- OBS Bypass (ESP)
 - Custom menu background
-- Custom loading screen
+- Custom loading screen (Disabled)
 - [AnimFix](https://www.unknowncheats.me/forum/garry-s-mod/502883-animfix-fake-chams.html)
 - Backtrack ([cl_interp abuse](https://www.unknowncheats.me/forum/garry-s-mod/414371-cl_interp-abuse-1-backtrack-fakeping.html)) (not 100% accuracy)
+- Multicore support 
 
 #### ToDo
 - Visuals
 - OBS Bypass chams
-- Bhop/Strafe
 - Lua API
-- Bitch
+- Netlogger
+- Chams
+- Configs
+- Legit bhop/strafe
+- M9K Autowall
 
 #### How to use
 Open properties: 
@@ -43,13 +54,17 @@ Also, when starting the game, select x64
 
 Afterwards you need to inject via process hacker
 
+### Download
+- [releases](https://github.com/pa1n-dev/nixware_x64/releases)
+
 ### Credits
 #### Maintainers / Devs
 - [pa1n](https://github.com/pa1n-dev)
 
 #### Testers
-- [theshezzee](https://github.com/THEshezzee) (partial)
 - [Zitc-Hen](https://github.com/Zitc-Hen)
+- [pavetr](https://github.com/pavetr1337)
+- [theshezzee](https://github.com/THEshezzee) (partial)
 
 #### Special thanks to these cheats
 - [lemi_gmod_revolution](https://github.com/LemiProject/lemi_gmod_revolution/)
@@ -57,5 +72,6 @@ Afterwards you need to inject via process hacker
 
 ### Software used
 - [ImGui](https://github.com/ocornut/imgui)
-- [xorstr](https://github.com/JustasMasiulis/xorstr)
 - [MinHook](https://github.com/TsudaKageyu/minhook)
+- [Json](https://github.com/nlohmann/json)
+- [xorstr](https://github.com/JustasMasiulis/xorstr)

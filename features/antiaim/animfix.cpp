@@ -2,7 +2,7 @@
 
 bool animfix::can_update_animstates(c_base_entity* local_player)
 {
-	static auto prev_anim_state = local_player->get_anim_state();
+	static c_hl2mp_player_anim_state* prev_anim_state = local_player->get_anim_state();
 	if (local_player->get_anim_state() != prev_anim_state)
 	{
 		if (real_anim_state)
@@ -100,14 +100,11 @@ void animfix::run(c_user_cmd* cmd, bool send_packet)
 	if (!can_update_animstates(local_player))
 		return;
 
-	bool create_real = !real_anim_state;
-	bool init_real = need_anim_state_reset || create_real;
-
-	if (create_real)
-		real_anim_state = local_player->create_anim_state();
-
-	if (init_real)
+	if (need_anim_state_reset)
 	{
+		if (!real_anim_state)
+			real_anim_state = local_player->create_anim_state();
+
 		if (!real_move_data)
 			real_move_data = new multi_player_movement_data_t{};
 

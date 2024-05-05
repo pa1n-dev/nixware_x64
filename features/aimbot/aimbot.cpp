@@ -8,11 +8,9 @@ void aimbot::smooth(c_user_cmd* cmd, q_angle& angle)
 	if (!settings::aimbot::accuracy::smooth || settings::aimbot::globals::silent)
 		return;
 
-	angle.normalize();
 	angle.clamp();
 
 	q_angle delta = angle - cmd->view_angles;
-	delta.normalize();
 	delta.clamp();
 
 	angle = cmd->view_angles + delta / settings::aimbot::accuracy::smooth;
@@ -68,7 +66,7 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 		math::vector_transform(hitbox->bb_max, bone_to_world[hitbox->bone], maxs);
 		shoot_pos = (mins + maxs) * 0.5;
 
-		if (penetrate_walls::is_visible(local_player, entity, shoot_pos))
+		if (penetrate_walls::can_hit(local_player, entity, shoot_pos))
 			return true;
 
 		found_hitbox = true;
@@ -81,7 +79,7 @@ bool aimbot::get_hit_position(c_base_entity* local_player, c_base_entity* entity
 		c_vector maxs = pos + entity->get_collidable()->maxs();
 		shoot_pos = (mins + maxs) * 0.5;
 
-		return penetrate_walls::is_visible(local_player, entity, shoot_pos);
+		return penetrate_walls::can_hit(local_player, entity, shoot_pos);
 	}
 
 	return false;
@@ -95,8 +93,8 @@ target_info aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_playe
 	q_angle view_angles = cmd->view_angles;
 	c_vector origin = local_player->get_abs_origin();
 
-	c_vector eye_position;
-	local_player->get_eye_position(eye_position);
+	c_vector eye_pos;
+	local_player->get_eye_position(eye_pos);
 
 	for (size_t i = 1; i <= interfaces::entity_list->get_highest_entity_index(); i++)
 	{
@@ -126,11 +124,13 @@ target_info aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_playe
 			distance = record.origin.distance_to(entity->get_abs_origin());
 		}
 
-		q_angle shoot_angle = math::calc_angle(eye_position, shoot_pos);
+		q_angle angle = math::calc_angle(globals::view_origin, shoot_pos);
 
-		float fov = utilities::get_fov(view_angles, shoot_angle);
+		float fov = utilities::get_fov(view_angles, angle);
 		if (fov > settings::aimbot::globals::fov)
 			continue;
+
+		q_angle shoot_angle = math::calc_angle(eye_pos, shoot_pos);
 
 		bool should_skip = false;
 		switch (settings::aimbot::globals::priority)

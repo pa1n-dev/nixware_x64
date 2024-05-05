@@ -1721,8 +1721,9 @@ bool ImGui::BeginCombo(const char* label, const char* preview_value, ImGuiComboF
     IM_ASSERT((flags & (ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_NoPreview)) != (ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_NoPreview)); // Can't use both flags together
 
     const ImVec2 label_size = CalcTextSize(label, NULL, true);
+    const ImVec2 preview_label_size = CalcTextSize(label, NULL, true);
     const float w = GetColumnWidth();
-    const ImRect total_bb(window->DC.CursorPos, window->DC.CursorPos + ImVec2(w - 10.f, style.ItemInnerSpacing.y * 2 + label_size.y * 2 + style.FramePadding.y));
+    const ImRect total_bb(window->DC.CursorPos, window->DC.CursorPos + ImVec2(w - 10.f, style.ItemInnerSpacing.y * 3 + preview_label_size.y + (label_size.x > 0 ? label_size.y + style.FramePadding.y : 0)));
 
     ItemSize(total_bb, style.FramePadding.y);
     if (!ItemAdd(total_bb, id))
@@ -1762,7 +1763,7 @@ bool ImGui::BeginCombo(const char* label, const char* preview_value, ImGuiComboF
     if (label_size.x > 0)
         RenderText(total_bb.Min, label);
 
-    ImRect frame = ImRect(ImVec2(total_bb.Min.x, total_bb.Min.y + style.ItemInnerSpacing.y + label_size.y), total_bb.Max);
+    ImRect frame = ImRect(ImVec2(total_bb.Min.x, total_bb.Min.y + (label_size.x > 0 ? label_size.y + style.FramePadding.y : 0)), ImVec2(total_bb.Max.x, total_bb.Max.y - style.FramePadding.y));
 
     if (!(flags & ImGuiComboFlags_NoPreview))
         window->DrawList->AddRectFilled(frame.Min, frame.Max, tab_map_item->second.frame, style.FrameRounding);

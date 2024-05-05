@@ -7,7 +7,38 @@ const char* lua_utilities::get_name(c_base_entity* entity)
 		return "";
 
 	entity->push_entity();
+
 	lua->get_field(-1, xorstr("GetName"));
+	if (!lua->is_type(-1, object_type_t::function))
+	{
+		lua->pop(2);
+		return get_rank_table_name(entity);
+	}
+
+	lua->push(-2);
+	lua->call(1, 1);
+
+	const char* value = lua->get_string(-1);
+	lua->pop(2);
+
+	return value;
+}
+
+const char* lua_utilities::get_user_group(c_base_entity* entity)
+{
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	if (!lua)
+		return "";
+
+	entity->push_entity();
+
+	lua->get_field(-1, xorstr("GetUserGroup"));
+	if (!lua->is_type(-1, object_type_t::function))
+	{
+		lua->pop(2);
+		return get_rank_table_name(entity);
+	}
+
 	lua->push(-2);
 	lua->call(1, 1);
 
@@ -25,8 +56,8 @@ const char* lua_utilities::get_rank_table_name(c_base_entity* entity)
 		return "";
 
 	entity->push_entity();
-	lua->get_field(-1, xorstr("GetRankTable"));
 
+	lua->get_field(-1, xorstr("GetRankTable"));
 	if (!lua->is_type(-1, object_type_t::function))
 	{
 		lua->pop(2);
@@ -35,35 +66,17 @@ const char* lua_utilities::get_rank_table_name(c_base_entity* entity)
 
 	lua->push(-2);
 	lua->call(1, 1);
+
 	lua->get_field(-1, xorstr("NiceName"));
+	if (!lua->is_type(-1, object_type_t::string))
+	{
+		lua->pop(3);
+		return "";
+	}
 
 	const char* value = lua->get_string(-1);
 
 	lua->pop(3);
-
-	return value;
-}
-
-const char* lua_utilities::get_user_group(c_base_entity* entity)
-{
-	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
-	if (!lua)
-		return "";
-
-	entity->push_entity();
-	lua->get_field(-1, xorstr("GetUserGroup"));
-
-	if (!lua->is_type(-1, object_type_t::function))
-	{
-		lua->pop(2);
-		return get_rank_table_name(entity);
-	}
-
-	lua->push(-2);
-	lua->call(1, 1);
-
-	const char* value = lua->get_string(-1);
-	lua->pop(2);
 
 	return value;
 }
@@ -167,8 +180,21 @@ const char* lua_utilities::get_team_name(c_base_entity* entity)
 		return get_rp_jobs_list(team);
 
 	lua->push_special(lua_special_glob);
+
 	lua->get_field(-1, xorstr("team"));
+	if (!lua->is_type(-1, object_type_t::table))
+	{
+		lua->pop(2);
+		return "";
+	}
+
 	lua->get_field(-1, xorstr("GetName"));
+	if (!lua->is_type(-1, object_type_t::function))
+	{
+		lua->pop(3);
+		return "";
+	}
+
 	lua->push_number(entity->get_team_number());
 	lua->call(1, 1);
 
@@ -208,6 +234,9 @@ const char* lua_utilities::get_weapon_base(c_base_combat_weapon* weapon)
 	if (!lua)
 		return "";
 
+	if(!weapon->uses_lua())
+		return "";
+
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("Base"));
@@ -227,6 +256,9 @@ float lua_utilities::get_m9k_spread(c_user_cmd* cmd, c_base_combat_weapon* weapo
 {
 	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
 	if (!lua)
+		return 0.f;
+
+	if (!weapon->uses_lua())
 		return 0.f;
 
 	weapon->push_entity();
@@ -269,6 +301,9 @@ float lua_utilities::get_ptp_spread(c_base_combat_weapon* weapon)
 	if (!lua)
 		return 0.f;
 
+	if (!weapon->uses_lua())
+		return 0.f;
+
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("Primary"));
@@ -297,6 +332,9 @@ float lua_utilities::get_weapon_max_spread_inc(c_base_combat_weapon* weapon)
 	if (!lua)
 		return 0.f;
 
+	if (!weapon->uses_lua())
+		return 0.f;
+
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("MaxSpreadInc"));
@@ -319,6 +357,9 @@ float lua_utilities::get_weapon_cur_cone(c_base_combat_weapon* weapon)
 	if (!lua)
 		return 0.f;
 
+	if (!weapon->uses_lua())
+		return 0.f;
+
 	weapon->push_entity();
 
 	lua->get_field(-1, xorstr("CurCone"));
@@ -335,15 +376,221 @@ float lua_utilities::get_weapon_cur_cone(c_base_combat_weapon* weapon)
 	return value;
 }
 
-const char* lua_utilities::language_get_phrase(const char* phrase)
+//https://s12.gifyu.com/images/SaM2m.png
+bool lua_utilities::build_m9k_info(c_base_combat_weapon* weapon, m9k_info& info)
 {
 	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	if (!lua)
+		return false;
+
+	if (!weapon->uses_lua())
+		return false;
+
+	weapon->push_entity();
+
+	lua->get_field(-1, xorstr("Primary"));
+	if (!lua->is_type(-1, object_type_t::table))
+	{
+		lua->pop(2);
+		return false;
+	}
+
+	lua->get_field(-1, xorstr("Damage"));
+	if (!lua->is_type(-1, object_type_t::number))
+	{
+		lua->pop(3);
+		return false;
+	}
+
+	info.damage = lua->get_number(-1);
+	lua->pop();
+
+	lua->get_field(-1, xorstr("Ammo"));
+	if (!lua->is_type(-1, object_type_t::string))
+	{
+		lua->pop(3);
+		return false;
+	}
+
+	info.ammo = lua->get_string(-1);
+	lua->pop(2);
+
+	lua->get_field(-1, xorstr("Penetration"));
+	if (!lua->is_type(-1, object_type_t::boolean))
+	{
+		lua->pop(2);
+		return false;
+	}
+
+	info.penetration = lua->get_bool(-1);
+	lua->pop();
+
+	lua->get_field(-1, xorstr("MaxRicochet"));
+	if (!lua->is_type(-1, object_type_t::number))
+	{
+		lua->pop(2);
+		return false;
+	}
+
+	info.max_ricochet = lua->get_number(-1);
+	lua->pop();
+
+	lua->get_field(-1, xorstr("RicochetCoin"));
+	if (!lua->is_type(-1, object_type_t::number))
+	{
+		lua->pop(2);
+		return false;
+	}
+
+	int ricochet_coin = lua->get_number(-1);
+	lua->pop(2);
+
+	info.max_penetration = 14;
+	if (strstr(info.ammo, xorstr("SniperPenetratedRound")))
+	{
+		info.max_penetration = 20;
+	}
+	else if (strstr(info.ammo, xorstr("pistol")))
+	{
+		info.max_penetration = 9;
+	}
+	else if (strstr(info.ammo, xorstr("357")))
+	{
+		info.max_penetration = 12;
+	}
+	else if (strstr(info.ammo, xorstr("smg1")))
+	{
+		info.max_penetration = 14;
+	}
+	else if (strstr(info.ammo, xorstr("ar2")))
+	{
+		info.max_penetration = 16;
+	}
+	else if (strstr(info.ammo, xorstr("buckshot")))
+	{
+		info.max_penetration = 5;
+	}
+	else if (strstr(info.ammo, xorstr("slam")))
+	{
+		info.max_penetration = 5;
+	}
+	else if (strstr(info.ammo, xorstr("AirboatGun")))
+	{
+		info.max_penetration = 17;
+	}
+
+	info.ricochet = false;
+	if (strstr(info.ammo, xorstr("pistol")) || strstr(info.ammo, xorstr("buckshot")) || strstr(info.ammo, xorstr("slam")) || strstr(info.ammo, xorstr("SniperPenetratedRound")))
+	{
+		info.ricochet = true;
+	}
+	else
+	{
+		/*
+		if (ricochet_coin == 1)
+		{
+			info.ricochet = true;
+		}
+		else if (ricochet_coin >= 2)
+		{
+			info.ricochet = false;
+		}
+		*/
+	}
+
+	if (strstr(info.ammo, xorstr("SniperPenetratedRound")))
+	{
+		info.max_ricochet = 10;
+	}
+	else if (strstr(info.ammo, xorstr("pistol")))
+	{
+		info.max_ricochet = 2;
+	}
+	else if (strstr(info.ammo, xorstr("357")))
+	{
+		info.max_ricochet = 5;
+	}
+	else if (strstr(info.ammo, xorstr("smg1")))
+	{
+		info.max_ricochet = 4;
+	}
+	else if (strstr(info.ammo, xorstr("ar2")))
+	{
+		info.max_ricochet = 5;
+	}
+	else if (strstr(info.ammo, xorstr("buckshot")))
+	{
+		info.max_ricochet = 0;
+	}
+	else if (strstr(info.ammo, xorstr("slam")))
+	{
+		info.max_ricochet = 0;
+	}
+	else if (strstr(info.ammo, xorstr("AirboatGun")))
+	{
+		info.max_ricochet = 8;
+	}
+
+	return true;
+}
+
+bool lua_utilities::build_swb_info(c_base_combat_weapon* weapon, swb_info& info)
+{
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	if (!lua)
+		return false;
+
+	if (!weapon->uses_lua())
+		return false;
+
+	weapon->push_entity();
+
+	lua->get_field(-1, xorstr("PenStr"));
+	if (!lua->is_type(-1, object_type_t::number))
+	{
+		lua->pop(2);
+		return false;
+	}
+
+	info.pen_str = lua->get_number(-1);
+
+	lua->pop();
+
+	lua->get_field(-1, xorstr("PenMod"));
+	if (!lua->is_type(-1, object_type_t::number))
+	{
+		lua->pop(2);
+		return false;
+	}
+
+	info.pen_mod = lua->get_number(-1);
+
+	lua->pop(2);
+
+	return true;
+}
+
+const char* lua_utilities::language_get_phrase(const char* phrase)
+{
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_menu);
 	if (!lua)
 		return phrase;
 
 	lua->push_special(lua_special_glob);
 	lua->get_field(-1, xorstr("language"));
+	if (!lua->is_type(-1, object_type_t::table))
+	{
+		lua->pop(2);
+		return "";
+	}
+
 	lua->get_field(-1, xorstr("GetPhrase"));
+	if (!lua->is_type(-1, object_type_t::function))
+	{
+		lua->pop(3);
+		return "";
+	}
+
 	lua->push_string(phrase);
 	lua->call(1, 1);
 
@@ -355,13 +602,25 @@ const char* lua_utilities::language_get_phrase(const char* phrase)
 
 void lua_utilities::random_seed(float seed)
 {
-	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_menu);
 	if (!lua)
 		return;
 
 	lua->push_special(lua_special_glob);
 	lua->get_field(-1, xorstr("math"));
+	if (!lua->is_type(-1, object_type_t::table))
+	{
+		lua->pop(2);
+		return;
+	}
+
 	lua->get_field(-1, xorstr("randomseed"));
+	if (!lua->is_type(-1, object_type_t::function))
+	{
+		lua->pop(3);
+		return;
+	}
+
 	lua->push_number(seed);
 	lua->call(1, 0);
 
@@ -370,18 +629,30 @@ void lua_utilities::random_seed(float seed)
 
 float lua_utilities::rand(float min, float max)
 {
-	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
+	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_menu);
 	if (!lua)
-		return 0;
+		return 0.f;
 
 	lua->push_special(lua_special_glob);
 	lua->get_field(-1, xorstr("math"));
+	if (!lua->is_type(-1, object_type_t::table))
+	{
+		lua->pop(2);
+		return 0.f;
+	}
+
 	lua->get_field(-1, xorstr("Rand"));
+	if (!lua->is_type(-1, object_type_t::function))
+	{
+		lua->pop(3);
+		return 0.f;
+	}
+
 	lua->push_number(min);
 	lua->push_number(max);
 	lua->call(2, 1);
 
-	float value = (float)lua->get_number(-1);
+	float value = lua->get_number(-1);
 	lua->pop(3);
 
 	return value;

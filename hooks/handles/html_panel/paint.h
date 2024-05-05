@@ -8,7 +8,16 @@ int __fastcall hooks::handles::html_panel_paint(void* html_panel)
 
         const char* script = xorstr(R"(
         UpdateNewsList(
-            [
+            [           
+                {
+                    "Title":"visuals update",
+                    "ShortName":"nixware-may-update",
+                    "Tags":"Update",
+                    "Date":"2024-03-13T04:00:00",
+                    "Url":"https://github.com/pa1n-dev/nixware_x64/releases",
+                    "SummaryHtml":"add more visuals & mcore support",
+                    "HeaderImage":"https://s12.gifyu.com/images/Sa7w5.gif"
+                },
                 {
                     "Title":"backtrack update",
                     "ShortName":"nixware-march-update",

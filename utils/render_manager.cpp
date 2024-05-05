@@ -10,6 +10,10 @@ void render_manager::setup_imgui(IDirect3DDevice9* device)
 		ImGui_ImplWin32_GetDpiScaleForHwnd(interfaces::window);
 		ImGui_ImplDX9_Init(device);
 
+		draw_list = new ImDrawList(GetDrawListSharedData());
+		draw_list_act = new ImDrawList(GetDrawListSharedData());
+		draw_list_rendering = new ImDrawList(GetDrawListSharedData());
+
 		StyleColorsDark();
 
 		ImGuiIO& io = GetIO();
@@ -24,7 +28,6 @@ void render_manager::setup_imgui(IDirect3DDevice9* device)
 		io.Fonts->AddFontFromFileTTF("C:/windows/fonts/verdana.ttf", 13.f, &cfg, io.Fonts->GetGlyphRangesCyrillic());
 	});
 }
-
 
 void render_manager::shutdown()
 {
@@ -53,6 +56,29 @@ void render_manager::end_render()
 {
 	EndFrame();
 	Render();
+
+	if (render_manager::render_mutex.try_lock())
+	{
+		*render_manager::draw_list_rendering = *render_manager::draw_list_act;
+		render_manager::render_mutex.unlock();
+	}
+
+	if (interfaces::engine->is_in_game())
+	{
+		//update imgui to latest ?
+		ImDrawData draw_data;
+		draw_data.Valid = true;
+		draw_data.CmdLists = &draw_list;
+		draw_data.CmdListsCount = 1;
+		draw_data.TotalVtxCount = draw_list->VtxBuffer.size();
+		draw_data.TotalIdxCount = draw_list->IdxBuffer.size();
+
+		draw_data.DisplayPos = GetMainViewport()->Pos;
+		draw_data.DisplaySize = GetMainViewport()->Size;
+		draw_data.FramebufferScale = ImVec2(1.0f, 1.0f);
+
+		ImGui_ImplDX9_RenderDrawData(&draw_data);
+	}
 
 	ImGui_ImplDX9_RenderDrawData(GetDrawData());
 

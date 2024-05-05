@@ -105,6 +105,16 @@ bool utilities::is_key_pressed(int key)
 	return false;
 }
 
+void utilities::trace_line(c_vector start, c_vector end, unsigned int mask, c_base_entity* skip, trace_t* trace)
+{
+	ray_t ray(start, end);
+
+	c_trace_filter filter;
+	filter.skip = skip;
+
+	interfaces::engine_trace->trace_ray(ray, mask, &filter, trace);
+}
+
 int utilities::time_to_ticks(float time)
 {
 	return (int)(0.5f + time / interfaces::global_vars->interval_per_tick);
@@ -164,17 +174,17 @@ bool utilities::world_to_screen(const c_vector& in, c_vector* out)
 bool utilities::get_entity_box(c_base_entity* entity, box_t& box)
 {
 	c_vector pos = entity->get_abs_origin();
-	c_vector min = pos + entity->get_collidable()->mins();
-	c_vector max = pos + entity->get_collidable()->maxs();
+	c_vector mins = pos + entity->get_collidable()->mins();
+	c_vector maxs = pos + entity->get_collidable()->maxs();
 
-	c_vector points[] = { c_vector(min.x, min.y, min.z),
-						c_vector(min.x, max.y, min.z),
-						c_vector(max.x, max.y, min.z),
-						c_vector(max.x, min.y, min.z),
-						c_vector(max.x, max.y, max.z),
-						c_vector(min.x, max.y, max.z),
-						c_vector(min.x, min.y, max.z),
-						c_vector(max.x, min.y, max.z) };
+	c_vector points[] = { c_vector(mins.x, mins.y, mins.z),
+						  c_vector(mins.x, maxs.y, mins.z),
+						c_vector(maxs.x, maxs.y, mins.z),
+						c_vector(maxs.x, mins.y, mins.z),
+						c_vector(maxs.x, maxs.y, maxs.z),
+						c_vector(mins.x, maxs.y, maxs.z),
+						c_vector(mins.x, mins.y, maxs.z),
+						c_vector(maxs.x, mins.y, maxs.z) };
 
 	c_vector screen_points[8];
 
@@ -184,26 +194,54 @@ bool utilities::get_entity_box(c_base_entity* entity, box_t& box)
 			return false;
 	}
 
-	float left = screen_points[0].x;
-	float top = screen_points[0].y;
-	float right = screen_points[0].x;
-	float bottom = screen_points[0].y;
+	float left		= screen_points[0].x;
+	float top		= screen_points[0].y;
+	float right		= screen_points[0].x;
+	float bottom	= screen_points[0].y;
 
 	for (int i = 1; i < 8; ++i)
 	{
-		left = min(left, screen_points[i].x);
-		top = max(top, screen_points[i].y);
-		right = max(right, screen_points[i].x);
-		bottom = min(bottom, screen_points[i].y);
+		left	= min(left, screen_points[i].x);
+		top		= max(top, screen_points[i].y);
+		right	= max(right, screen_points[i].x);
+		bottom	= min(bottom, screen_points[i].y);
 	}
 
 	if (isnan(left) || isnan(top) || isnan(right) || isnan(bottom))
 		return false;
 
-	box.left = left;
-	box.top = top;
-	box.right = right;
-	box.bottom = bottom;
+	box.left	= left;
+	box.top		= top;
+	box.right	= right;
+	box.bottom	= bottom;
 
 	return true;
+}
+
+void utilities::update_entity_list()
+{
+	if (!interfaces::engine->is_in_game())
+		return;
+
+	for (size_t i = 0; i <= interfaces::entity_list->get_highest_entity_index(); i++)
+	{
+		c_base_entity* entity = interfaces::entity_list->get_entity(i);
+		if (!entity)
+			continue;
+
+		if (entity->is_player())
+			continue;
+
+		if (i == interfaces::engine->get_local_player())
+			continue;
+
+		std::string name = entity->get_class_name();
+		if (name.empty())
+			continue;
+
+		if (settings::visuals::entity::list.contains(name))
+			continue;
+
+		settings::visuals::entity::list.emplace(name, false);
+	}
 }
