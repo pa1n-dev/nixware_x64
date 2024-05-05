@@ -7,7 +7,7 @@ The cheat is updated every week on Monday (almost)
 
 Please write about problems and errors in [issues](https://github.com/pa1n-dev/nixware_x64/issues)
 
-I will also now attach the virus total to each update
+I will also now attach the [virustotal](https://www.virustotal.com/gui/home/upload) to each update
 
 Also, this cheat that you download from other sites besides this github may be viruses
 
