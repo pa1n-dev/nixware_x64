@@ -9,8 +9,6 @@ Please write about problems and errors in [issues](https://github.com/pa1n-dev/n
 
 I will also now attach the [virustotal](https://www.virustotal.com/gui/home/upload) to each update
 
-Also, this cheat that you download from other sites besides this github may be viruses
-
 #### Showcase
 [Menu showcase](https://pa1n-dev.github.io/nixware/showcase/)
 
@@ -56,6 +54,9 @@ Afterwards you need to inject via process hacker
 
 ### Download
 - [releases](https://github.com/pa1n-dev/nixware_x64/releases)
+
+> [!WARNING]
+> I cant guarantee safety of downloading cheat from other web sites
 
 ### Credits
 #### Maintainers / Devs
