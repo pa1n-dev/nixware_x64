@@ -85,7 +85,7 @@ void hooks::initialize()
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("40 55 53 56 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ?")), &handles::send_datagram, (LPVOID*)&handles::originals::send_datagram))
-        throw; 
+        throw;
 
     if (!min_hook.enable_hook())
         throw;

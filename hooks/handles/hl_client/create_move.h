@@ -12,9 +12,9 @@ void __fastcall hooks::handles::create_move(c_hl_client* client, int sequence_nu
 
 	c_user_cmd old_cmd = *cmd;
 
-	engine_prediction::start(cmd);
+	//engine_prediction::start(cmd);
 	aimbot::run(cmd);
-	engine_prediction::end(cmd);
+	//engine_prediction::end(cmd);
 	predict_spread::run(cmd);
 
 	bool send_packet = fakelags::run(cmd);

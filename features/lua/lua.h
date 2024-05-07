@@ -3,6 +3,6 @@
 
 namespace lua
 {
-	void run_string(const std::string& path);
+	void executor();
 	void dumper(const std::string& filename, const std::string& string_to_run);
 }

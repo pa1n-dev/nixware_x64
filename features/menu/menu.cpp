@@ -248,7 +248,7 @@ void menu::render()
                 LabelText("Last update:", utilities::get_last_modified_time(path).c_str());
 
                 if (Button(xorstr("Load script"), ImVec2(column_width - 10.f, 35.f)))
-                    lua::run_string(path);
+                    globals::waiting_to_be_executed.store(std::make_pair(true, path.c_str()));
             }
         }
         EndChild();

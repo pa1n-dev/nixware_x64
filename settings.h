@@ -15,6 +15,8 @@ namespace globals
     inline D3DMATRIX world_to_screen;
     inline float fov = 0;
     inline void* menu_panel = nullptr;
+
+    inline std::atomic<std::pair<bool, const char*>> waiting_to_be_executed;
 }
 
 namespace settings
