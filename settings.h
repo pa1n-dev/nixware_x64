@@ -151,7 +151,6 @@ namespace settings
             inline bool box = false;
             inline bool name = false;
             inline bool distance = false;
-
             inline int render_distance = 15000;
 
             namespace colors
@@ -187,7 +186,7 @@ namespace settings
         namespace miscellaneous
         {
             inline bool dumper = false;
+            inline bool net_logger = false;
         }
-
     }
 }

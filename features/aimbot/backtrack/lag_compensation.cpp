@@ -107,5 +107,5 @@ bool lag_compensation::get_is_locked()
 		reset_ticks--;
 	}
 
-	return (has_to_reset || reset_ticks > 0  );
+	return (has_to_reset || reset_ticks > 0);
 }

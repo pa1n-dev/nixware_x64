@@ -3,51 +3,51 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <stdexcept>
+
+#undef interface
 
 namespace memory
 {
+	typedef void* (*interface_type)(const char* name, int* return_code);
+
 	template<typename T>
 	T* capture_interface(const char* module_name, const char* interface_name)
 	{
-		typedef void* (*interface_type)(const char* name, int* return_code);
-		const auto temp = reinterpret_cast<interface_type>(GetProcAddress(GetModuleHandleA(module_name), "CreateInterface"));
-		return static_cast<T*>(temp(interface_name, 0));
+		HMODULE module_handle = GetModuleHandleA(module_name);
+		if (!module_handle)
+			throw;
+
+		FARPROC proc_address = GetProcAddress(module_handle, "CreateInterface");
+		if (!proc_address)
+			throw;
+
+		interface_type create_interface = reinterpret_cast<interface_type>(proc_address);
+		if (!create_interface)
+			throw;
+
+		T* interface = static_cast<T*>(create_interface(interface_name, nullptr));
+		if (!interface)
+			throw;
+
+		return interface;
 	}
 
-	constexpr auto relative_to_absolute(uintptr_t address, int offset, int instruction_size = 6)
+	constexpr uintptr_t relative_to_absolute(uintptr_t address, int offset, int instruction_size = 7)
 	{
 		auto instruction = address + offset;
-
 		int relative_address = *(int*)(instruction);
-		auto real_address = address + instruction_size + relative_address;
-		return real_address;
-	}
-
-	inline uintptr_t get_virtual(PVOID** c, int idx)
-	{
-		return (uintptr_t)(*c)[idx];
+		return address + instruction_size + relative_address;
 	}
 
 	template<typename T>
-	T* get_vmt_from_instruction(uintptr_t address)
+	T* get_vmt_from_instruction(uintptr_t address, size_t offset = 0)
 	{
 		uintptr_t step = 3;
-		uintptr_t instruction_size = 7;
-		uintptr_t instruction = address;
-
-		uintptr_t relative_address = *(DWORD*)(instruction + step);
-		uintptr_t real_address = instruction + instruction_size + relative_address;
-		return *(T**)(real_address);
-	}
-
-	template<typename T>
-	T* get_vmt_from_instruction(uintptr_t address, size_t offset)
-	{
-		uintptr_t step = 3;
-		uintptr_t instruction_size = 7;
 		uintptr_t instruction = address + offset;
 
-		return *(T**)(relative_to_absolute(instruction, step, instruction_size));
+		uintptr_t real_address = relative_to_absolute(instruction, step);
+		return *(T**)(real_address);
 	}
 
 	template<typename T>
@@ -58,6 +58,11 @@ namespace memory
 
 		T function = reinterpret_cast<T>(address);
 		return function;
+	}
+
+	inline uintptr_t get_virtual(PVOID** c, int idx)
+	{
+		return (uintptr_t)(*c)[idx];
 	}
 
 	uint8_t* pattern_scanner(const std::string& module_name, const std::string& signature);
