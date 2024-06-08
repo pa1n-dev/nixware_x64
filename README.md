@@ -26,7 +26,7 @@ I will also now attach the [virustotal](https://www.virustotal.com/gui/home/uplo
 - Custom menu background
 - Custom loading screen (Disabled)
 - [AnimFix](https://www.unknowncheats.me/forum/garry-s-mod/502883-animfix-fake-chams.html)
-- Backtrack ([cl_interp abuse](https://www.unknowncheats.me/forum/garry-s-mod/414371-cl_interp-abuse-1-backtrack-fakeping.html)) (not 100% accuracy)
+- 1 second backtrack without fakeping ([cl_interp abuse](https://www.unknowncheats.me/forum/garry-s-mod/414371-cl_interp-abuse-1-backtrack-fakeping.html)) (not 100% accuracy)
 - Multicore support 
 
 #### ToDo

@@ -15,17 +15,12 @@ bool utilities::game_is_full_loaded()
 void utilities::attach_console()
 {
 	AllocConsole();
-	freopen(xorstr("conin$"), "r", stdin);
 	freopen(xorstr("conout$"), "w", stdout);
-	freopen(xorstr("conout$"), "w", stderr);
-	SetConsoleTitleA(xorstr("Nixware"));
 }
 
 void utilities::detach_console()
 {
-	fclose(stdin);
 	fclose(stdout);
-	fclose(stderr);
 	FreeConsole();
 }
 

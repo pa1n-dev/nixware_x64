@@ -47,9 +47,25 @@ c_vector c_vector::normalized()
 
 void c_vector::clamp()
 {
-	x = std::clamp(x, -89.0f, 89.0f);
-	y = std::clamp(y, -180.0f, 180.0f);
-	z = 0;
+	while (this->x < -180.0f)
+		this->x += 360.0f;
+
+	while (this->x > 180.0f)
+		this->x -= 360.0f;
+
+	if (this->x > 89.0f)
+		this->x = 89.0f;
+
+	if (this->x < -89.0f)
+		this->x = -89.0f;
+
+	while (this->y < -180.0f)
+		this->y += 360.0f;
+
+	while (this->y > 180.0f)
+		this->y -= 360.0f;
+
+	this->z = 0.0f;
 }
 
 float c_vector::dot(const c_vector& other) const
