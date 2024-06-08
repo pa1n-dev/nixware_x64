@@ -2,7 +2,7 @@ class c_lua_interface;
 
 struct lua_state_t
 {
-    char                pad_0000[69];
+    char                pad_0000[120];
     c_lua_interface*    lua_lnterface;
 };
 

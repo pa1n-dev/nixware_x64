@@ -33,7 +33,7 @@ void menu::render()
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
-        BeginChild(xorstr("Globals"), child_size); 
+        BeginChild(xorstr("Globals"), child_size);
         {
             Checkbox(xorstr("Enable"), &settings::aimbot::globals::enable); custom::hotkey(xorstr("Aimbot Hotkey"), &settings::aimbot::globals::hotkey);
             Checkbox(xorstr("Silent"), &settings::aimbot::globals::silent);
@@ -113,7 +113,7 @@ void menu::render()
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
 
         BeginChild(xorstr("ESP"), child_size);
-        {   
+        {
             static int type = 0;
             Combo(xorstr("##ESP"), &type, xorstr("Player\0" "Entity\0"));
 
@@ -146,14 +146,14 @@ void menu::render()
 
                     for (auto item : settings::visuals::entity::list.items())
                     {
-                        bool temp = item.value(); 
-                        Selectable(item.key().c_str(), &temp, ImGuiSelectableFlags_DontClosePopups); 
+                        bool temp = item.value();
+                        Selectable(item.key().c_str(), &temp, ImGuiSelectableFlags_DontClosePopups);
                         item.value() = temp;
                     }
 
                     EndCombo();
                 }
-            
+
                 SliderInt(xorstr("Render distance"), &settings::visuals::entity::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
             }
             break;
@@ -206,7 +206,7 @@ void menu::render()
     if (BeginTabItem(xorstr("Lua")))
     {
         ImVec2 child_size = ImVec2((GetColumnWidth() - (style.ItemSpacing.x * 2)) / 3, GetWindowHeight() - (GetCursorPosY() + style.ItemInnerSpacing.y * 2));
-        
+
         static int selected_item = -1;
         static char search_buffer[256] = "";
 
@@ -248,7 +248,7 @@ void menu::render()
                 LabelText("Last update:", utilities::get_last_modified_time(path).c_str());
 
                 if (Button(xorstr("Load script"), ImVec2(column_width - 10.f, 35.f)))
-                    lua::run_string(path);
+                    globals::waiting_to_be_executed.store(std::make_pair(true, path.c_str()));
             }
         }
         EndChild();
@@ -258,6 +258,8 @@ void menu::render()
         BeginChild(xorstr("Misc"), child_size);
         {
             Checkbox(xorstr("Dumper"), &settings::lua::miscellaneous::dumper);
+            Checkbox(xorstr("NetLogger"), &settings::lua::miscellaneous::net_logger);
+
         }
         EndChild();
 

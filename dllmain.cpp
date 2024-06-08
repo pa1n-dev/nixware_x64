@@ -5,14 +5,12 @@ DWORD WINAPI initialize(HMODULE base)
     while (!utilities::game_is_full_loaded())
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-#ifdef _DEBUG
+#ifndef _DEBUG
     utilities::attach_console();
 #endif
-
+    
     interfaces::initialize();
     hooks::initialize();
-
-    //interfaces::engine->client_cmd_unrestricted(xorstr("gmod_mcore_test 0; alias gmod_mcore_test"));
 
     while (!globals::unload)
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -24,7 +22,7 @@ DWORD WINAPI initialize(HMODULE base)
 
 BOOL WINAPI shutdown()
 {
-#ifdef _DEBUG
+#ifndef _DEBUG
     utilities::detach_console();
 #endif
 

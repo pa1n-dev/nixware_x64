@@ -37,5 +37,6 @@ void hooks::handles::paint_traverse(i_panel* panel, v_panel v_panel, bool force_
 	else if (globals::focus_overlay_panel == v_panel)
 	{
 		visuals::render();
+		lua::executor();
 	}
 }

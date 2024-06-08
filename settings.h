@@ -15,6 +15,8 @@ namespace globals
     inline D3DMATRIX world_to_screen;
     inline float fov = 0;
     inline void* menu_panel = nullptr;
+
+    inline std::atomic<std::pair<bool, const char*>> waiting_to_be_executed;
 }
 
 namespace settings
@@ -149,7 +151,6 @@ namespace settings
             inline bool box = false;
             inline bool name = false;
             inline bool distance = false;
-
             inline int render_distance = 15000;
 
             namespace colors
@@ -185,7 +186,7 @@ namespace settings
         namespace miscellaneous
         {
             inline bool dumper = false;
+            inline bool net_logger = false;
         }
-
     }
 }

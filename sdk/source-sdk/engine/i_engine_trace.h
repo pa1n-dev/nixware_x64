@@ -74,6 +74,7 @@ class i_trace_filter
 public:
 	virtual bool			should_hit_entity(void* entity, int mask) = 0;
 	virtual trace_type_t	get_trace_type() const = 0;
+	virtual void			unknown() = 0;
 };
 
 class c_trace_filter : public i_trace_filter
@@ -87,6 +88,11 @@ public:
 	virtual trace_type_t get_trace_type() const
 	{
 		return trace_everything;
+	}
+
+	void unknown()
+	{
+
 	}
 
 	void* skip;

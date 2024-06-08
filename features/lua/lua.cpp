@@ -1,23 +1,27 @@
 #include "lua.h"
 
-void lua::run_string(const std::string& path)
+void lua::executor()
 {
-	std::ifstream file(path);
-
-	if (!file.is_open())
+	auto l = globals::waiting_to_be_executed.load();
+	if (!l.first || !l.second)
 		return;
-
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-	std::string file_content = buffer.str();
-
-	file.close();
 
 	c_lua_interface* lua = interfaces::lua_shared->get_interface(lua_type_client);
 	if (!lua)
 		return;
 
-	lua->run_string("", "", file_content.c_str());
+	std::ifstream file(l.second);
+	if (!file.is_open())
+		return;
+
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	file.close();
+
+	const char* data = buffer.str().c_str();
+	lua->run_string("", "", data);
+
+	globals::waiting_to_be_executed.store(std::make_pair(false, nullptr));
 }
 
 void lua::dumper(const std::string& filename, const std::string& string_to_run)
