@@ -9,6 +9,9 @@ Please write about problems and errors in [issues](https://github.com/pa1n-dev/n
 
 I will also now attach the [virustotal](https://www.virustotal.com/gui/home/upload) to each update
 
+#### Communication
+[OUR DISCORD SERVER](https://discord.gg/FdezFJxMxd)
+
 #### Showcase
 [Menu showcase](https://pa1n-dev.github.io/nixware/showcase/)
 
