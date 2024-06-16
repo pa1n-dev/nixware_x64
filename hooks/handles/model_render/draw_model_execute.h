@@ -69,7 +69,7 @@ void __fastcall hooks::handles::draw_model_execute(c_model_render* model_render,
 				originals::draw_model_execute(model_render, state, info, matrix);
 			}
 
-			if (settings::antiaim::visuals::fake_model::enable && animfix::created_fake_matrix)
+			if (settings::antihit::visuals::fake_model::enable && animfix::created_fake_matrix)
 			{
 				matrix3x4 matrix[MAX_STUDIO_BONES];
 				for (int i = 0; i < MAX_STUDIO_BONES; i++)
@@ -81,7 +81,7 @@ void __fastcall hooks::handles::draw_model_execute(c_model_render* model_render,
 					matrix[i][2][3] += origin.z;
 				}
 
-				render_chams(settings::antiaim::visuals::fake_model::material_type, settings::antiaim::visuals::colors::fake_model, false, matrix);
+				render_chams(settings::antihit::visuals::fake_model::material_type, settings::antihit::visuals::colors::fake_model, false, matrix);
 			}
 
 			return;

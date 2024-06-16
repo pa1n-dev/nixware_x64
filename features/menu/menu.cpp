@@ -77,22 +77,22 @@ void menu::render()
 
         BeginChild(xorstr("Globals"), child_size);
         {
-            Checkbox(xorstr("Enable"), &settings::antiaim::globals::enable); custom::hotkey(xorstr("AntiAim Hotkey"), &settings::antiaim::globals::hotkey);
-            Checkbox(xorstr("Fake duck"), &settings::antiaim::globals::fake_duck);
-            Checkbox(xorstr("At target"), &settings::antiaim::globals::at_target);
-            Checkbox(xorstr("Invert yaw"), &settings::antiaim::globals::invert_yaw);
-            Combo(xorstr("Yaw"), &settings::antiaim::globals::yaw, xorstr("LBY\0"));
-            Combo(xorstr("Pitch"), &settings::antiaim::globals::pitch, xorstr("Down\0" "Up\0"));
+            Checkbox(xorstr("Enable"), &settings::antihit::fake_angles::enable); custom::hotkey(xorstr("AntiAim Hotkey"), &settings::antihit::fake_angles::hotkey);
+            Checkbox(xorstr("Fake duck"), &settings::antihit::fake_angles::fake_duck);
+            Checkbox(xorstr("At target"), &settings::antihit::fake_angles::at_target);
+            Checkbox(xorstr("Invert yaw"), &settings::antihit::fake_angles::invert_yaw);
+            Combo(xorstr("Yaw"), &settings::antihit::fake_angles::yaw, xorstr("LBY\0"));
+            Combo(xorstr("Pitch"), &settings::antihit::fake_angles::pitch, xorstr("Down\0" "Up\0"));
         }
         EndChild();
 
         SameLine();
 
-        BeginChild(xorstr("FakeLag's"), child_size);
+        BeginChild(xorstr("Fake Lag's"), child_size);
         {
-            Checkbox(xorstr("Enable"), &settings::antiaim::fakelags::enable);
-            SliderInt(xorstr("Count"), &settings::antiaim::fakelags::count, 1, 24, xorstr("%d"), ImGuiSliderFlags_NoInput); /*sv_maxusrcmdprocessticks = 24*/
-            Combo(xorstr("Method"), &settings::antiaim::fakelags::method, xorstr("On Ground\0" "In Air\0" "On Move\0" "On Stand\0" "Always\0"));
+            Checkbox(xorstr("Enable"), &settings::antihit::fake_lags::enable);
+            SliderInt(xorstr("Count"), &settings::antihit::fake_lags::count, 1, 24, xorstr("%d"), ImGuiSliderFlags_NoInput); /*sv_maxusrcmdprocessticks = 24*/
+            Combo(xorstr("Method"), &settings::antihit::fake_lags::method, xorstr("On Ground\0" "In Air\0" "On Move\0" "On Stand\0" "Always\0"));
         }
         EndChild();
 
@@ -100,8 +100,8 @@ void menu::render()
 
         BeginChild(xorstr("Visuals"), child_size);
         {
-            Checkbox(xorstr("Fake model"), &settings::antiaim::visuals::fake_model::enable); ColorEdit4(xorstr("Fake model"), settings::antiaim::visuals::colors::fake_model, color_edit4_flags);
-            Combo(xorstr("Material"), &settings::antiaim::visuals::fake_model::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
+            Checkbox(xorstr("Fake model"), &settings::antihit::visuals::fake_model::enable); ColorEdit4(xorstr("Fake model"), settings::antihit::visuals::colors::fake_model, color_edit4_flags);
+            Combo(xorstr("Material"), &settings::antihit::visuals::fake_model::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
         }
         EndChild();
 
@@ -121,30 +121,30 @@ void menu::render()
             {
             case 0:
             {
-                Checkbox(xorstr("Enable"), &settings::visuals::players::enable);
-                Checkbox(xorstr("Dormant"), &settings::visuals::players::dormant);
-                Checkbox(xorstr("Box"), &settings::visuals::players::box); ColorEdit4(xorstr("Box"), settings::visuals::players::colors::box, color_edit4_flags);
-                Checkbox(xorstr("Name"), &settings::visuals::players::name); ColorEdit4(xorstr("Name"), settings::visuals::players::colors::name, color_edit4_flags);
-                Checkbox(xorstr("Rp team"), &settings::visuals::players::rp_team); ColorEdit4(xorstr("Rp team"), settings::visuals::players::colors::rp_team, color_edit4_flags);
-                Checkbox(xorstr("User group"), &settings::visuals::players::user_group); ColorEdit4(xorstr("User group"), settings::visuals::players::colors::user_group, color_edit4_flags);
-                Checkbox(xorstr("Weapon name"), &settings::visuals::players::weapon_name); ColorEdit4(xorstr("Weapon name"), settings::visuals::players::colors::weapon_name, color_edit4_flags);
-                Checkbox(xorstr("Distance"), &settings::visuals::players::distance); ColorEdit4(xorstr("Distance"), settings::visuals::players::colors::distance, color_edit4_flags);
-                SliderInt(xorstr("Render distance"), &settings::visuals::players::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
+                Checkbox(xorstr("Enable"), &settings::visuals::esp::players::enable);
+                Checkbox(xorstr("Dormant"), &settings::visuals::esp::players::dormant);
+                Checkbox(xorstr("Box"), &settings::visuals::esp::players::box); ColorEdit4(xorstr("Box"), settings::visuals::esp::players::colors::box, color_edit4_flags);
+                Checkbox(xorstr("Name"), &settings::visuals::esp::players::name); ColorEdit4(xorstr("Name"), settings::visuals::esp::players::colors::name, color_edit4_flags);
+                Checkbox(xorstr("Rp team"), &settings::visuals::esp::players::rp_team); ColorEdit4(xorstr("Rp team"), settings::visuals::esp::players::colors::rp_team, color_edit4_flags);
+                Checkbox(xorstr("User group"), &settings::visuals::esp::players::user_group); ColorEdit4(xorstr("User group"), settings::visuals::esp::players::colors::user_group, color_edit4_flags);
+                Checkbox(xorstr("Weapon name"), &settings::visuals::esp::players::weapon_name); ColorEdit4(xorstr("Weapon name"), settings::visuals::esp::players::colors::weapon_name, color_edit4_flags);
+                Checkbox(xorstr("Distance"), &settings::visuals::esp::players::distance); ColorEdit4(xorstr("Distance"), settings::visuals::esp::players::colors::distance, color_edit4_flags);
+                SliderInt(xorstr("Render distance"), &settings::visuals::esp::players::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
             }
             break;
             case 1:
             {
-                Checkbox(xorstr("Enable"), &settings::visuals::entity::enable);
-                Checkbox(xorstr("Dormant"), &settings::visuals::entity::dormant);
-                Checkbox(xorstr("Box"), &settings::visuals::entity::box); ColorEdit4(xorstr("Box"), settings::visuals::entity::colors::box, color_edit4_flags);
-                Checkbox(xorstr("Name"), &settings::visuals::entity::name); ColorEdit4(xorstr("Name"), settings::visuals::entity::colors::name, color_edit4_flags);
-                Checkbox(xorstr("Distance"), &settings::visuals::entity::distance); ColorEdit4(xorstr("Distance"), settings::visuals::entity::colors::distance, color_edit4_flags);
+                Checkbox(xorstr("Enable"), &settings::visuals::esp::entity::enable);
+                Checkbox(xorstr("Dormant"), &settings::visuals::esp::entity::dormant);
+                Checkbox(xorstr("Box"), &settings::visuals::esp::entity::box); ColorEdit4(xorstr("Box"), settings::visuals::esp::entity::colors::box, color_edit4_flags);
+                Checkbox(xorstr("Name"), &settings::visuals::esp::entity::name); ColorEdit4(xorstr("Name"), settings::visuals::esp::entity::colors::name, color_edit4_flags);
+                Checkbox(xorstr("Distance"), &settings::visuals::esp::entity::distance); ColorEdit4(xorstr("Distance"), settings::visuals::esp::entity::colors::distance, color_edit4_flags);
 
                 if (BeginCombo(xorstr("List"), xorstr("...")))
                 {
                     utilities::update_entity_list();
 
-                    for (auto item : settings::visuals::entity::list.items())
+                    for (auto item : settings::visuals::esp::entity::list.items())
                     {
                         bool temp = item.value();
                         Selectable(item.key().c_str(), &temp, ImGuiSelectableFlags_DontClosePopups);
@@ -154,7 +154,7 @@ void menu::render()
                     EndCombo();
                 }
 
-                SliderInt(xorstr("Render distance"), &settings::visuals::entity::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
+                SliderInt(xorstr("Render distance"), &settings::visuals::esp::entity::render_distance, 100, 20000, xorstr("%d m"), ImGuiSliderFlags_NoInput);
             }
             break;
             }
@@ -173,7 +173,11 @@ void menu::render()
 
         BeginChild(xorstr("World"), child_size);
         {
+            Checkbox(xorstr("Fov changer"), &settings::visuals::world::fov_changer::enable);
+            SliderFloat(xorstr("Value##1"), &settings::visuals::world::fov_changer::value, 50, 179, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
 
+            Checkbox(xorstr("Model fov changer"), &settings::visuals::world::model_fov_changer::enable);
+            SliderFloat(xorstr("Value##2"), &settings::visuals::world::model_fov_changer::value, 30, 150, xorstr("%.1f"), ImGuiSliderFlags_NoInput);
         }
         EndChild();
 
@@ -288,7 +292,9 @@ void menu::render()
             LabelText(xorstr("FrameBg"));        ColorEdit4(xorstr("FrameBg"), settings::menu::colors::frame_bg, color_edit4_flags);
             LabelText(xorstr("FrameHoveredBg")); ColorEdit4(xorstr("FrameHoveredBg"), settings::menu::colors::frame_hovered_bg, color_edit4_flags);
             LabelText(xorstr("FrameActiveBg"));  ColorEdit4(xorstr("FrameActiveBg"), settings::menu::colors::frame_active_bg, color_edit4_flags);
-            Checkbox(xorstr("Custom loading screen"), &settings::menu::custom_loading_screen);
+            Checkbox(xorstr("Custom loading screen"), &settings::menu::custom_loading_screen::enable);
+            SetNextItemWidth(GetColumnWidth() - 10.f);
+            InputText(xorstr("Url"), settings::menu::custom_loading_screen::url, IM_ARRAYSIZE(settings::menu::custom_loading_screen::url));
         }
         EndChild();
 
@@ -296,9 +302,50 @@ void menu::render()
 
         BeginChild(xorstr("Configs"), child_size);
         {
-            float column_width = GetColumnWidth();
+            float column_width = GetColumnWidth() - 10.f;
+            ImVec2 button_size = ImVec2((column_width / 2) - style.ItemInnerSpacing.x, 35.f);
 
-            if (Button(xorstr("Unload cheat"), ImVec2(column_width - 10.f, 35.f)))
+            static int selected_item = -1;
+            static std::string selected_config_name;
+
+            static char new_config_name[256] = "";
+
+            std::vector<std::string> file_list = utilities::get_files_from_folder(xorstr("C:/nixware/configs/"), "", xorstr(".nixware"));
+
+            if (BeginCombo(xorstr("Configs"), selected_config_name.empty() ? xorstr("...") : selected_config_name.c_str()))
+            {
+                for (int i = 0; i < file_list.size(); i++)
+                {
+                    const bool is_selected = (selected_item == i);
+
+                    if (Selectable(file_list[i].c_str(), is_selected))
+                    {
+                        selected_item = i;
+                        selected_config_name = file_list[i];
+                    }
+
+                    if (is_selected)
+                        SetItemDefaultFocus();
+                }
+
+                EndCombo();
+            }
+
+            if (Button(xorstr("Load"), button_size))
+                config_manager::load(selected_config_name);
+
+            SameLine();
+
+            if (Button(xorstr("Save"), button_size))
+                config_manager::save(selected_config_name);
+
+            SetNextItemWidth(column_width);
+            InputText(xorstr("New config name"), new_config_name, IM_ARRAYSIZE(new_config_name));
+
+            if (Button(xorstr("Create and save"), ImVec2(column_width, 35.f)))
+                config_manager::save(new_config_name);
+
+            if (Button(xorstr("Unload cheat"), ImVec2(column_width, 35.f)))
                 globals::unload = true;
         }
         EndChild();

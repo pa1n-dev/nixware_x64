@@ -29,13 +29,13 @@ void visuals::render()
 
 		if (entity->is_player())
 		{
-			if (!settings::visuals::players::enable)
+			if (!settings::visuals::esp::players::enable)
 				continue;
 
 			if (!entity->is_alive())
 				continue;
 
-			if (!settings::visuals::players::dormant && entity->is_dormant())
+			if (!settings::visuals::esp::players::dormant && entity->is_dormant())
 				continue;
 
 			if (entity == local_player)
@@ -48,49 +48,49 @@ void visuals::render()
 			float offset = 0;
 			float distance = origin.distance_to(entity->get_abs_origin());
 
-			float alpha = std::clamp((settings::visuals::players::render_distance - distance) / 100.f, 0.f, 1.f);
+			float alpha = std::clamp((settings::visuals::esp::players::render_distance - distance) / 100.f, 0.f, 1.f);
 			if (alpha <= 0.0f)
 				continue;
 
 			PushStyleVar(ImGuiStyleVar_Alpha, alpha);
 
-			if (settings::visuals::players::box)
-				render_manager::box(box, settings::visuals::players::colors::box, 1.f);
+			if (settings::visuals::esp::players::box)
+				render_manager::box(box, settings::visuals::esp::players::colors::box, 1.f);
 
-			if (settings::visuals::players::distance)
+			if (settings::visuals::esp::players::distance)
 			{
 				std::string distance_text = std::to_string((int)distance) + "m";
-				render_manager::render_text(box, distance_text.c_str(), settings::visuals::players::colors::distance, offset);
+				render_manager::render_text(box, distance_text.c_str(), settings::visuals::esp::players::colors::distance, offset);
 			}
 
 			c_base_combat_weapon* weapon = entity->get_active_weapon();
 			if (weapon)
 			{
-				if (settings::visuals::players::weapon_name)
-					render_manager::render_text(box, lua_utilities::language_get_phrase(lua_utilities::get_weapon_print_name(weapon)), settings::visuals::players::colors::weapon_name, offset);
+				if (settings::visuals::esp::players::weapon_name)
+					render_manager::render_text(box, lua_utilities::language_get_phrase(lua_utilities::get_weapon_print_name(weapon)), settings::visuals::esp::players::colors::weapon_name, offset);
 			}
 
-			if (settings::visuals::players::user_group)
-				render_manager::render_text(box, lua_utilities::get_user_group(entity), settings::visuals::players::colors::user_group, offset);
+			if (settings::visuals::esp::players::user_group)
+				render_manager::render_text(box, lua_utilities::get_user_group(entity), settings::visuals::esp::players::colors::user_group, offset);
 
-			if (settings::visuals::players::rp_team)
-				render_manager::render_text(box, lua_utilities::get_team_name(entity), settings::visuals::players::colors::rp_team, offset);
+			if (settings::visuals::esp::players::rp_team)
+				render_manager::render_text(box, lua_utilities::get_team_name(entity), settings::visuals::esp::players::colors::rp_team, offset);
 
-			if (settings::visuals::players::name)
-				render_manager::render_text(box, lua_utilities::get_name(entity), settings::visuals::players::colors::name, offset);
+			if (settings::visuals::esp::players::name)
+				render_manager::render_text(box, lua_utilities::get_name(entity), settings::visuals::esp::players::colors::name, offset);
 
 			PopStyleVar();
 		}
-		else if (settings::visuals::entity::enable)
+		else if (settings::visuals::esp::entity::enable)
 		{
-			if (!settings::visuals::entity::dormant && entity->is_dormant())
+			if (!settings::visuals::esp::entity::dormant && entity->is_dormant())
 				continue;
 
 			std::string name = entity->get_class_name();
 			if (name.empty())
 				continue;
 
-			if (!settings::visuals::entity::list.contains(name) || !settings::visuals::entity::list[name].get<bool>())
+			if (!settings::visuals::esp::entity::list.contains(name) || !settings::visuals::esp::entity::list[name].get<bool>())
 				continue;
 
 			box_t box;
@@ -100,23 +100,23 @@ void visuals::render()
 			float offset = 0;
 			float distance = origin.distance_to(entity->get_abs_origin());
 
-			float alpha = std::clamp((settings::visuals::entity::render_distance - distance) / 100.f, 0.f, 1.f);
+			float alpha = std::clamp((settings::visuals::esp::entity::render_distance - distance) / 100.f, 0.f, 1.f);
 			if (alpha <= 0.0f)
 				continue;
 
 			PushStyleVar(ImGuiStyleVar_Alpha, alpha);
 
-			if (settings::visuals::entity::box)
-				render_manager::box(box, settings::visuals::entity::colors::box, 1.f);
+			if (settings::visuals::esp::entity::box)
+				render_manager::box(box, settings::visuals::esp::entity::colors::box, 1.f);
 
-			if (settings::visuals::entity::distance)
+			if (settings::visuals::esp::entity::distance)
 			{
 				std::string distance_text = std::to_string((int)distance) + "m";
-				render_manager::render_text(box, distance_text.c_str(), settings::visuals::entity::colors::distance, offset);
+				render_manager::render_text(box, distance_text.c_str(), settings::visuals::esp::entity::colors::distance, offset);
 			}
 
-			if (settings::visuals::entity::name)
-				render_manager::render_text(box, name.c_str(), settings::visuals::entity::colors::name, offset);
+			if (settings::visuals::esp::entity::name)
+				render_manager::render_text(box, name.c_str(), settings::visuals::esp::entity::colors::name, offset);
 
 			PopStyleVar();
 		}

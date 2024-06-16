@@ -191,6 +191,7 @@
     <ClCompile Include="sdk\source-sdk\math\quaternion.cpp" />
     <ClCompile Include="sdk\source-sdk\math\radian_euler.cpp" />
     <ClCompile Include="sdk\source-sdk\math\vector.cpp" />
+    <ClCompile Include="utils\config_manager.cpp" />
     <ClCompile Include="utils\lua_utilities.cpp" />
     <ClCompile Include="utils\hotkey.cpp" />
     <ClCompile Include="utils\render_manager.cpp" />
@@ -302,6 +303,7 @@
     <ClInclude Include="sdk\source-sdk\client\i_view_render.h" />
     <ClInclude Include="sdk\source-sdk\tier0\platform.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="utils\config_manager.h" />
     <ClInclude Include="utils\hotkey.h" />
     <ClInclude Include="utils\lua_utilities.h" />
     <ClInclude Include="utils\render_manager.h" />

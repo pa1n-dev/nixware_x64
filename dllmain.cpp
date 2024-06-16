@@ -5,7 +5,7 @@ DWORD WINAPI initialize(HMODULE base)
     while (!utilities::game_is_full_loaded())
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-#ifndef _DEBUG
+#ifdef _DEBUG
     utilities::attach_console();
 #endif
     
@@ -22,7 +22,7 @@ DWORD WINAPI initialize(HMODULE base)
 
 BOOL WINAPI shutdown()
 {
-#ifndef _DEBUG
+#ifdef _DEBUG
     utilities::detach_console();
 #endif
 

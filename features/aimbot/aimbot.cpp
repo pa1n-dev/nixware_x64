@@ -126,7 +126,7 @@ target_info aimbot::find_best_target(c_user_cmd* cmd, c_base_entity* local_playe
 
 		q_angle angle = math::calc_angle(globals::view_origin, shoot_pos);
 
-		float fov = utilities::get_fov(view_angles, angle);
+		float fov = utilities::get_fov(globals::view_angles, angle);
 		if (fov > settings::aimbot::globals::fov)
 			continue;
 

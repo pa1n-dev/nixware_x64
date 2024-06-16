@@ -132,6 +132,9 @@
     <ClCompile Include="features\aimbot\engine_prediction.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="utils\config_manager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\imgui\imconfig.h">
@@ -459,6 +462,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\json\json.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\config_manager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

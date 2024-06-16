@@ -52,7 +52,8 @@ std::vector<std::string> utilities::get_files_from_folder(const std::string& pat
 {
 	std::vector<std::string> list;
 
-	std::filesystem::create_directories(path);
+	if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path))
+		std::filesystem::create_directories(path);
 
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
@@ -234,9 +235,9 @@ void utilities::update_entity_list()
 		if (name.empty())
 			continue;
 
-		if (settings::visuals::entity::list.contains(name))
+		if (settings::visuals::esp::entity::list.contains(name))
 			continue;
 
-		settings::visuals::entity::list.emplace(name, false);
+		settings::visuals::esp::entity::list.emplace(name, false);
 	}
 }

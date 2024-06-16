@@ -3,10 +3,10 @@
 
 void antiaim::run(c_user_cmd* cmd, bool send_packet)
 {
-    if (!settings::antiaim::globals::enable)
+    if (!settings::antihit::fake_angles::enable)
         return;
 
-    if (!settings::antiaim::globals::hotkey.check())
+    if (!settings::antihit::fake_angles::hotkey.check())
         return;
 
     c_base_entity* local_player = interfaces::entity_list->get_entity(interfaces::engine->get_local_player());
@@ -22,11 +22,11 @@ void antiaim::run(c_user_cmd* cmd, bool send_packet)
     q_angle view;
     interfaces::engine->get_view_angles(view);
 
-    if (settings::antiaim::globals::at_target && aimbot::target.entity)
+    if (settings::antihit::fake_angles::at_target && aimbot::target.entity)
         view = aimbot::target.shoot_angle;
 
     float pitch = 0.f;
-    switch (settings::antiaim::globals::pitch)
+    switch (settings::antihit::fake_angles::pitch)
     {
     case 0:
         pitch = 90.f;
@@ -37,10 +37,10 @@ void antiaim::run(c_user_cmd* cmd, bool send_packet)
     }
 
     float yaw = 0.f;
-    switch (settings::antiaim::globals::yaw)
+    switch (settings::antihit::fake_angles::yaw)
     {
     case 0:
-        yaw = send_packet ^ settings::antiaim::globals::invert_yaw ? (view.y - 90.f) : (view.y + 90.f);
+        yaw = send_packet ^ settings::antihit::fake_angles::invert_yaw ? (view.y - 90.f) : (view.y + 90.f);
         break;
     }
 

@@ -6,7 +6,7 @@ bool fakelags::run(c_user_cmd* cmd)
 	if (!local_player || !local_player->is_alive())
 		return true;
 
-	if (settings::antiaim::globals::fake_duck && cmd->buttons & IN_DUCK && local_player->get_flags() & FL_ONGROUND)
+	if (settings::antihit::fake_angles::fake_duck && cmd->buttons & IN_DUCK && local_player->get_flags() & FL_ONGROUND)
 	{
 		if (cmd->command_number & 1)
 		{
@@ -17,12 +17,12 @@ bool fakelags::run(c_user_cmd* cmd)
 		return true;
 	}
 
-	if (!settings::antiaim::fakelags::enable || cmd->buttons & IN_ATTACK)
+	if (!settings::antihit::fake_lags::enable || cmd->buttons & IN_ATTACK)
 		return true;
 
-	if (interfaces::client_state->choked_commands < settings::antiaim::fakelags::count)
+	if (interfaces::client_state->choked_commands < settings::antihit::fake_lags::count)
 	{
-        switch (settings::antiaim::fakelags::method) 
+        switch (settings::antihit::fake_lags::method) 
         {
         case 0:
             if (local_player->get_flags() & FL_ONGROUND)

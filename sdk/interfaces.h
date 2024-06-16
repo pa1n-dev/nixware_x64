@@ -1,10 +1,5 @@
 #pragma once
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#pragma comment(lib, "d3d9.lib")
-#pragma comment (lib, "d3dx9.lib")
-
 #include <algorithm>
 #include <cstdint>
 #include <deque>
@@ -19,6 +14,13 @@
 #include <intrin.h>
 #include <mutex>
 
+#include <d3d9.h>
+#include <d3dx9.h>
+#pragma comment(lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
+#pragma comment(lib, "freetype.lib")
+
+#include "../utils/hotkey.h"
 #include "../dependencies/json/json.hpp"
 #include "../dependencies/xorstr/xorstr.h"
 #include "../dependencies/memory/memory.h"
@@ -80,6 +82,12 @@
 #include "source-sdk/c_engine_client.h"
 #include "source-sdk/c_client_state.h"
 #include "source-sdk/i_prediction.h"
+
+#include "../utils/utilities.h"
+#include "../utils/lua_utilities.h"
+#include "../utils/render_manager.h"
+#include "../utils/config_manager.h"
+#include "../settings.h"
 
 namespace interfaces
 {
