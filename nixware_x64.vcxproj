@@ -143,7 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;NIXWAREX64_EXPORTS;_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
@@ -183,6 +183,8 @@
     <ClCompile Include="features\menu\menu.cpp" />
     <ClCompile Include="features\miscellaneous\miscellaneous.cpp" />
     <ClCompile Include="features\miscellaneous\movement.cpp" />
+    <ClCompile Include="features\visuals\chams.cpp" />
+    <ClCompile Include="features\visuals\obs_bypass.cpp" />
     <ClCompile Include="features\visuals\visuals.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="dependencies\memory\memory.cpp" />
@@ -231,6 +233,8 @@
     <ClInclude Include="features\menu\menu.h" />
     <ClInclude Include="features\miscellaneous\miscellaneous.h" />
     <ClInclude Include="features\miscellaneous\movement.h" />
+    <ClInclude Include="features\visuals\chams.h" />
+    <ClInclude Include="features\visuals\obs_bypass.h" />
     <ClInclude Include="features\visuals\visuals.h" />
     <ClInclude Include="hooks\handles\client_mode_shared\override_view.h" />
     <ClInclude Include="hooks\handles\engine_client\set_view_angles.h" />
@@ -262,6 +266,7 @@
     <ClInclude Include="hooks\handles\lua_interface\run_string_ex.h" />
     <ClInclude Include="sdk\source-sdk\materialsystem\i_material.h" />
     <ClInclude Include="sdk\source-sdk\shared\i_move_helper.h" />
+    <ClInclude Include="sdk\source-sdk\tier1\key_values.h" />
     <ClInclude Include="sdk\source-sdk\vphysics\i_physics_surface_props.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_cvar.h" />
     <ClInclude Include="sdk\source-sdk\vstdlib\c_uniform_random_stream.h" />

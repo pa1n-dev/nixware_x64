@@ -64,7 +64,7 @@ void menu::render()
             Checkbox(xorstr("Fov"), &settings::aimbot::visuals::fov); ColorEdit4(xorstr("Fov"), settings::aimbot::visuals::colors::fov, color_edit4_flags);
             Checkbox(xorstr("Snaplines"), &settings::aimbot::visuals::snaplines); ColorEdit4(xorstr("Snaplines"), settings::aimbot::visuals::colors::snaplines, color_edit4_flags);
             Checkbox(xorstr("Backtrack"), &settings::aimbot::visuals::backtrack::enable); ColorEdit4(xorstr("Backtrack"), settings::aimbot::visuals::colors::backtrack, color_edit4_flags);
-            Combo(xorstr("Material"), &settings::aimbot::visuals::backtrack::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
+            Combo(xorstr("Material"), &settings::aimbot::visuals::backtrack::material_type, xorstr("Normal\0" "Metal\0" "Wireframe\0" "Flat\0"));
         }
         EndChild();
 
@@ -101,7 +101,7 @@ void menu::render()
         BeginChild(xorstr("Visuals"), child_size);
         {
             Checkbox(xorstr("Fake model"), &settings::antihit::visuals::fake_model::enable); ColorEdit4(xorstr("Fake model"), settings::antihit::visuals::colors::fake_model, color_edit4_flags);
-            Combo(xorstr("Material"), &settings::antihit::visuals::fake_model::material_type, xorstr("Normal\0" "Flat\0" "Wireframe\0"));
+            Combo(xorstr("Material"), &settings::antihit::visuals::fake_model::material_type, xorstr("Normal\0" "Metal\0" "Wireframe\0" "Flat\0"));
         }
         EndChild();
 
@@ -142,7 +142,7 @@ void menu::render()
 
                 if (BeginCombo(xorstr("List"), xorstr("...")))
                 {
-                    utilities::update_entity_list();
+                    utilities::update_entity_list(settings::visuals::esp::entity::list);
 
                     for (auto item : settings::visuals::esp::entity::list.items())
                     {
@@ -165,7 +165,55 @@ void menu::render()
 
         BeginChild(xorstr("Chams"), child_size);
         {
+            static int type = 0;
+            Combo(xorstr("##ESP"), &type, xorstr("Player\0" "Entity\0" "Hands\0"));
 
+            switch (type)
+            {
+            case 0:
+            {
+                Checkbox(xorstr("Enable"), &settings::visuals::chams::players::enable); ColorEdit4(xorstr("Chams"), settings::visuals::chams::colors::players, color_edit4_flags);
+                Checkbox(xorstr("Ignore walls"), &settings::visuals::chams::players::ignore_walls);
+                Combo(xorstr("Material"), &settings::visuals::chams::players::material_type, xorstr("Normal\0" "Metal\0" "Wireframe\0" "Flat\0"));
+
+                Checkbox(xorstr("Draw original model"), &settings::visuals::chams::players::draw_original_model);
+
+                break;
+            }
+            case 1:
+            {
+                Checkbox(xorstr("Enable"), &settings::visuals::chams::entity::enable); ColorEdit4(xorstr("Chams"), settings::visuals::chams::colors::entity, color_edit4_flags);
+                Checkbox(xorstr("Ignore walls"), &settings::visuals::chams::entity::ignore_walls);
+                Combo(xorstr("Material"), &settings::visuals::chams::entity::material_type, xorstr("Normal\0" "Metal\0" "Wireframe\0" "Flat\0"));
+
+                Checkbox(xorstr("Draw original model"), &settings::visuals::chams::entity::draw_original_model);
+
+                if (BeginCombo(xorstr("List"), xorstr("...")))
+                {
+                    utilities::update_entity_list(settings::visuals::chams::entity::list);
+
+                    for (auto item : settings::visuals::chams::entity::list.items())
+                    {
+                        bool temp = item.value();
+                        Selectable(item.key().c_str(), &temp, ImGuiSelectableFlags_DontClosePopups);
+                        item.value() = temp;
+                    }
+
+                    EndCombo();
+                }
+
+                break;
+            }
+            case 2:
+            {
+                Checkbox(xorstr("Enable"), &settings::visuals::chams::hands::enable); ColorEdit4(xorstr("Chams"), settings::visuals::chams::colors::hands, color_edit4_flags);
+                Combo(xorstr("Material"), &settings::visuals::chams::hands::material_type, xorstr("Normal\0" "Metal\0" "Wireframe\0" "Flat\0"));
+
+                Checkbox(xorstr("Draw original model"), &settings::visuals::chams::hands::draw_original_model);
+
+                break;
+            }
+            }
         }
         EndChild();
 

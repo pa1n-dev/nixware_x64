@@ -37,10 +37,14 @@ void lua::dumper(const std::string& filename, const std::string& string_to_run)
 	std::replace(address.begin(), address.end(), ':', '_');
 	std::replace(address.begin(), address.end(), '.', '-');
 
+	std::regex forbidden(xorstr("[^a-zA-Z0-9_\\-]"));
+	std::regex_replace(filename, forbidden, "");
+
 	std::filesystem::path path = xorstr("C:/nixware/dumps/") + address + xorstr("/");
 	path /= filename;
 
-	std::filesystem::create_directories(path.parent_path());
+	if (!std::filesystem::exists(path.parent_path()) || !std::filesystem::is_directory(path.parent_path()))
+		std::filesystem::create_directories(path.parent_path());
 
 	std::ofstream file(path);
 

@@ -214,12 +214,12 @@ bool utilities::get_entity_box(c_base_entity* entity, box_t& box)
 	return true;
 }
 
-void utilities::update_entity_list()
+void utilities::update_entity_list(nlohmann::json& list)
 {
 	if (!interfaces::engine->is_in_game())
 		return;
 
-	for (size_t i = 0; i <= interfaces::entity_list->get_highest_entity_index(); i++)
+	for (int i = 0; i <= interfaces::entity_list->get_highest_entity_index(); i++)
 	{
 		c_base_entity* entity = interfaces::entity_list->get_entity(i);
 		if (!entity)
@@ -228,16 +228,13 @@ void utilities::update_entity_list()
 		if (entity->is_player())
 			continue;
 
-		if (i == interfaces::engine->get_local_player())
-			continue;
-
 		std::string name = entity->get_class_name();
 		if (name.empty())
 			continue;
 
-		if (settings::visuals::esp::entity::list.contains(name))
+		if (list.contains(name))
 			continue;
 
-		settings::visuals::esp::entity::list.emplace(name, false);
+		list.emplace(name, false);
 	}
 }

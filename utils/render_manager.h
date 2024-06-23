@@ -47,10 +47,7 @@ namespace render_manager
 
 	inline void box(box_t box, float color[4], float thickness)
 	{
-		draw_list->AddLine(ImVec2(box.left, box.bottom), ImVec2(box.left, box.top), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
-		draw_list->AddLine(ImVec2(box.left, box.top), ImVec2(box.right, box.top), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
-		draw_list->AddLine(ImVec2(box.right, box.top), ImVec2(box.right, box.bottom), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
-		draw_list->AddLine(ImVec2(box.right, box.bottom), ImVec2(box.left, box.bottom), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), thickness);
+		draw_list->AddRect(ImVec2(box.left, box.top), ImVec2(box.right, box.bottom), GetColorU32(ImVec4(color[0], color[1], color[2], color[3])), 0.f, 0, thickness);
 	}
 
 	inline void render_text(box_t box, const char* text, float color[4], float& text_offset)

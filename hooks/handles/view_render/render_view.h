@@ -8,4 +8,5 @@ void __fastcall hooks::handles::render_view(i_view_render* view_render, c_view_s
 	globals::view_origin = view.origin;
 
 	originals::render_view(view_render, view, flags, to_draw);
+	obs_bypass::render_view(view_render, view, flags, to_draw);
 }

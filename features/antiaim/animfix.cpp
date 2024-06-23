@@ -60,7 +60,7 @@ void animfix::update_real_bones(c_base_entity* local_player)
 	{
 		c_vector origin = local_player->get_abs_origin();
 
-		for (auto& i : real_matrix) 
+		for (auto& i : real_matrix)
 		{
 			i[0][3] -= origin.x;
 			i[1][3] -= origin.y;
@@ -75,18 +75,7 @@ void animfix::update_fake_bones(c_base_entity* local_player)
 {
 	local_player->invalidate_bone_cache();
 	if (local_player->get_client_renderable()->setup_bones(fake_matrix, MAX_STUDIO_BONES, BONE_USED_BY_ANYTHING, interfaces::global_vars->curtime))
-	{
-		c_vector origin = local_player->get_abs_origin();
-
-		for (auto& i : fake_matrix)
-		{
-			i[0][3] -= origin.x;
-			i[1][3] -= origin.y;
-			i[2][3] -= origin.z;
-		}
-
 		created_fake_matrix = true;
-	}
 }
 
 void animfix::swap_anim_states(c_base_entity* local_player)

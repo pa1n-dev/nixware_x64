@@ -12,12 +12,6 @@ I will also now attach the [virustotal](https://www.virustotal.com/gui/home/uplo
 #### Communication
 [OUR DISCORD SERVER](https://discord.gg/FdezFJxMxd)
 
-#### Showcase
-[Menu showcase](https://pa1n-dev.github.io/nixware/showcase/)
-
-![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/c21beff3-5d31-45c7-a8ca-fafbeb5318a3)
-![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/5873042b-de4d-4312-9434-7c46c36efbdf)
-
 #### Features
 - Aimbot (Silent, Automatic fire, Penetrate walls (SWB, CW2), Hitbox, Priority, Smooth)
 - Predict spread ([m9k](https://steamcommunity.com/sharedfiles/filedetails/?id=128089118), [swb](https://steamcommunity.com/sharedfiles/filedetails/?id=2279720120), [ptp](https://steamcommunity.com/sharedfiles/filedetails/?id=187933083), cw2, hl2)
@@ -25,20 +19,29 @@ I will also now attach the [virustotal](https://www.virustotal.com/gui/home/uplo
 - Backtrack
 - AntiAim (AA, Fakelag's, Fake duck)
 - ThirdPerson
-- OBS Bypass (ESP)
+- OBS Bypass (ESP, CHAMS)
 - Custom menu background
 - Custom loading screen (Disabled)
 - [AnimFix](https://www.unknowncheats.me/forum/garry-s-mod/502883-animfix-fake-chams.html)
 - 1 second backtrack without fakeping ([cl_interp abuse](https://www.unknowncheats.me/forum/garry-s-mod/414371-cl_interp-abuse-1-backtrack-fakeping.html)) (not 100% accuracy)
 - Multicore support 
 
+#### Showcase
+[Menu showcase](https://pa1n-dev.github.io/nixware/showcase/)
+
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/d3606d10-8edf-4768-9d2c-2c6cc906e495)
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/db8fd692-8956-4e40-a9be-4b491b016c48)
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/8efc2bac-57a3-4451-b233-4081164448d3)
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/faf3ca0d-8645-413f-a742-3287f38af4ea)
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/ab47a4be-7e3a-44bf-a056-5141d8268204)
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/487fe5f0-e772-4c40-93c0-b6c6714016c6)
+
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/fe282ba0-d4d1-471a-ba26-c46902a71ba1)
+![image](https://github.com/pa1n-dev/nixware_x64/assets/74207477/c21beff3-5d31-45c7-a8ca-fafbeb5318a3)
+
 #### ToDo
-- Visuals
-- OBS Bypass chams
 - Lua API
 - Netlogger
-- Chams
-- Configs
 - Legit bhop/strafe
 - M9K Autowall
 

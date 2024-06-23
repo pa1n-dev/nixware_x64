@@ -13,6 +13,8 @@
 #include <unordered_map>
 #include <intrin.h>
 #include <mutex>
+#include <regex>
+#include <format>
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -48,6 +50,7 @@
 #include "source-sdk/tier1/checksum_md5.h"
 #include "source-sdk/tier1/c_utl_memory.h"
 #include "source-sdk/tier1/c_utl_vector.h"
+#include "source-sdk/tier1/key_values.h"
 #include "source-sdk/engine/c_collideable.h"
 #include "source-sdk/engine/c_render.h"
 #include "source-sdk/anim_state/c_multiplayer_anim_state.h"

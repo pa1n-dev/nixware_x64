@@ -6,6 +6,23 @@
 #include "../utils/render_manager.h"
 #include "../settings.h"
 
+#include "../features/menu/menu.h"
+#include "../features/visuals/visuals.h"
+#include "../features/visuals/obs_bypass.h"
+#include "../features/visuals/chams.h"
+#include "../features/aimbot/aimbot.h"
+#include "../features/aimbot/penetrate_walls.h"
+#include "../features/aimbot/predict_spread.h"
+#include "../features/aimbot/engine_prediction.h"
+#include "../features/aimbot/backtrack/history.h"
+#include "../features/aimbot/backtrack/lag_compensation.h"
+#include "../features/antiaim/antiaim.h"
+#include "../features/antiaim/fakelags.h"
+#include "../features/antiaim/animfix.h"
+#include "../features/miscellaneous/miscellaneous.h"
+#include "../features/miscellaneous/movement.h"
+#include "../features/lua/lua.h"
+
 namespace hooks
 {
 	void initialize();

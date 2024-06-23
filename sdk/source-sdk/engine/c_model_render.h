@@ -15,4 +15,14 @@ public:
 	{
 		return memory::call_v_function<void(__thiscall*)(void*, i_material*, override_type_t)>(this, 1)(this, material, override_type);
 	}
+
+	void setup_lighting(const c_vector& center)
+	{
+		return memory::call_v_function<void(__thiscall*)(void*, const c_vector&)>(this, 21)(this, center);
+	}
+
+	void suppress_engine_lighting(bool suppress)
+	{
+		return memory::call_v_function<void(__thiscall*)(void*, bool)>(this, 23)(this, suppress);
+	}
 };

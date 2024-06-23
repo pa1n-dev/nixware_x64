@@ -13,7 +13,7 @@ DWORD WINAPI initialize(HMODULE base)
     hooks::initialize();
 
     while (!globals::unload)
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     FreeLibraryAndExitThread(base, EXIT_SUCCESS);
 

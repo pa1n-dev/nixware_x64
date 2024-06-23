@@ -64,6 +64,21 @@ public:
 		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 172)(this);
 	}
 
+	uintptr_t get_owner_entity()
+	{
+		return ((uintptr_t)this + 0x734);
+	}
+
+	uintptr_t get_hands()
+	{
+		return ((uintptr_t)this + 0x38d0);
+	}
+
+	uintptr_t get_view_model()
+	{
+		return ((uintptr_t)this + 0x2d98);
+	}
+
 	bool is_dormant()
 	{
 		return *(bool*)((uintptr_t)this + 0x1FA);

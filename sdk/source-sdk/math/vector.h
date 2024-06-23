@@ -6,7 +6,7 @@ using matrix4x4 = float[16];
 
 struct box_t
 {
-	int left, top, right, bottom;
+	float left, top, right, bottom;
 };
 
 class c_vector

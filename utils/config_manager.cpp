@@ -124,6 +124,10 @@ void config_manager::load(std::string name)
         visuals[xorstr("chams")][xorstr("hands")][xorstr("material_type")].get_to(settings::visuals::chams::hands::material_type);
         visuals[xorstr("chams")][xorstr("hands")][xorstr("draw_original_model")].get_to(settings::visuals::chams::hands::draw_original_model);
 
+        visuals[xorstr("chams")][xorstr("colors")][xorstr("players")].get_to(settings::visuals::chams::colors::players);
+        visuals[xorstr("chams")][xorstr("colors")][xorstr("entity")].get_to(settings::visuals::chams::colors::entity);
+        visuals[xorstr("chams")][xorstr("colors")][xorstr("hands")].get_to(settings::visuals::chams::colors::hands);
+
         visuals[xorstr("world")][xorstr("fov_changer")][xorstr("enable")].get_to(settings::visuals::world::fov_changer::enable);
         visuals[xorstr("world")][xorstr("fov_changer")][xorstr("value")].get_to(settings::visuals::world::fov_changer::value);
         visuals[xorstr("world")][xorstr("model_fov_changer")][xorstr("enable")].get_to(settings::visuals::world::model_fov_changer::enable);
@@ -144,7 +148,7 @@ void config_manager::load(std::string name)
     }
     catch (const std::exception& e)
     {
-        
+
     }
 }
 
@@ -271,6 +275,10 @@ void config_manager::save(std::string name)
         visuals[xorstr("chams")][xorstr("hands")][xorstr("enable")] = settings::visuals::chams::hands::enable;
         visuals[xorstr("chams")][xorstr("hands")][xorstr("material_type")] = settings::visuals::chams::hands::material_type;
         visuals[xorstr("chams")][xorstr("hands")][xorstr("draw_original_model")] = settings::visuals::chams::hands::draw_original_model;
+
+        visuals[xorstr("chams")][xorstr("colors")][xorstr("players")] = settings::visuals::chams::colors::players;
+        visuals[xorstr("chams")][xorstr("colors")][xorstr("entity")] = settings::visuals::chams::colors::entity;
+        visuals[xorstr("chams")][xorstr("colors")][xorstr("hands")] = settings::visuals::chams::colors::hands;
 
         visuals[xorstr("world")][xorstr("fov_changer")][xorstr("enable")] = settings::visuals::world::fov_changer::enable;
         visuals[xorstr("world")][xorstr("fov_changer")][xorstr("value")] = settings::visuals::world::fov_changer::value;
