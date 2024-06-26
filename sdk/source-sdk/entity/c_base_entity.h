@@ -5,28 +5,28 @@ class c_base_entity
 public:
 	c_collideable* get_collidable()
 	{
-		return memory::call_v_function<c_collideable*(__thiscall*)(void*)>(this, 3)(this);
+		return memory::call_v_function<c_collideable * (__thiscall*)(void*)>(this, 3)(this);
 	}
 
 	i_client_networkable* get_client_networkable()
 	{
-		return memory::call_v_function<i_client_networkable*(__thiscall*)(void*)>(this, 4)(this);
+		return memory::call_v_function<i_client_networkable * (__thiscall*)(void*)>(this, 4)(this);
 	}
 
 	i_client_renderable* get_client_renderable()
 	{
-		return memory::call_v_function<i_client_renderable*(__thiscall*)(void*)>(this, 5)(this);
+		return memory::call_v_function<i_client_renderable * (__thiscall*)(void*)>(this, 5)(this);
 	}
 
 	const c_vector& get_abs_origin()
 	{
-		return memory::call_v_function<c_vector&(__thiscall*)(void*)>(this, 9)(this);
+		return memory::call_v_function<c_vector & (__thiscall*)(void*)>(this, 9)(this);
 	}
 
 	//only works for local_player
 	const q_angle& get_abs_angles()
 	{
-		return memory::call_v_function<c_vector&(__thiscall*)(void*)>(this, 10)(this);
+		return memory::call_v_function<c_vector & (__thiscall*)(void*)>(this, 10)(this);
 	}
 
 	int get_team_number()
@@ -51,9 +51,14 @@ public:
 
 	q_angle& eye_angles()
 	{
-		return memory::call_v_function<q_angle&(__thiscall*)(void*)>(this, 140)(this);
+		return memory::call_v_function<q_angle & (__thiscall*)(void*)>(this, 140)(this);
 	}
-	
+
+	bool is_weapon()
+	{
+		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 167)(this);
+	}
+
 	bool uses_lua()
 	{
 		return memory::call_v_function<bool(__thiscall*)(void*)>(this, 170)(this);
@@ -66,17 +71,17 @@ public:
 
 	uintptr_t get_owner_entity()
 	{
-		return ((uintptr_t)this + 0x734);
+		return ((uintptr_t)this + 0x734); //DT_GMOD_Player, Prop: m_hOwnerEntity
 	}
 
 	uintptr_t get_hands()
 	{
-		return ((uintptr_t)this + 0x38d0);
+		return ((uintptr_t)this + 0x38d0);  //DT_GMOD_Player, Prop: m_Hands
 	}
 
 	uintptr_t get_view_model()
 	{
-		return ((uintptr_t)this + 0x2d98);
+		return ((uintptr_t)this + 0x2da0); //DT_GMOD_Player, Prop: m_hViewModel[0]
 	}
 
 	bool is_dormant()
@@ -91,67 +96,48 @@ public:
 
 	int get_flags()
 	{
-		return *(int*)((uintptr_t)this + 0x440);
+		return *(int*)((uintptr_t)this + 0x440); //DT_GMOD_Player, Prop: m_fFlags
 	}
 
 	c_vector get_velocity()
 	{
-		return *(c_vector*)((uintptr_t)this + 0x148);
+		return *(c_vector*)((uintptr_t)this + 0x148); //DT_GMOD_Player, Prop: m_vecVelocity
 	}
 
-	float get_simulation_time() 
+	float get_simulation_time()
 	{
-		return *(float*)((uintptr_t)this + 0xA0);
+		return *(float*)((uintptr_t)this + 0xA0); //DT_GMOD_Player, Prop: m_flSimulationTime
 	}
 
 	int get_tick_base()
 	{
-		return *(int*)((uintptr_t)this + 0x2D50);
+		return *(int*)((uintptr_t)this + 0x2d58); //DT_BasePlayer, Prop: m_nTickBase
 	}
 
 	int hitbox_set()
 	{
-		return *(int*)((uintptr_t)this + 0x16D8);
-	}
-
-	int& get_sequence()
-	{
-		return *(int*)((uintptr_t)this + 0x1A00);
-	}
-
-	float& get_cycle()
-	{
-		return *(float*)((uintptr_t)this + 0x1A08);
+		return *(int*)((uintptr_t)this + 0x16D8); //DT_GMOD_Player 0x16d8
 	}
 
 	bool& client_side_animation()
 	{
-		return *(bool*)((uintptr_t)this + 0x19D0);
+		return *(bool*)((uintptr_t)this + 0x19d8); //DT_GMOD_Player, Prop: m_bClientSideAnimation, Offset: 0x19d8
 	}
 
 	q_angle& get_punch_angle()
 	{
-		return *(q_angle*)((uintptr_t)this + 0x2A00);
+		return *(q_angle*)((uintptr_t)this + 0x2a08); //DT_GMOD_Player, Prop: m_vecPunchAngle,
 	}
 
-	c_studio_hdr* get_model_ptr()
-	{
-		return *(c_studio_hdr**)((uintptr_t)this + 0x1AF0);
-	}
-
-	unsigned int& hitbox_bone_cache_handle()
-	{
-		return *(unsigned int*)((uintptr_t)this + 0x1A98);
-	}
-
+	//https://s10.gifyu.com/images/Sr48V.png
 	c_hl2mp_player_anim_state* get_anim_state()
 	{
-		return *(c_hl2mp_player_anim_state**)((uintptr_t)this + 0x3618);
+		return *(c_hl2mp_player_anim_state**)((uintptr_t)this + 0x3620);
 	}
 
 	c_hl2mp_player_anim_state* create_anim_state()
 	{
-		using create_anim_state_fn = c_hl2mp_player_anim_state*(__cdecl*)(void*);
+		using create_anim_state_fn = c_hl2mp_player_anim_state * (__cdecl*)(void*);
 
 		static create_anim_state_fn create_anim_state = (create_anim_state_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 40 48 8B 05 ? ? ? ? 48 33 C4 48 89 44 24 ? 48 8B 1D ? ? ?"));
 
@@ -187,7 +173,7 @@ public:
 
 	c_base_combat_weapon* get_active_weapon()
 	{
-		using get_active_weapon_fn = c_base_combat_weapon* (__fastcall*)(void*);
+		using get_active_weapon_fn = c_base_combat_weapon * (__fastcall*)(void*);
 
 		static get_active_weapon_fn get_active_weapon = (get_active_weapon_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("40 53 48 83 EC 20 48 3B 0D ? ? ? ?"));
 
@@ -236,7 +222,7 @@ public:
 
 	const char* get_class_name()
 	{
-		using get_class_name_fn = const char*(__fastcall*)(void*);
+		using get_class_name_fn = const char* (__fastcall*)(void*);
 
 		static get_class_name_fn get_class_name = (get_class_name_fn)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("client.dll"), xorstr("E8 ? ? ? ? 4D 8B 47 10")), 1, 6);
 

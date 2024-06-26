@@ -15,41 +15,27 @@ public:
 
 	c_vector& get_bullet_spread()
 	{
-		return memory::call_v_function<c_vector&(__thiscall*)(void*)>(this, 325)(this);
-	}
-
-	int primary_ammo()
-	{
-		return *(int*)((uintptr_t)this + 0x1C48);
-	}
-
-	float next_primary_attack()
-	{
-		return *(float*)((uintptr_t)this + 0x1BFC);
+		return memory::call_v_function<c_vector & (__thiscall*)(void*)>(this, 325)(this);
 	}
 
 	const char* get_name()
 	{
-		using  get_name_fn = const char* (__fastcall*)(void*);
-
-		static get_name_fn get_name = (get_name_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 83 EC 28 0F B7 89 F4 1B 00 00 E8 ? ? ? ? 48 83 C0 0A"));
-
-		if (!get_name)
-			throw;
-
-		return get_name(this);
+		return memory::call_v_function<const char* (__thiscall*)(void*)>(this, 366)(this);
 	}
 
 	const char* get_print_name()
 	{
-		using  get_print_name_fn = const char* (__fastcall*)(void*);
+		return memory::call_v_function<const char* (__thiscall*)(void*)>(this, 367)(this);
+	}
 
-		static get_print_name_fn get_print_name = (get_print_name_fn)memory::pattern_scanner(xorstr("client.dll"), xorstr("48 83 EC 28 0F B7 89 F4 1B 00 00 E8 ? ? ? ? 48 83 C0 5A"));
+	int primary_ammo()
+	{
+		return *(int*)((uintptr_t)this + 0x1C50); /*m_iClip1*/
+	}
 
-		if (!get_print_name)
-			throw;
-
-		return get_print_name(this);
+	float next_primary_attack()
+	{
+		return *(float*)((uintptr_t)this + 0x1C04); /*m_flNextPrimaryAttack*/
 	}
 
 	bool is_holding_tool()
