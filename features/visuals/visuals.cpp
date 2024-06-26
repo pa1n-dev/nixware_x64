@@ -140,9 +140,4 @@ void visuals::render()
 	}
 
 	render_manager::draw_list->PopClipRect();
-
-	//add render to queue
-	render_manager::render_mutex.lock();
-	*render_manager::draw_list_act = *render_manager::draw_list;
-	render_manager::render_mutex.unlock();
 }

@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)x64\</OutDir>
-    <IntDir>$(SolutionDir)x64\obj\</IntDir>
+    <OutDir>$(SolutionDir)build\release\</OutDir>
+    <IntDir>$(SolutionDir)build\release\obj\</IntDir>
     <TargetName>nixware</TargetName>
     <IncludePath>D:\Source\DirectX SDK\Include;D:\Source\Freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Source\DirectX SDK\Lib\x64;D:\Source\Freetype\win64;$(LibraryPath)</LibraryPath>

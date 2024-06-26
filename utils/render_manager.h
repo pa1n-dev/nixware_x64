@@ -6,11 +6,7 @@ namespace render_manager
 {
 	using namespace ImGui;
 
-	inline std::mutex render_mutex;
-
 	inline ImDrawList* draw_list;
-	inline ImDrawList* draw_list_act;
-	inline ImDrawList* draw_list_rendering;
 
 	static IDirect3DStateBlock9* pixel_state = nullptr;
 	static i_texture* rt = nullptr;

@@ -11,8 +11,6 @@ void render_manager::setup_imgui(IDirect3DDevice9* device)
 		ImGui_ImplDX9_Init(device);
 
 		draw_list = new ImDrawList(GetDrawListSharedData());
-		draw_list_act = new ImDrawList(GetDrawListSharedData());
-		draw_list_rendering = new ImDrawList(GetDrawListSharedData());
 
 		StyleColorsDark();
 
@@ -56,12 +54,6 @@ void render_manager::end_render()
 {
 	EndFrame();
 	Render();
-
-	if (render_manager::render_mutex.try_lock())
-	{
-		*render_manager::draw_list_rendering = *render_manager::draw_list_act;
-		render_manager::render_mutex.unlock();
-	}
 
 	if (interfaces::engine->is_in_game())
 	{

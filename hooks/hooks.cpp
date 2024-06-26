@@ -25,7 +25,7 @@ void hooks::initialize()
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 21), &handles::create_move, (LPVOID*)&handles::originals::create_move))
-       throw;
+        throw;
 
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 23), &handles::write_user_cmd_delta_to_buffer, (LPVOID*)&handles::originals::write_user_cmd_delta_to_buffer))
         throw;
@@ -33,8 +33,8 @@ void hooks::initialize()
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::hl_client, 35), &handles::frame_stage_notify, (LPVOID*)&handles::originals::frame_stage_notify))
         throw;
 
-    //if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::engine, 20), &handles::set_view_angles, (LPVOID*)&handles::originals::set_view_angles))
-    //    throw;
+    if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::engine, 20), &handles::set_view_angles, (LPVOID*)&handles::originals::set_view_angles))
+        throw;
 
     if (!min_hook.create_hook((LPVOID)memory::get_virtual((PVOID**)interfaces::view_render, 6), &handles::render_view, (LPVOID*)&handles::originals::render_view))
         throw;
@@ -55,7 +55,7 @@ void hooks::initialize()
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::relative_to_absolute((uintptr_t)memory::pattern_scanner(xorstr("menusystem.dll"), xorstr("E8 ? ? ? ? EB 17 48 8B 0D ? ? ? ?")), 1, 5), &handles::html_panel_load_url, (LPVOID*)&handles::originals::html_panel_load_url))
-       throw;
+        throw;
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("menusystem.dll"), xorstr("40 57 48 83 EC 40 48 8B F9")), &handles::html_panel_paint, (LPVOID*)&handles::originals::html_panel_paint))
         throw;
@@ -64,14 +64,10 @@ void hooks::initialize()
         throw;
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("lua_shared.dll"), xorstr("40 55 53 56 57 41 54 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 49 8B F1")), &handles::run_string_ex, (LPVOID*)&handles::originals::run_string_ex))
-        throw; 
+        throw;
 
     if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 56 48 83 EC 20 48 8B D9 45 0F B6 F1")), &handles::send_net_msg, (LPVOID*)&handles::originals::send_net_msg))
         throw;
-
-    //bug: crash
-    //if (!min_hook.create_hook((LPVOID)memory::pattern_scanner(xorstr("engine.dll"), xorstr("40 55 53 56 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ?")), &handles::send_datagram, (LPVOID*)&handles::originals::send_datagram))
-    //    throw;
 
     if (!min_hook.enable_hook())
         throw;

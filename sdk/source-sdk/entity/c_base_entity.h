@@ -76,7 +76,7 @@ public:
 
 	uintptr_t get_hands()
 	{
-		return ((uintptr_t)this + 0x38d0);  //DT_GMOD_Player, Prop: m_Hands
+		return ((uintptr_t)this + 0x38d8);  //DT_GMOD_Player, Prop: m_Hands
 	}
 
 	uintptr_t get_view_model()
