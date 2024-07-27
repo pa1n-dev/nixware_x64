@@ -69,7 +69,6 @@ Afterwards you need to inject via process hacker
 - [pa1n](https://github.com/pa1n-dev)
 
 #### Testers
-- [Zitc-Hen](https://github.com/Zitc-Hen)
 - [pavetr](https://github.com/pavetr1337)
 - [theshezzee](https://github.com/THEshezzee) (partial)
 
