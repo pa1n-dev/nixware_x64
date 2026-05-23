@@ -2,7 +2,6 @@
 
 > [!WARNING]
 > ### Nixware IS NO LONGER SUPPORTED
-> #### Always updated, more functional, our cheat is only for $2: [Ignite](https://ignitecheat.xyz/)
 
 This is a cheat for [Garry's Mod](https://store.steampowered.com/app/4000/Garrys_Mod/) x64
 
